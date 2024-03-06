@@ -1,0 +1,15 @@
+.headline {
+    font-weight: bold;
+    margin-top: 5%;
+    margin-bottom: 20px;
+    color: rgb(70, 179, 243);
+}
+
+.newsWrapper {
+    margin-left: 25px;
+}
+
+.entryWrapper {
+    padding-left: 10px;
+    border-left: 4px solid rgb(70, 179, 243);
+}
