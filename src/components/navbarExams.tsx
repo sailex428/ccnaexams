@@ -6,13 +6,7 @@ export default function NavbarExams() {
     <Navbar className={styles.navigationBar}>
       <Container>
         <NavbarBrand href={"/"} className={styles.text}>
-          <img
-            src="/public/logo.png"
-            width="30"
-            height="30"
-            className="d-inline-block align-top"
-            alt="Logo"
-          />
+          <img src="/logo.png" alt="Logo" />
           {"CCNAExams"}
         </NavbarBrand>
         <Nav>

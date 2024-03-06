@@ -1,6 +1,6 @@
 import { Col } from "react-bootstrap";
-import styles from "../../styles/homepage.module.css";
-import { newsEntries } from "@/src/components/news";
+import styles from "../../styles/pages/homepage.module.css";
+import { newsEntries } from "@/src/components/lib/news";
 
 export default function Homepage() {
   return (
