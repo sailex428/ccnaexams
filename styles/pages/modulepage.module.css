@@ -1,0 +1,10 @@
+.headline {
+    font-weight: bold;
+    margin-top: 5%;
+    margin-bottom: 20px;
+    color: rgb(70, 179, 243);
+}
+
+.wrapper {
+    margin-left: 25px;
+}
