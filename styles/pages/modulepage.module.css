@@ -1,0 +1,15 @@
+.container {
+    display: grid;
+    place-items: center;
+}
+
+.headline {
+    font-weight: bold;
+    margin: 30px 0 10px 0;
+    color: rgb(70, 179, 243);
+}
+
+.questions {
+    width: 95%;
+    max-width: 1000px;
+}

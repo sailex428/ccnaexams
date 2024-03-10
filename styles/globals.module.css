@@ -3,5 +3,18 @@
 }
 
 .error {
-    margin: 40px 10px;
+    margin: 50px 20px;
+}
+
+.button {
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: rgb(70, 179, 243);
+    border: solid 2px rgb(72, 182, 246);
+}
+
+.button:hover {
+    color: rgb(70, 179, 243);
+    background-color: white;
+    border: solid 2px rgb(72, 182, 246);
 }

@@ -1,12 +1,17 @@
 .headline {
     font-weight: bold;
-    margin-top: 5%;
-    margin-bottom: 20px;
     color: rgb(70, 179, 243);
 }
 
-.newsWrapper {
-    margin-left: 25px;
+.container {
+    display: grid;
+    place-items: center;
+    margin-top: 30px;
+}
+
+.content {
+    width: 90%;
+    max-width: 1000px;
 }
 
 .entryWrapper {
