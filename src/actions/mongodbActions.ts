@@ -11,7 +11,7 @@ async function getDB() {
   return client.db(databaseName);
 }
 
-export async function getModuleQuestions(moduleId: string) {
+export async function getQuestionsOfModule(moduleId: string) {
   try {
     const db = await getDB();
     return db
