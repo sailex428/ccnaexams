@@ -1,4 +1,4 @@
-import type { Question } from "@/types/database";
+import type { QuestionType } from "@/types/database";
 import { Form } from "react-bootstrap";
 import { useContext } from "react";
 import AnswerContext from "@/src/components/answerContext";
@@ -11,7 +11,7 @@ export default function Question({
   answer,
   explanation,
   rightAnswers,
-}: Question & { rightAnswers: number }) {
+}: QuestionType & { rightAnswers: number }) {
   const { setUserAnswers, userAnswers } = useContext(AnswerContext);
 
   const handleAnswerChange = (number: number, userAnswer: string) => {

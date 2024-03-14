@@ -1,7 +1,7 @@
 "use server";
 
 import clientPromise from "./mongodbConnect";
-import { QuestionModule } from "@/types/database";
+import { QuestionType, QuestionModuleType } from "@/types/database";
 
 const databaseName = "ccnaexams";
 const collectionName = "modulequestion";
@@ -15,12 +15,24 @@ export async function getQuestionsOfModule(moduleId: string) {
   try {
     const db = await getDB();
     return db
-      .collection<QuestionModule>(collectionName)
+      .collection<QuestionModuleType>(collectionName)
       .find({ module: moduleId })
       .toArray();
   } catch (e) {
     console.log("database error: " + e);
-    const emptyArray: QuestionModule[] = [];
-    return emptyArray;
+    return [] as QuestionModuleType[];
+  }
+}
+
+export async function getQuestion(questionId: number, moduleId: string) {
+  try {
+    const db = await getDB();
+    return db
+      .collection<QuestionType>(collectionName)
+      .find({ module: moduleId, number: questionId })
+      .toArray();
+  } catch (e) {
+    console.log("database error: " + e);
+    return [] as QuestionType[];
   }
 }

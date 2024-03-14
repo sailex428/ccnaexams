@@ -2,7 +2,7 @@
 
 import type { PropsWithChildren } from "react";
 import { createContext, useState } from "react";
-import { AnswerContextType } from "@/types/answerType";
+import { AnswerContextType } from "@/types/answerContextType";
 
 const AnswerContext = createContext<AnswerContextType>({
   userAnswers: [],
@@ -10,7 +10,7 @@ const AnswerContext = createContext<AnswerContextType>({
 });
 
 export function AnswerContextProvider(props: PropsWithChildren) {
-  const [userAnswers, setUserAnswers] = useState<Array<string>>([]);
+  const [userAnswers, setUserAnswers] = useState<string[]>([]);
 
   const answerContext: AnswerContextType = {
     userAnswers,
