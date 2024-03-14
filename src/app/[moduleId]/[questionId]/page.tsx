@@ -3,12 +3,15 @@ import styles from "@/styles/pages/modulepage.module.css";
 export default function ModulePage({
   params,
 }: {
-  params: { questionId: number };
+  params: { questionId: number; moduleId: string };
 }) {
   return (
     <div className={styles.container}>
       <div className={styles.question}>
-        <QuestionModule questionId={params.questionId} />
+        <QuestionModule
+          moduleId={params.moduleId}
+          questionId={params.questionId}
+        />
       </div>
     </div>
   );

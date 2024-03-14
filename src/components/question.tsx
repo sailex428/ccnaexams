@@ -19,7 +19,6 @@ export default function Question({
     newUserAnswers[number - 1] = userAnswer;
     setUserAnswers(newUserAnswers);
   };
-
   return (
     <div className={styles.container}>
       <Form>
@@ -29,20 +28,20 @@ export default function Question({
           {question}
         </h6>
         {options.map((option) => (
-          <Form.Check key="">
+          <Form.Check>
             <Form.Check.Input
               type={"radio"}
               name={"group"}
               onChange={() => handleAnswerChange(number, option)}
-              isValid={rightAnswers != 0 ? answer == option : false}
+              isValid={rightAnswers != -1 ? answer == option : false}
               isInvalid={
-                rightAnswers != 0 ? userAnswers[number - 1] != answer : false
+                rightAnswers != -1 ? userAnswers[number - 1] != answer : false
               }
             ></Form.Check.Input>
             <Form.Check.Label>{option}</Form.Check.Label>
           </Form.Check>
         ))}
-        {rightAnswers != 0 && explanation ? (
+        {rightAnswers != -1 && explanation ? (
           <div className={styles.explanation}>
             <h6 className={"fw-bold"}>{"Explanation: "}</h6>
             {explanation}
