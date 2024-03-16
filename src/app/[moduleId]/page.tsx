@@ -5,11 +5,7 @@ export default function ModulePage({
 }: {
   params: { moduleId: string };
 }) {
-  return (
-    <>
-      <ExamStartModule moduleId={params.moduleId} />
-    </>
-  );
+  return <ExamStartModule moduleId={params.moduleId} />;
 }
 
 export function generateStaticParams() {
