@@ -10,14 +10,15 @@ type Props = {
   questionId: number;
 };
 export default function QuestionModule({ questionId, moduleId }: Props) {
-  const [question, setQuestion] = useState<QuestionType[]>([]);
+  const [question, setCurrentQuestion] = useState<QuestionType[]>([]);
   const currentQuestion = question[0];
 
   useEffect(() => {
     async function fetchQuestion() {
       try {
         const questionData = await getQuestion(questionId, moduleId);
-        setQuestion(questionData);
+        console.log("change");
+        setCurrentQuestion(questionData);
       } catch (error) {
         console.log("error reading data from database:", error);
       }
