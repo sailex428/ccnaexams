@@ -1,5 +1,3 @@
-"use client";
-
 import ExamStartModule from "@/src/components/examStartModule";
 
 export default function ModulePage({

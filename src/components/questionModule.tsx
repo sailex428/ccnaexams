@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getQuestion } from "@/src/actions/mongodbActions";
+import { getQuestion } from "@/src/app/api/mongodbActions";
 import type { QuestionType } from "@/types/database";
 import Question from "@/src/components/question";
 
@@ -22,22 +22,22 @@ export default function QuestionModule({ questionId, moduleId }: Props) {
         console.log("error reading data from database:", error);
       }
     }
-    fetchQuestion();
+    fetchQuestion().then();
   }, [questionId, moduleId]);
 
   return (
     <>
-      {currentQuestion != undefined ? (
+      {currentQuestion ? (
         <Question
           question={currentQuestion.question}
           number={currentQuestion.number}
           answer={currentQuestion.answer}
           explanation={currentQuestion.explanation}
           options={currentQuestion.options}
-          rightAnswers={-1}
+          examIsFinished={false}
         />
       ) : (
-        <div className="fw-bold">Loading...</div>
+        <div className="fw-bold mt-4">Loading...</div>
       )}
     </>
   );

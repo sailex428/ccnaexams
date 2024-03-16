@@ -1,6 +1,14 @@
 .container {
     display: grid;
-    place-items: center;
+    justify-items: center;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 95%;
+    max-width: 1000px;
 }
 
 .headline {

@@ -10,8 +10,8 @@ export default function Question({
   options,
   answer,
   explanation,
-  rightAnswers,
-}: QuestionType & { rightAnswers: number }) {
+  examIsFinished,
+}: QuestionType & { examIsFinished: boolean }) {
   const { setUserAnswers, userAnswers } = useContext(AnswerContext);
 
   const handleAnswerChange = (number: number, userAnswer: string) => {
@@ -19,6 +19,7 @@ export default function Question({
     newUserAnswers[number - 1] = userAnswer;
     setUserAnswers(newUserAnswers);
   };
+
   return (
     <div className={styles.container}>
       <Form>
@@ -27,23 +28,23 @@ export default function Question({
           {". "}
           {question}
         </h6>
-        {options.map((option) => (
-          <Form.Check>
+        {options.map((option, index) => (
+          <Form.Check key={index}>
             <Form.Check.Input
               type={"radio"}
               name={"group"}
               onChange={() => handleAnswerChange(number, option)}
-              isValid={rightAnswers != -1 ? answer == option : false}
+              isValid={examIsFinished ? answer == option : false}
               isInvalid={
-                rightAnswers != -1 ? userAnswers[number - 1] != answer : false
+                examIsFinished ? userAnswers[number - 1] != answer : false
               }
             ></Form.Check.Input>
             <Form.Check.Label>{option}</Form.Check.Label>
           </Form.Check>
         ))}
-        {rightAnswers != -1 && explanation ? (
+        {examIsFinished && explanation ? (
           <div className={styles.explanation}>
-            <h6 className={"fw-bold"}>{"Explanation: "}</h6>
+            <h6>{"Explanation: "}</h6>
             {explanation}
           </div>
         ) : (

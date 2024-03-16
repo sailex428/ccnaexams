@@ -14,7 +14,7 @@ async function getDB() {
 export async function getQuestionsOfModule(moduleId: string) {
   try {
     const db = await getDB();
-    return db
+    return await db
       .collection<QuestionModuleType>(collectionName)
       .find({ module: moduleId })
       .toArray();
@@ -27,8 +27,8 @@ export async function getQuestionsOfModule(moduleId: string) {
 export async function getQuestion(questionId: number, moduleId: string) {
   try {
     const db = await getDB();
-    return db
-      .collection<QuestionType>(collectionName)
+    return await db
+      .collection<QuestionModuleType>(collectionName)
       .find({ module: moduleId, number: questionId })
       .toArray();
   } catch (e) {
