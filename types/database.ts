@@ -1,4 +1,4 @@
-export type Question = {
+export type QuestionType = {
   number: number;
   question: string;
   options: Array<string>;
@@ -6,6 +6,6 @@ export type Question = {
   explanation: string;
 };
 
-export type QuestionModule = {
+export type QuestionModuleType = {
   _id: string;
-} & Question;
+} & QuestionType;

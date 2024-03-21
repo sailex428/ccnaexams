@@ -16,3 +16,7 @@ export default function ModulePage({
     </div>
   );
 }
+
+export function generateStaticParams() {
+  return [{ id: "11-13" }];
+}

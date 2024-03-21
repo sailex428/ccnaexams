@@ -7,8 +7,7 @@
 }
 
 .button {
-    padding: 10px;
-    margin-bottom: 20px;
+    padding: 12px 30px 12px 30px;
     background-color: rgb(70, 179, 243);
     border: solid 2px rgb(72, 182, 246);
 }

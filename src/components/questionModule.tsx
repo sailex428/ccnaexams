@@ -2,12 +2,12 @@
 
 import { useContext, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import { getQuestionsOfModule } from "@/src/actions/mongodbActions";
-import type { QuestionModule } from "@/types/database";
-import Question from "@/src/components/question";
-import styles from "@/styles/globals.module.css";
-import AnswerContext from "@/src/components/answerContext";
 import ExamResults from "@/src/components/examResults";
+import { getQuestionsOfModule } from "@/src/actions/mongodbActions";
+import Question from "@/src/components/question";
+import AnswerContext from "@/src/components/answerContext";
+import type { QuestionType } from "@/types/database";
+import styles from "@/styles/globals.module.css";
 
 type Props = {
   moduleId: string;
@@ -15,8 +15,9 @@ type Props = {
 
 export default function QuestionModule({ moduleId }: Props) {
   const { setUserAnswers, userAnswers } = useContext(AnswerContext);
-  const [questions, setQuestions] = useState<QuestionModule[]>([]);
+  const [questions, setQuestions] = useState<QuestionType[]>([]);
   const [rightAnswers, setRightAnswers] = useState<number>(0);
+  let examFinished = false;
 
   useEffect(() => {
     async function fetchQuestions() {
@@ -27,9 +28,9 @@ export default function QuestionModule({ moduleId }: Props) {
         console.log("error reading data from database:", error);
       }
     }
-    fetchQuestions();
+    fetchQuestions().then();
     setUserAnswers(new Array(questions.length));
-  }, [moduleId, questions.length, setUserAnswers]);
+  }, [moduleId, setUserAnswers]);
 
   const checkUserAnswers = () => {
     let rightAnswersOfUser = 0;
@@ -38,14 +39,17 @@ export default function QuestionModule({ moduleId }: Props) {
         rightAnswersOfUser += 1;
       }
     });
+    console.log("check");
+    examFinished = true;
     setRightAnswers(rightAnswersOfUser);
+    console.log(rightAnswersOfUser);
   };
 
   return (
     <div>
       {questions.length > 0 ? (
         <>
-          {rightAnswers != 0 ? (
+          {examFinished ? (
             <ExamResults
               rightAnswers={rightAnswers}
               length={questions.length}
@@ -55,9 +59,9 @@ export default function QuestionModule({ moduleId }: Props) {
           )}
           {questions
             .sort((q1, q2) => q1.number - q2.number)
-            .map((question) => (
+            .map((question, index) => (
               <Question
-                key=""
+                key={index}
                 question={question.question}
                 number={question.number}
                 answer={question.answer}
@@ -70,13 +74,13 @@ export default function QuestionModule({ moduleId }: Props) {
             variant="primary"
             size="sm"
             className={styles.button}
-            onClick={checkUserAnswers}
+            onClick={() => checkUserAnswers()}
           >
             Check Answers
           </Button>
         </>
       ) : (
-        <div className="fw-bold">Loading...</div>
+        <div className="fw-bold mt-4">Loading...</div>
       )}
     </div>
   );

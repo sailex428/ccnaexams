@@ -13,7 +13,6 @@ export default function ExamResults({ rightAnswers, length }: Props) {
     <div className={styles.container}>
       <h5 className="fw-bold">Result:</h5>
       <p>{percentageOfRightAnswers} of your answers are right.</p>
-      <div className={styles.statusbar}></div>
     </div>
   );
 }
