@@ -5,9 +5,35 @@
     background-color: aliceblue;
 }
 
+.heading {
+    font-weight: bold;
+    word-wrap: anywhere;
+}
+
+.answerContainer {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    word-wrap: anywhere;
+}
+
 .explanation {
     margin-top: 15px;
     padding: 7px;
     background-color: #9fea9f;
     border-radius: 5px;
+    word-wrap: anywhere;
+}
+
+.options {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+}
+
+@media only screen and (max-width: 500px) {
+    .options {
+        flex-direction: column-reverse;
+    }
 }

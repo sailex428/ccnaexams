@@ -1,23 +1,15 @@
 .container {
     display: grid;
-    justify-items: center;
-}
-
-.buttons {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    width: 95%;
-    max-width: 1000px;
+    place-items: center;
 }
 
 .headline {
     font-weight: bold;
-    margin-top: 30px;
+    margin: 30px 10px 10px 10px;
     color: rgb(70, 179, 243);
 }
 
-.question {
+.questions {
     width: 95%;
-    max-width: 1000px;
+    max-width: 700px;
 }
