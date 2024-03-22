@@ -1,7 +1,7 @@
 FROM node:20-alpine
 
 # image label
-LABEL authors="elha"
+LABEL authors="sailex"
 
 # set workdirectory
 WORKDIR /
