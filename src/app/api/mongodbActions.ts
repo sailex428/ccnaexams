@@ -14,10 +14,14 @@ async function getDB() {
 export async function getQuestionsOfModule(moduleId: string) {
   try {
     const db = await getDB();
-    return await db
+    const data =  await db
       .collection<QuestionType>(collectionName)
       .find({ module: moduleId })
       .toArray();
+    return data.map((questionData) => {
+      const { _id, ...question } = questionData;
+      return {...question} as QuestionType;
+    });
   } catch (e) {
     console.log("database error: " + e);
     return [] as QuestionType[];
@@ -34,7 +38,7 @@ export async function getQuestion(questionId: number, moduleId: string) {
 
     return data.map((questionData) => {
       const { _id, ...question } = questionData;
-      return question as QuestionType;
+      return {...question} as QuestionType;
     });
   } catch (e) {
     console.log("database error: " + e);
