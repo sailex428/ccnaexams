@@ -17,7 +17,8 @@
     "properties-parser": "^0.6.0",
     "react": "^18",
     "react-bootstrap": "^2.10.2",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "sharp": "^0.33.2"
   },
   "devDependencies": {
     "@types/node": "^20.11.24",

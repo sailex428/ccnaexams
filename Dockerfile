@@ -6,15 +6,21 @@ LABEL authors="elha"
 # set workdirectory
 WORKDIR /
 
+# set env for db
+ENV MONGODB_URI=$MONGODB_URI
+
 # copy dependency files
 COPY package.json ./
 COPY package-lock.json ./
 
-# install dependency
+# install dependencies
 RUN npm install
 
-# add app
+# copy complete app
 COPY . ./
+
+# build app
+RUN npm run build
 
 EXPOSE 3000
 
