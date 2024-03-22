@@ -7,9 +7,7 @@ export default function ModulePage({
 }) {
   return (
     <div className={styles.container}>
-      <h2 className={styles.headline}>
-        {"CCNA 1 Exams Module " + params.moduleId}
-      </h2>
+      <h2 className={styles.headline}>{"Module " + params.moduleId}</h2>
       <div className={styles.questions}>
         <QuestionModule moduleId={params.moduleId} />
       </div>

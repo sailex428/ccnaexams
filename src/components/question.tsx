@@ -1,18 +1,20 @@
 import { useContext } from "react";
-import { Form } from "react-bootstrap";
+import { Form, FormCheck } from "react-bootstrap";
 import type { QuestionType } from "@/types/database";
 import AnswerContext from "@/src/components/answerContext";
 import styles from "@/styles/question.module.css";
+import FormCheckInput from "react-bootstrap/FormCheckInput";
+import FormCheckLabel from "react-bootstrap/FormCheckLabel";
+import ExamImage from "@/src/components/examImage";
 
-export default function Question({
-  number,
-  question,
-  options,
-  answer,
-  explanation,
-  rightAnswers,
-}: QuestionType & { rightAnswers: number }) {
+type Props = {
+  number: number;
+  question: QuestionType;
+  examFinished: boolean;
+};
+export default function Question(question: Props) {
   const { setUserAnswers, userAnswers } = useContext(AnswerContext);
+  const currentQuestion = question.question;
 
   const handleAnswerChange = (number: number, userAnswer: string) => {
     const newUserAnswers = [...userAnswers];
@@ -21,36 +23,50 @@ export default function Question({
   };
 
   return (
-    <div className={styles.container}>
-      <Form>
-        <h6 className="fw-bold">
-          {number}
-          {". "}
-          {question}
-        </h6>
-        {options.map((option, index) => (
-          <Form.Check key={index}>
-            <Form.Check.Input
-              type={"radio"}
-              name={"group"}
-              onChange={() => handleAnswerChange(number, option)}
-              isValid={rightAnswers ? answer == option : false}
-              isInvalid={
-                rightAnswers ? userAnswers[number - 1] != answer : false
-              }
-            ></Form.Check.Input>
-            <Form.Check.Label>{option}</Form.Check.Label>
-          </Form.Check>
-        ))}
-        {rightAnswers && explanation ? (
-          <div className={styles.explanation}>
-            <h6>{"Explanation: "}</h6>
-            {explanation}
-          </div>
-        ) : (
-          <></>
-        )}
-      </Form>
-    </div>
+    <Form className={styles.container}>
+      <h6 className={styles.heading}>
+        {question.number}
+        {". "}
+        {currentQuestion.question}
+      </h6>
+      <div className={styles.options}>
+        <div className={styles.answerContainer}>
+          {currentQuestion.options.map((option, index) => (
+            <FormCheck key={index}>
+              <FormCheckInput
+                type={currentQuestion.type}
+                name={"group"}
+                onChange={() =>
+                  handleAnswerChange(currentQuestion.number, option)
+                }
+                isValid={
+                  question.examFinished
+                    ? currentQuestion.answer == option
+                    : false
+                }
+                isInvalid={
+                  question.examFinished
+                    ? userAnswers[currentQuestion.number - 1] !=
+                      currentQuestion.answer
+                    : false
+                }
+              ></FormCheckInput>
+              <FormCheckLabel className={styles.answer}>
+                {option}
+              </FormCheckLabel>
+            </FormCheck>
+          ))}
+        </div>
+        <ExamImage img={currentQuestion.img} />
+      </div>
+      {question.examFinished && currentQuestion.explanation ? (
+        <div className={styles.explanation}>
+          <h6>{"Explanation: "}</h6>
+          {currentQuestion.explanation}
+        </div>
+      ) : (
+        <></>
+      )}
+    </Form>
   );
 }

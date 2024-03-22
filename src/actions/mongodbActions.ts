@@ -4,7 +4,7 @@ import clientPromise from "./mongodbConnect";
 import { QuestionType } from "@/types/database";
 
 const databaseName = "ccnaexams";
-const collectionName = "modulequestion";
+const collectionName = "modulequestionproduktion";
 
 async function getDB() {
   const client = await clientPromise;

@@ -14,10 +14,10 @@ type Props = {
 };
 
 export default function QuestionModule({ moduleId }: Props) {
-  const { setUserAnswers, userAnswers } = useContext(AnswerContext);
+  const { userAnswers } = useContext(AnswerContext);
   const [questions, setQuestions] = useState<QuestionType[]>([]);
   const [rightAnswers, setRightAnswers] = useState<number>(0);
-  let examFinished = false;
+  const [examFinished, setExamFinished] = useState<boolean>(false);
 
   useEffect(() => {
     async function fetchQuestions() {
@@ -29,8 +29,7 @@ export default function QuestionModule({ moduleId }: Props) {
       }
     }
     fetchQuestions().then();
-    setUserAnswers(new Array(questions.length));
-  }, [moduleId, setUserAnswers]);
+  }, [moduleId]);
 
   const checkUserAnswers = () => {
     let rightAnswersOfUser = 0;
@@ -39,10 +38,9 @@ export default function QuestionModule({ moduleId }: Props) {
         rightAnswersOfUser += 1;
       }
     });
-    console.log("check");
-    examFinished = true;
     setRightAnswers(rightAnswersOfUser);
-    console.log(rightAnswersOfUser);
+    setExamFinished(true);
+    window.scroll(0, 0);
   };
 
   return (
@@ -58,16 +56,13 @@ export default function QuestionModule({ moduleId }: Props) {
             <></>
           )}
           {questions
-            .sort((q1, q2) => q1.number - q2.number)
+            .sort(() => 0.5 - Math.random())
             .map((question, index) => (
               <Question
                 key={index}
-                question={question.question}
-                number={question.number}
-                answer={question.answer}
-                explanation={question.explanation}
-                options={question.options}
-                rightAnswers={rightAnswers}
+                number={index + 1}
+                question={question}
+                examFinished={examFinished}
               />
             ))}
           <Button

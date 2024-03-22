@@ -1,8 +1,19 @@
-.navigationBar {
+.navigation {
     background-color: rgb(70, 179, 243);
+    width: 100%;
 }
 
-.text {
+.container {
+    width: 700px;
+    max-width: 100%;
+}
+
+.brand {
+    color: white;
+    font-weight: bold;
+}
+
+.link {
     color: white;
 }
 

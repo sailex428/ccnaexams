@@ -4,8 +4,8 @@ export type QuestionType = {
   options: Array<string>;
   answer: string;
   explanation: string;
+  type: FormCheckInputType;
+  img: string;
 };
 
-export type QuestionModuleType = {
-  _id: string;
-} & QuestionType;
+type FormCheckInputType = "checkbox" | "radio";
