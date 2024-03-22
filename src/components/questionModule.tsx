@@ -3,7 +3,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import ExamResults from "@/src/components/examResults";
-import { getQuestionsOfModule } from "@/src/actions/mongodbActions";
+import { getQuestionsOfModule } from "@/src/app/api/mongodbActions";
 import Question from "@/src/components/question";
 import AnswerContext from "@/src/components/answerContext";
 import type { QuestionType } from "@/types/database";
