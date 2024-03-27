@@ -10,7 +10,7 @@ const AnswerContext = createContext<AnswerContextType>({
 });
 
 export function AnswerContextProvider(props: PropsWithChildren) {
-  const [userAnswers, setUserAnswers] = useState<string[]>([]);
+  const [userAnswers, setUserAnswers] = useState<string[][]>([]);
 
   const answerContext: AnswerContextType = {
     userAnswers,

@@ -1,5 +1,5 @@
 import React from "react";
-import NavbarExams from "@/src/components/navbarExams";
+import ExamsNavbar from "@/src/components/examsNavbar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AnswerContextProvider } from "@/src/components/answerContext";
 
@@ -15,9 +15,9 @@ export default function RootLayout({
         <link rel="icon" href="/logo.png" />
       </head>
       <body>
-        <NavbarExams>
+        <ExamsNavbar>
           <AnswerContextProvider>{children}</AnswerContextProvider>
-        </NavbarExams>
+        </ExamsNavbar>
       </body>
     </html>
   );

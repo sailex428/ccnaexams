@@ -8,6 +8,7 @@
 
 .button {
     padding: 12px 30px 12px 30px;
+    margin-bottom: 20px;
     background-color: rgb(70, 179, 243);
     border: solid 2px rgb(72, 182, 246);
 }
@@ -22,7 +23,7 @@
     border-radius: 10px;
     border: #fafafa 5px solid;
     max-height: none;
-    max-width: 80%;
+    max-width: 60%;
 }
 
 @media only screen and (max-width: 500px) {

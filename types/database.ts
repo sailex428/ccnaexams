@@ -2,7 +2,7 @@ export type QuestionType = {
   number: number;
   question: string;
   options: Array<string>;
-  answer: string;
+  answer: string[];
   explanation: string;
   type: FormCheckInputType;
   img: string;

@@ -2,7 +2,7 @@
 
 import { useContext, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import ExamResults from "@/src/components/examResults";
+import Results from "@/src/components/results";
 import { getQuestionsOfModule } from "@/src/app/api/mongodbActions";
 import Question from "@/src/components/question";
 import AnswerContext from "@/src/components/answerContext";
@@ -34,7 +34,11 @@ export default function QuestionModule({ moduleId }: Props) {
   const checkUserAnswers = () => {
     let rightAnswersOfUser = 0;
     userAnswers.forEach((userAnswer, index) => {
-      if (userAnswer == questions[index].answer) {
+      console.log(
+          JSON.stringify(userAnswer) +
+          JSON.stringify(questions[index].answer)
+      )
+      if (JSON.stringify(userAnswer) == JSON.stringify(questions[index].answer)) {
         rightAnswersOfUser += 1;
       }
     });
@@ -48,7 +52,7 @@ export default function QuestionModule({ moduleId }: Props) {
       {questions.length > 0 ? (
         <>
           {examFinished ? (
-            <ExamResults
+            <Results
               rightAnswers={rightAnswers}
               length={questions.length}
             />
@@ -56,7 +60,6 @@ export default function QuestionModule({ moduleId }: Props) {
             <></>
           )}
           {questions
-            .sort(() => 0.5 - Math.random())
             .map((question, index) => (
               <Question
                 key={index}

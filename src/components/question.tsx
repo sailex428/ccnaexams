@@ -18,7 +18,7 @@ export default function Question(question: Props) {
 
   const handleAnswerChange = (number: number, userAnswer: string) => {
     const newUserAnswers = [...userAnswers];
-    newUserAnswers[number - 1] = userAnswer;
+    newUserAnswers[number - 1] =  new Array(userAnswer);
     setUserAnswers(newUserAnswers);
   };
 
@@ -41,7 +41,7 @@ export default function Question(question: Props) {
                 }
                 isValid={
                   question.examFinished
-                    ? currentQuestion.answer == option
+                    ? currentQuestion.answer[0] == option
                     : false
                 }
                 isInvalid={

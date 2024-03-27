@@ -5,7 +5,7 @@ type Props = {
   length: number;
 };
 
-export default function ExamResults({ rightAnswers, length }: Props) {
+export default function Results({ rightAnswers, length }: Props) {
   const percentageOfRightAnswers =
     ((rightAnswers / length) * 100).toFixed(1) + "%";
 

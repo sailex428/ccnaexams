@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Container, Nav, Navbar, NavbarBrand, NavLink } from "react-bootstrap";
 import styles from "../../styles/navbar.module.css";
 
-export default function NavbarExams(props: PropsWithChildren) {
+export default function ExamsNavbar(props: PropsWithChildren) {
   return (
     <div>
       <Navbar expand={"lg"} className={styles.navigation}>
