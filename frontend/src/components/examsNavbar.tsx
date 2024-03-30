@@ -1,5 +1,5 @@
-import { PropsWithChildren } from "react";
 import Image from "next/image";
+import { PropsWithChildren } from "react";
 import { Container, Nav, Navbar, NavbarBrand, NavLink } from "react-bootstrap";
 import styles from "../../styles/navbar.module.css";
 
@@ -10,6 +10,7 @@ export default function ExamsNavbar(props: PropsWithChildren) {
         <Container className={styles.container}>
           <NavbarBrand href={"/"} className={styles.brand}>
             <Image
+              priority={true}
               src="/logo-high.png"
               alt="Logo"
               className={styles.logo}

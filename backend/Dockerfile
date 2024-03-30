@@ -1,4 +1,4 @@
-FROM openjdk21-jdk-alpine
+FROM openjdk:21-oracle
 
 LABEL authors="sailex"
 

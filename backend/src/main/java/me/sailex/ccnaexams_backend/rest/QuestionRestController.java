@@ -1,6 +1,6 @@
 package me.sailex.ccnaexams_backend.rest;
 
-import me.sailex.ccnaexams_backend.Question;
+import me.sailex.ccnaexams_backend.model.Question;
 import me.sailex.ccnaexams_backend.database.QuestionCollection;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ public class QuestionRestController {
 
     private QuestionCollection collection;
 
-    @GetMapping("/questions/{moduleId}")
+    @GetMapping("/api/{moduleId}")
     public ResponseEntity<List<Question>> getQuestions(@PathVariable String moduleId) {
         try {
             return new ResponseEntity<>(collection.getQuestions(moduleId).get(), HttpStatus.OK);
@@ -25,7 +25,7 @@ public class QuestionRestController {
         }
     }
 
-    @GetMapping("/questions/{moduleId}/{questionId}")
+    @GetMapping("/api/{moduleId}/{questionId}")
     public ResponseEntity<List<Question>> getQuestion(@PathVariable String moduleId, @PathVariable String questionId) {
         try {
             return new ResponseEntity<>(collection.getQuestion(moduleId, questionId).get(), HttpStatus.OK);

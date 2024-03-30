@@ -4,20 +4,20 @@ FROM node:20-alpine
 LABEL authors="sailex"
 
 # set workdirectory
-WORKDIR /
+WORKDIR /src/app
 
 # set env for db
-ENV MONGODB_URI=$MONGODB_URI
+ENV BACKEND_URI=http://192.168.0.1:8080/api
 
 # copy dependency files
 COPY package.json ./
 COPY package-lock.json ./
 
-# install dependencies
-RUN npm install
-
 # copy complete app
 COPY . ./
+
+# install dependencies
+RUN npm install
 
 # build app
 RUN npm run build

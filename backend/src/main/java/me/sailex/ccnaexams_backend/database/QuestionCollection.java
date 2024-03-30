@@ -2,11 +2,13 @@ package me.sailex.ccnaexams_backend.database;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
-import me.sailex.ccnaexams_backend.Question;
+import me.sailex.ccnaexams_backend.config.DatabaseConfiguration;
+import me.sailex.ccnaexams_backend.model.Question;
 import me.sailex.ccnaexams_backend.rest.QuestionRestController;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,6 +18,9 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 public class QuestionCollection {
+
+    @Autowired
+    private DatabaseConfiguration databaseConfiguration;
 
     private Database database;
     private final Logger log =
@@ -27,7 +32,7 @@ public class QuestionCollection {
 
         getCollection().find(Filters.eq("module", moduleId)).forEach(question -> {
             if (question == null || question.isEmpty()) {
-                future.complete(null);
+                future.complete(new ArrayList<>());
                 log.warn("Question is empty");
                 return;
             }
@@ -41,12 +46,12 @@ public class QuestionCollection {
     public CompletableFuture<List<Question>> getQuestion(String moduleId, String questionId) {
         CompletableFuture<List<Question>> future = new CompletableFuture<>();
 
-        Document question = getCollection().find(Filters.eq("number", questionId)).first();
+        Document question = getCollection().find(Filters.and(Filters.eq("module", moduleId), Filters.eq("number", questionId))).first();
         if (question == null || question.isEmpty()) {
-            future.complete(null);
+            future.complete(new ArrayList<>());
             log.warn("Question " + moduleId + " / " + questionId + " is empty");
             return future;
-        };
+        }
         future.complete(Collections.singletonList(convertDocumentToQuestion(question)));
         log.info("GET : question " + questionId +  " of module " + moduleId);
         return future;
@@ -72,7 +77,7 @@ public class QuestionCollection {
     }
 
     private MongoCollection<Document> getCollection() {
-        return database.getMongoDatabase().getCollection("moduletest");
+        return database.getMongoDatabase().getCollection(databaseConfiguration.getMongoCollection());
     }
 
     public void setDatabase(Database database) {

@@ -1,4 +1,4 @@
-package me.sailex.ccnaexams_backend;
+package me.sailex.ccnaexams_backend.model;
 
 import java.util.List;
 

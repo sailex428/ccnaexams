@@ -9,7 +9,7 @@ type Props = {
 export default function ExamStartModule({ moduleId }: Props) {
   return (
     <div className={styles.container}>
-      <h2 className={styles.headline}>{"CCNA 1 Exams Module " + moduleId}</h2>
+      <h2 className={styles.headline}>{"Module " + moduleId}</h2>
       <Button
         href={"/" + moduleId + "/1"}
         variant="primary"
