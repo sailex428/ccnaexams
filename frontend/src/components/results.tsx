@@ -1,4 +1,4 @@
-import styles from "@/styles/results.module.css";
+import styles from "@/styles/components/results.module.css";
 
 type Props = {
   rightAnswers: number;

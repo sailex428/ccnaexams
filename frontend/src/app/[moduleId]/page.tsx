@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getDetail } from "@/src/app/api/actions";
 import { Button } from "react-bootstrap";
@@ -8,7 +8,6 @@ import { DetailType } from "@/types/database";
 import { properties } from "@/src/components/lib/static";
 import global from "@/styles/globals.module.css";
 import styles from "@/styles/pages/modulepage.module.css";
-import AnswerContext from "@/src/components/answerContext";
 
 export default function StartExamPage({
   params,

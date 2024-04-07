@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.result {
+    display: flex;
+    flex-direction: column;
+    width: 750px;
+    max-width: 95%;
+    margin-top: 30px;
+
+    padding: 15px 0 5px 15px;
+    border-radius: 10px;
+    background-color: aliceblue;
+    border-left: rgb(70, 179, 243) solid 8px;
+}
+
+.pieChart {
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 50px;
+}
+
+@media only screen and (max-width: 500px) {
+    .pieChart {
+        justify-content: center;
+        margin-left: 0;
+    }
+}

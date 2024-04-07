@@ -35,12 +35,12 @@ public class ResultManager {
             }
 
         } catch (Exception e) {
-            log.error("PUT : result processing failed : " + e.getLocalizedMessage());
+            log.error("POST : result processing failed : " + e.getLocalizedMessage());
             future.complete(new ArrayList<>());
             return future;
         }
         future.complete(Collections.singletonList(rightAnswers));
-        log.info("PUT : result " + userAnswers);
+        log.info("POST : result " + userAnswers);
         return future;
     }
 

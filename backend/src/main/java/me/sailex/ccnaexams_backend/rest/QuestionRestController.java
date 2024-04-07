@@ -46,7 +46,7 @@ public class QuestionRestController {
         }
     }
 
-    @PutMapping(path = "/api/{moduleId}/result", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/api/{moduleId}/result", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Integer>> postResult(@PathVariable String moduleId, @RequestBody List<Answer> userAnswer) {
         try {
             return new ResponseEntity<>(resultManager.getResult(userAnswer, moduleId).get(), HttpStatus.CREATED);

@@ -10,8 +10,8 @@ type Props = {
   questionId: number;
 };
 export default function QuestionModule({ questionId, moduleId }: Props) {
-  const [question, setQuestion] = useState<QuestionType[]>([]);
-  console.log(moduleId);
+  const [question, setQuestion] = useState<QuestionType>({} as QuestionType);
+
   useEffect(() => {
     const fetchQuestions = async () => {
       await getQuestion(moduleId, questionId).then((data) => {
@@ -23,8 +23,8 @@ export default function QuestionModule({ questionId, moduleId }: Props) {
 
   if (question == null) {
     return <div className="fw-bold mt-4">An Error occurred</div>;
-  } else if (question.length > 0) {
-    return <Question question={question[0]} examIsFinished={false} />;
+  } else if (question.question != null) {
+    return <Question question={question} examIsFinished={false} />;
   } else {
     return <div className="fw-bold mt-4">Question is loading...</div>;
   }

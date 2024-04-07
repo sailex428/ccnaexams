@@ -2,7 +2,8 @@ import { useContext } from "react";
 import { Form } from "react-bootstrap";
 import AnswerContext from "@/src/components/answerContext";
 import type { QuestionType } from "@/types/database";
-import styles from "@/styles/question.module.css";
+import styles from "@/styles/components/question.module.css";
+import ExamImage from "@/src/components/examImage";
 
 type QuestionProps = {
   question: QuestionType;
@@ -12,19 +13,30 @@ type QuestionProps = {
 export default function Question(props: QuestionProps) {
   const { setUserAnswers, userAnswers } = useContext(AnswerContext);
   const currentQuestion = props.question;
+  let currentUserAnswers = userAnswers.find(
+    (answer) => parseInt(answer?.number) == parseInt(currentQuestion.number),
+  )?.answers;
 
-  const handleAnswerChange = (number: number, newUserAnswer: string) => {
+  const handleAnswerChange = (newUserAnswer: string) => {
     const newUserAnswers = userAnswers;
-    let currentAnswer = userAnswers[number - 1];
-    console.log(currentAnswer);
-    if (currentAnswer == null) {
-      currentAnswer = new Array(newUserAnswer);
-      console.log(newUserAnswer);
-    } else {
-      currentAnswer.push(newUserAnswer);
+
+    if (newUserAnswers === undefined) {
+      return;
     }
-    newUserAnswers[number - 1] = currentAnswer;
-    console.log(newUserAnswers);
+
+    if (currentUserAnswers == null || currentQuestion.type == "radio") {
+      currentUserAnswers = new Array(newUserAnswer);
+    } else {
+      if (!currentUserAnswers.includes(newUserAnswer)) {
+        currentUserAnswers.push(newUserAnswer);
+      } else {
+        currentUserAnswers.splice(currentUserAnswers.indexOf(newUserAnswer), 1);
+      }
+    }
+    newUserAnswers[parseInt(currentQuestion.number)] = {
+      answers: currentUserAnswers,
+      number: currentQuestion.number,
+    };
     setUserAnswers(newUserAnswers);
   };
 
@@ -36,23 +48,16 @@ export default function Question(props: QuestionProps) {
           {". "}
           {currentQuestion.question}
         </h6>
+        <ExamImage image={currentQuestion.image} />
         {currentQuestion.options.map((option, index) => (
           <Form.Check key={index}>
             <Form.Check.Input
               type={currentQuestion.type}
               name={"group"}
-              onChange={() =>
-                handleAnswerChange(currentQuestion.number, option)
-              }
-              isValid={
-                props.examIsFinished
-                  ? currentQuestion.answer[0] == option
-                  : false
-              }
-              isInvalid={
-                props.examIsFinished
-                  ? userAnswers[currentQuestion.number - 1] !=
-                    currentQuestion.answer
+              onChange={() => handleAnswerChange(option)}
+              defaultChecked={
+                currentUserAnswers != null
+                  ? currentUserAnswers.includes(option)
                   : false
               }
             ></Form.Check.Input>
