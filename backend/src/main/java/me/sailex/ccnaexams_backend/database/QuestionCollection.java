@@ -3,7 +3,6 @@ package me.sailex.ccnaexams_backend.database;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import me.sailex.ccnaexams_backend.config.DatabaseConfiguration;
-import me.sailex.ccnaexams_backend.model.Answer;
 import me.sailex.ccnaexams_backend.model.Detail;
 import me.sailex.ccnaexams_backend.model.Question;
 import me.sailex.ccnaexams_backend.rest.QuestionRestController;

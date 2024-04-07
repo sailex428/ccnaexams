@@ -1,15 +1,11 @@
 import styles from "@/styles/globals.module.css";
 
-type Props = {
-  img: string;
-};
-
-export default function ExamImage(img: Props) {
+export default function ExamImage(image: { image: string }) {
   return (
     <>
-      {img.img ? (
+      {image.image ? (
         <img
-          src={"data:image/png;base64," + img.img}
+          src={"data:image/png;base64," + image.image}
           alt={"question image"}
           className={styles.image}
         />

@@ -1,54 +1,57 @@
-import { Button } from "react-bootstrap";
-import QuestionModule from "@/src/components/questionModule";
-import { getQuestions } from "@/src/app/api/actions";
+"use client";
+
+import React, { useContext, useEffect, useState } from "react";
+import Footer from "@/src/components/footer";
+import { getDetail, getQuestion } from "@/src/app/api/actions";
 import { QuestionType } from "@/types/database";
-import styles from "@/styles/pages/modulepage.module.css";
-import global from "@/styles/globals.module.css";
+import styles from "@/styles/pages/questionpage.module.css";
+import Question from "@/src/components/question";
+import AnswerContext from "@/src/components/answerContext";
 
-export default function ModulePage({
+export default function QuestionPage({
   params,
 }: {
   params: { questionId: number; moduleId: string; question: QuestionType[] };
 }) {
-  return (
-    <div className={styles.container}>
-      <div className={styles.question}>
-        <QuestionModule
-          questionId={params.questionId}
-          moduleId={params.moduleId}
-        />
-      </div>
-      <div className={styles.buttons}>
-        <Button
-          href={`/${params.moduleId}/${params.questionId - 1}`}
-          className={global.button}
-        >
-          {"<"}
-        </Button>
-        <Button
-          href={`/${params.moduleId}/${parseInt(params.questionId + "") + 1}`}
-          className={global.button}
-        >
-          {">"}
-        </Button>
-      </div>
-    </div>
-  );
-}
+  const { numberOfQuestions, setNumberOfQuestions } = useContext(AnswerContext);
+  const [question, setQuestion] = useState<QuestionType>({} as QuestionType);
 
-export async function generateStaticParams({
-  params,
-}: {
-  params: { questionId: number; moduleId: string; question: QuestionType[] };
-}) {
-  async function fetchQuestionsCount() {
-    const questionModule = await getQuestions(params.moduleId);
-    return questionModule.length;
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      await getQuestion(params.moduleId, params.questionId).then((data) => {
+        setQuestion(data);
+      });
+      if (numberOfQuestions == 0) {
+        await getDetail(params.moduleId).then((data) => {
+          setNumberOfQuestions(data.numberOfQuestions);
+        });
+      }
+    };
+    fetchQuestions();
+  }, [params.moduleId]);
+
+  if (question == null) {
+    return (
+      <div className={styles.container}>
+        <div className="fw-bold mt-4">An Error occurred</div>
+      </div>
+    );
+  } else if (question.question != null) {
+    return (
+      <>
+        <div className={styles.container}>
+          <div className={styles.question}>
+            <Question question={question} examIsFinished={false} />
+          </div>
+        </div>
+        <Footer params={params} numberOfQuestions={numberOfQuestions} />
+      </>
+    );
+  } else {
+    return (
+      <div className={styles.container}>
+        <div className="fw-bold mt-4">Question is loading...</div>
+      </div>
+    );
   }
-  const questionCount = await fetchQuestionsCount();
-  let staticParams = [];
-  for (let i = 1; i < questionCount; i++) {
-    staticParams.push({ moduleId: params.moduleId }, { questionId: i });
-  }
-  return staticParams;
 }

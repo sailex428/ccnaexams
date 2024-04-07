@@ -1,16 +1,9 @@
-.notfound {
-    margin: 50px 20px;
-}
-
-.error {
-    margin: 50px 20px;
-}
-
 .button {
     padding: 12px 30px 12px 30px;
-    margin: 20px;
     background-color: rgb(70, 179, 243);
     border: solid 2px rgb(72, 182, 246);
+    border-radius: 13px;
+
 }
 
 .button:hover {
@@ -24,6 +17,14 @@
     border: #fafafa 5px solid;
     max-height: none;
     max-width: 60%;
+}
+
+.notfound {
+    margin: 50px 20px;
+}
+
+.error {
+    margin: 50px 20px;
 }
 
 @media only screen and (max-width: 500px) {

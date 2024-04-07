@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { PropsWithChildren } from "react";
 import { Container, Nav, Navbar, NavbarBrand, NavLink } from "react-bootstrap";
-import styles from "../../styles/navbar.module.css";
+import styles from "../../styles/components/navbar.module.css";
 
 export default function ExamsNavbar(props: PropsWithChildren) {
   return (
