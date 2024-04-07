@@ -1,0 +1,36 @@
+{
+  "name": "ccnaexams",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node_modules/.bin/next dev",
+    "build": "node_modules/.bin/next build",
+    "start": "node_modules/.bin/next start",
+    "lint": "node_modules/.bin/next lint"
+  },
+  "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "bootstrap": "^5.3.2",
+    "mongodb": "^6.5.0",
+    "next": "^14.1.2",
+    "node-fetch": "^3.3.2",
+    "pnpm": "^8.15.1",
+    "prettier": "^3.2.5",
+    "properties-parser": "^0.6.0",
+    "react": "^18",
+    "react-bootstrap": "^2.10.2",
+    "react-dom": "^18",
+    "sharp": "^0.33.2",
+    "victory": "^37.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.24",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.1.0",
+    "turbo": "^1.12.2",
+    "typescript": "^5"
+  }
+}

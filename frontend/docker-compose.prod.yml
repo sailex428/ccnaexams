@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  frontend:
+    image: ccna-exams/frontend:dev
+    ports:
+      - "3000:3000"
+    environment:
+      - BACKEND_URI=http://192.168.0.1:8080/api
+    networks:
+      - app
+    depends_on:
+      - backend
+
+  backend:
+    image: ccna-exams/backend:dev
+    ports:
+      - "8080:8080"
+    networks:
+      - app
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - app
+
+networks:
+  app:
+    driver: "bridge"
