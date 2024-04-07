@@ -9,17 +9,22 @@ const AnswerContext = createContext<AnswerContextType>({
   setUserAnswers: () => null,
   numberOfQuestions: 0,
   setNumberOfQuestions: () => null,
+  examIsFinished: false,
+  setExamIsFinished: () => null,
 });
 
 export function AnswerContextProvider(props: PropsWithChildren) {
   const [userAnswers, setUserAnswers] = useState<UserAnswersType[]>([]);
   const [numberOfQuestions, setNumberOfQuestions] = useState<number>(0);
+  const [examIsFinished, setExamIsFinished] = useState<boolean>(false);
 
   const answerContext: AnswerContextType = {
     userAnswers,
     setUserAnswers,
     numberOfQuestions,
     setNumberOfQuestions,
+    examIsFinished,
+    setExamIsFinished,
   };
 
   return (

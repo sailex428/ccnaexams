@@ -44,7 +44,7 @@ export default function QuestionPage({
             <Question question={question} examIsFinished={false} />
           </div>
         </div>
-        <Footer params={params} numberOfQuestions={numberOfQuestions} />
+        <Footer params={params} />
       </>
     );
   } else {

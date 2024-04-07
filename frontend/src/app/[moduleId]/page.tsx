@@ -55,7 +55,7 @@ export default function StartExamPage({
   } else {
     return (
       <div className={styles.container}>
-        <div className="fw-bold mt-4">Question is loading...</div>
+        <div className="fw-bold mt-4">Module is loading...</div>
       </div>
     );
   }

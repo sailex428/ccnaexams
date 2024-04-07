@@ -22,7 +22,9 @@ export async function getQuestions(moduleId: string) {
 }
 
 export async function getQuestion(moduleId: string, questionId: number) {
-  const data: QuestionType[] = await fetch(`${uri}/${moduleId}/${questionId}`)
+  const data: QuestionType[] = await fetch(`${uri}/${moduleId}/${questionId}`, {
+    cache: "force-cache",
+  })
     .then((response) => {
       return response.json();
     })

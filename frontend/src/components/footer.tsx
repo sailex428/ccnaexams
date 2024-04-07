@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useContext } from "react";
 import { Button } from "react-bootstrap";
 import { QuestionType } from "@/types/database";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,14 +12,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import global from "@/styles/globals.module.css";
 import styles from "@/styles/components/footer.module.css";
+import AnswerContext from "@/src/components/answerContext";
 
 type FooterProps = {
   params: { questionId: number; moduleId: string; question: QuestionType[] };
-  numberOfQuestions: number;
 };
 
-export default function Footer({ params, numberOfQuestions }: FooterProps) {
+export default function Footer({ params }: FooterProps) {
   const router = useRouter();
+  const { examIsFinished, setExamIsFinished, numberOfQuestions } =
+    useContext(AnswerContext);
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
@@ -35,15 +38,20 @@ export default function Footer({ params, numberOfQuestions }: FooterProps) {
         ) : (
           <></>
         )}
-        <Button
-          title={"show result"}
-          className={global.button}
-          onClick={() => {
-            router.push(`/${params.moduleId}/result`);
-          }}
-        >
-          <FontAwesomeIcon icon={faFlagCheckered} />
-        </Button>
+        {examIsFinished ? (
+          <></>
+        ) : (
+          <Button
+            title={"show result"}
+            className={global.button}
+            onClick={() => {
+              router.push(`/${params.moduleId}/result`);
+              setExamIsFinished(true);
+            }}
+          >
+            <FontAwesomeIcon icon={faFlagCheckered} />
+          </Button>
+        )}
         {params.questionId < numberOfQuestions ? (
           <Button
             title={"next"}

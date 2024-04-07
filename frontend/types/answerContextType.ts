@@ -5,6 +5,8 @@ export type AnswerContextType = {
   userAnswers: UserAnswersType[];
   setNumberOfQuestions: Dispatch<SetStateAction<number>>;
   numberOfQuestions: number;
+  examIsFinished: boolean;
+  setExamIsFinished: Dispatch<SetStateAction<boolean>>;
 };
 
 export type UserAnswersType = {
