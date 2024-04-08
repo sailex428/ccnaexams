@@ -14,7 +14,7 @@ export default function Question(props: QuestionProps) {
   const { setUserAnswers, userAnswers } = useContext(AnswerContext);
   const currentQuestion = props.question;
   let currentUserAnswers = userAnswers.find(
-    (answer) => parseInt(answer?.number) == parseInt(currentQuestion.number),
+    (answer) => answer?.number == currentQuestion.number,
   )?.answers;
 
   const handleAnswerChange = (newUserAnswer: string) => {
@@ -58,6 +58,16 @@ export default function Question(props: QuestionProps) {
               defaultChecked={
                 currentUserAnswers != null
                   ? currentUserAnswers.includes(option)
+                  : false
+              }
+              isValid={
+                props.examIsFinished
+                  ? currentQuestion.answer.includes(option)
+                  : false
+              }
+              isInvalid={
+                props.examIsFinished
+                  ? !currentQuestion.answer.includes(option)
                   : false
               }
             ></Form.Check.Input>

@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { Button } from "react-bootstrap";
-import { QuestionType } from "@/types/database";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowLeft,
@@ -15,51 +14,50 @@ import styles from "@/styles/components/footer.module.css";
 import AnswerContext from "@/src/components/answerContext";
 
 type FooterProps = {
-  params: { questionId: number; moduleId: string; question: QuestionType[] };
+  questionId: number;
+  moduleId: string;
 };
 
-export default function Footer({ params }: FooterProps) {
+export default function Footer({ questionId, moduleId }: FooterProps) {
   const router = useRouter();
-  const { examIsFinished, setExamIsFinished, numberOfQuestions } =
-    useContext(AnswerContext);
+  const { examIsFinished, numberOfQuestions } = useContext(AnswerContext);
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
-        {params.questionId > 1 ? (
+        {questionId > 1 ? (
           <Button
             title={"back"}
             className={global.button}
             onClick={() => {
-              router.push(`/${params.moduleId}/${params.questionId - 1}`);
+              router.push(`/${moduleId}/${questionId - 1}`);
             }}
           >
             <FontAwesomeIcon icon={faArrowLeft} />
           </Button>
+        ) : examIsFinished ? (
+          <div></div>
         ) : (
           <></>
         )}
-        {examIsFinished ? (
-          <></>
-        ) : (
+        {!examIsFinished ? (
           <Button
             title={"show result"}
             className={global.button}
             onClick={() => {
-              router.push(`/${params.moduleId}/result`);
-              setExamIsFinished(true);
+              router.push(`/${moduleId}/result`);
             }}
           >
             <FontAwesomeIcon icon={faFlagCheckered} />
           </Button>
+        ) : (
+          <></>
         )}
-        {params.questionId < numberOfQuestions ? (
+        {questionId < numberOfQuestions ? (
           <Button
             title={"next"}
             className={global.button}
             onClick={() => {
-              router.push(
-                `/${params.moduleId}/${parseInt(params.questionId + "") + 1}`,
-              );
+              router.push(`/${moduleId}/${parseInt(questionId + "") + 1}`);
             }}
           >
             <FontAwesomeIcon icon={faArrowRight} />

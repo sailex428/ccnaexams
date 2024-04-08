@@ -13,7 +13,8 @@ export default function QuestionPage({
 }: {
   params: { questionId: number; moduleId: string; question: QuestionType[] };
 }) {
-  const { numberOfQuestions, setNumberOfQuestions } = useContext(AnswerContext);
+  const { numberOfQuestions, setNumberOfQuestions, examIsFinished } =
+    useContext(AnswerContext);
   const [question, setQuestion] = useState<QuestionType>({} as QuestionType);
 
   useEffect(() => {
@@ -41,10 +42,10 @@ export default function QuestionPage({
       <>
         <div className={styles.container}>
           <div className={styles.question}>
-            <Question question={question} examIsFinished={false} />
+            <Question question={question} examIsFinished={examIsFinished} />
           </div>
         </div>
-        <Footer params={params} />
+        <Footer moduleId={params.moduleId} questionId={params.questionId} />
       </>
     );
   } else {

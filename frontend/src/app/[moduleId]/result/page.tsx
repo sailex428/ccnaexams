@@ -6,14 +6,17 @@ import PieChart from "@/src/components/pieChart";
 import AnswerContext from "@/src/components/answerContext";
 import styles from "@/styles/components/results.module.css";
 import { QuestionType } from "@/types/database";
+import ResultFooter from "@/src/components/resultFooter";
 
 export default function ResultPage({
   params,
 }: {
   params: { moduleId: string; questionId: number; question: QuestionType[] };
 }) {
-  const { numberOfQuestions, userAnswers } = useContext(AnswerContext);
+  const { numberOfQuestions, userAnswers, setExamIsFinished } =
+    useContext(AnswerContext);
   const [result, setResult] = useState<number>(0);
+  setExamIsFinished(true);
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -43,6 +46,7 @@ export default function ResultPage({
           <p className="fw-bold mt-3">{"... of your answers are right."}</p>
         </div>
       </div>
+      <ResultFooter moduleId={params.moduleId} />
     </>
   );
 }

@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getDetail } from "@/src/app/api/actions";
 import { Button } from "react-bootstrap";
 import { DetailType } from "@/types/database";
-import { properties } from "@/src/components/lib/static";
 import global from "@/styles/globals.module.css";
 import styles from "@/styles/pages/modulepage.module.css";
+import AnswerContext from "@/src/components/answerContext";
 
 export default function StartExamPage({
   params,
@@ -15,8 +15,9 @@ export default function StartExamPage({
   params: { moduleId: string };
 }) {
   const router = useRouter();
+  const { setExamIsFinished } = useContext(AnswerContext);
   const [detail, setDetail] = useState<DetailType>({} as DetailType);
-
+  setExamIsFinished(false);
   useEffect(() => {
     const fetchDetails = async () => {
       await getDetail(params.moduleId).then((data) => {
@@ -39,7 +40,11 @@ export default function StartExamPage({
           className={styles.headline}
         >{`Module ${params.moduleId} : ${detail.title}`}</h2>
         <div className={styles.info}>
-          <p>{properties.startExamText.replace("${title}", detail.title)}</p>
+          <p>
+            {"Überprüfen Sie Ihr Verständnis von " +
+              detail.title +
+              " mit praxisnahen Fragen für die CCNA-Prüfungsvorbereitung."}
+          </p>
           <Button
             variant="primary"
             className={global.button}
@@ -47,7 +52,7 @@ export default function StartExamPage({
               router.push(`/${params.moduleId}/1`);
             }}
           >
-            {properties.startExamButton}
+            {"Starte den Test"}
           </Button>
         </div>
       </div>
