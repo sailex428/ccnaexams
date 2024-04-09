@@ -46,10 +46,10 @@ export default function Question(props: QuestionProps) {
         <h6 className="fw-bold">
           {currentQuestion.number}
           {". "}
-          {currentQuestion.question}
+          {currentQuestion.question.de}
         </h6>
         <ExamImage image={currentQuestion.image} />
-        {currentQuestion.options.map((option, index) => (
+        {currentQuestion.options.de.map((option, index) => (
           <Form.Check key={index}>
             <Form.Check.Input
               type={currentQuestion.type}
@@ -62,12 +62,12 @@ export default function Question(props: QuestionProps) {
               }
               isValid={
                 props.examIsFinished
-                  ? currentQuestion.answer.includes(option)
+                  ? currentQuestion.answer.de.includes(option)
                   : false
               }
               isInvalid={
                 props.examIsFinished
-                  ? !currentQuestion.answer.includes(option)
+                  ? !currentQuestion.answer.de.includes(option)
                   : false
               }
             ></Form.Check.Input>
@@ -77,7 +77,7 @@ export default function Question(props: QuestionProps) {
         {props.examIsFinished && currentQuestion.explanation ? (
           <div className={styles.explanation}>
             <h6>{"Explanation: "}</h6>
-            {currentQuestion.explanation}
+            {currentQuestion.explanation.de}
           </div>
         ) : (
           <></>

@@ -38,11 +38,11 @@ export default function StartExamPage({
       <div className={styles.container}>
         <h2
           className={styles.headline}
-        >{`Module ${params.moduleId} : ${detail.title}`}</h2>
+        >{`Module ${params.moduleId} : ${detail.title.de}`}</h2>
         <div className={styles.info}>
           <p>
             {"Überprüfen Sie Ihr Verständnis von " +
-              detail.title +
+              detail.title.de +
               " mit praxisnahen Fragen für die CCNA-Prüfungsvorbereitung."}
           </p>
           <Button

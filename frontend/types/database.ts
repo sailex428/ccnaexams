@@ -1,16 +1,24 @@
 export type QuestionType = {
   number: string;
-  question: string;
-  options: Array<string>;
-  answer: string[];
-  explanation: string;
-  type: FormCheckInputType;
+  question: LanguageStringType;
+  options: LanguageArrayType;
+  answer: LanguageArrayType;
+  explanation: LanguageStringType;
+  type: "checkbox" | "radio";
   image: string;
 };
 
-type FormCheckInputType = "checkbox" | "radio";
-
 export type DetailType = {
   numberOfQuestions: number;
-  title: string;
+  title: LanguageStringType;
+};
+
+type LanguageArrayType = {
+  en: string[];
+  de: string[];
+};
+
+type LanguageStringType = {
+  en: string;
+  de: string;
 };
