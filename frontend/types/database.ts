@@ -5,7 +5,7 @@ export type QuestionType = {
   answer: LanguageArrayType;
   explanation: LanguageStringType;
   type: "checkbox" | "radio";
-  image: string;
+  img: string;
 };
 
 export type DetailType = {

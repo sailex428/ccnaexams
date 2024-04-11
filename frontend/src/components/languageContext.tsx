@@ -5,7 +5,7 @@ import { createContext, useState } from "react";
 import { LanguageContextType } from "@/types/languageContextType";
 
 const LanguageContext = createContext<LanguageContextType>({
-  lang: "",
+  lang: "en",
   setLang: () => null,
 });
 

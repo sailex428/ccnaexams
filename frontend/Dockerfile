@@ -7,7 +7,7 @@ LABEL authors="sailex"
 WORKDIR /src/app
 
 # set env for db
-ENV BACKEND_URI=http://192.168.0.1:8080/api
+ENV BACKEND_URI=http://backend:8080/api
 
 # copy dependency files
 COPY package.json ./
@@ -18,9 +18,6 @@ COPY . ./
 
 # install dependencies
 RUN npm install
-
-# build app
-RUN npm run build
 
 EXPOSE 3000
 

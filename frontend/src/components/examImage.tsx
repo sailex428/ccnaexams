@@ -1,11 +1,11 @@
 import styles from "@/styles/globals.module.css";
 
-export default function ExamImage(image: { image: string }) {
+export default function ExamImage(img: { img: string }) {
   return (
     <>
-      {image.image ? (
+      {img.img ? (
         <img
-          src={"data:image/png;base64," + image.image}
+          src={"data:image/png;base64," + img.img}
           alt={"question image"}
           className={styles.image}
         />

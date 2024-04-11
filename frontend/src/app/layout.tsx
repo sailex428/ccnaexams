@@ -17,9 +17,9 @@ export default function RootLayout({
       </head>
       <body>
         <ExamsNavbar>
-          <AnswerContextProvider>
-            <LanguageContextProvider>{children}</LanguageContextProvider>
-          </AnswerContextProvider>
+          <LanguageContextProvider>
+            <AnswerContextProvider>{children}</AnswerContextProvider>
+          </LanguageContextProvider>
         </ExamsNavbar>
       </body>
     </html>
