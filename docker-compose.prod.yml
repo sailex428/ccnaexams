@@ -6,7 +6,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - BACKEND_URI=http://192.168.0.1:8080/api
+      - BACKEND_URI=http://backend:8080/api
     networks:
       - app
     depends_on:

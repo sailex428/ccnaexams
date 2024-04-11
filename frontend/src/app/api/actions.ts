@@ -8,18 +8,6 @@ if (!process.env.BACKEND_URI) {
 }
 
 const uri = process.env.BACKEND_URI;
-export async function getQuestions(moduleId: string) {
-  const data = await fetch(`${uri}/${moduleId}`, {
-    cache: "force-cache",
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .catch(() => {
-      console.log("Error: Fetch failed " + moduleId);
-    });
-  return data as QuestionType[];
-}
 
 export async function getQuestion(moduleId: string, questionId: number) {
   const data: QuestionType[] = await fetch(`${uri}/${moduleId}/${questionId}`, {
@@ -35,7 +23,7 @@ export async function getQuestion(moduleId: string, questionId: number) {
 }
 
 export async function getDetail(moduleId: string) {
-  const data: DetailType = await fetch(`${uri}/${moduleId}/detail`, {
+  const data: DetailType[] = await fetch(`${uri}/${moduleId}/detail`, {
     cache: "force-cache",
   })
     .then((response) => {
@@ -44,7 +32,7 @@ export async function getDetail(moduleId: string) {
     .catch(() => {
       console.log("Error: Fetch failed of detail of module " + moduleId);
     });
-  return data;
+  return data[0];
 }
 
 export async function postAnswers(

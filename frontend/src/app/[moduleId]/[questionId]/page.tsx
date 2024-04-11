@@ -51,7 +51,8 @@ export default function QuestionPage({
   } else {
     return (
       <div className={styles.container}>
-        <div className="fw-bold mt-4">Question is loading...</div>
+        <div className="fw-bold mt-5">Question is loading...</div>
+        <Footer moduleId={params.moduleId} questionId={params.questionId} />
       </div>
     );
   }

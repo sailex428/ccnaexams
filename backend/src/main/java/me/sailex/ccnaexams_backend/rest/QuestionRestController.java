@@ -1,10 +1,9 @@
 package me.sailex.ccnaexams_backend.rest;
 
-import me.sailex.ccnaexams_backend.model.Answer;
-import me.sailex.ccnaexams_backend.model.Detail;
-import me.sailex.ccnaexams_backend.model.Question;
 import me.sailex.ccnaexams_backend.database.QuestionCollection;
+import me.sailex.ccnaexams_backend.model.UserAnswer;
 import me.sailex.ccnaexams_backend.result.ResultManager;
+import org.bson.Document;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,17 +18,8 @@ public class QuestionRestController {
     private QuestionCollection collection;
     private ResultManager resultManager;
 
-    @GetMapping("/api/{moduleId}")
-    public ResponseEntity<List<Question>> getQuestions(@PathVariable String moduleId) {
-        try {
-            return new ResponseEntity<>(collection.getQuestions(moduleId).get(), HttpStatus.OK);
-        } catch (InterruptedException | ExecutionException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     @GetMapping("/api/{moduleId}/{questionId}")
-    public ResponseEntity<List<Question>> getQuestion(@PathVariable String moduleId, @PathVariable String questionId) {
+    public ResponseEntity<List<Document>> getQuestion(@PathVariable String moduleId, @PathVariable String questionId) {
         try {
             return new ResponseEntity<>(collection.getQuestion(moduleId, questionId).get(), HttpStatus.OK);
         } catch (InterruptedException | ExecutionException e) {
@@ -38,7 +28,7 @@ public class QuestionRestController {
     }
 
     @GetMapping("/api/{moduleId}/detail")
-    public ResponseEntity<List<Detail>> getDetail(@PathVariable String moduleId) {
+    public ResponseEntity<List<Document>> getDetail(@PathVariable String moduleId) {
         try {
             return new ResponseEntity<>(collection.getDetail(moduleId).get(), HttpStatus.OK);
         } catch (InterruptedException | ExecutionException e) {
@@ -47,8 +37,9 @@ public class QuestionRestController {
     }
 
     @PostMapping(path = "/api/{moduleId}/result", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Integer>> postResult(@PathVariable String moduleId, @RequestBody List<Answer> userAnswer) {
+    public ResponseEntity<List<Integer>> postResult(@PathVariable String moduleId, @RequestBody List<UserAnswer> userAnswer) {
         try {
+            System.out.println(userAnswer);
             return new ResponseEntity<>(resultManager.getResult(userAnswer, moduleId).get(), HttpStatus.CREATED);
         } catch (InterruptedException | ExecutionException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

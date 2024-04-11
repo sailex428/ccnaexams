@@ -9,14 +9,28 @@
 }
 
 .brand {
+    display: flex;
+    align-items: center;
     color: white;
     font-weight: bold;
 }
 
-.link {
+.navLink {
     color: white;
 }
 
+.dropdownItem {
+    color: rgb(70, 179, 243);
+}
+
 .logo {
-    margin-bottom: 3px;
+    margin-top: 2px;
+}
+
+.offCanvas {
+    background-color: rgb(70, 179, 243);
+}
+
+.toggle {
+    border: white 0;
 }

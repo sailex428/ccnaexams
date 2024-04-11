@@ -1,12 +1,29 @@
+"use client";
+
 import Image from "next/image";
-import { PropsWithChildren } from "react";
-import { Container, Nav, Navbar, NavbarBrand, NavLink } from "react-bootstrap";
+import React, { PropsWithChildren, useContext } from "react";
+import LanguageContext from "@/src/components/languageContext";
+import {
+  Container,
+  Nav,
+  Navbar,
+  NavbarBrand,
+  NavbarOffcanvas,
+  NavbarToggle,
+  NavDropdown,
+  NavLink,
+  OffcanvasBody,
+  OffcanvasHeader,
+  OffcanvasTitle,
+} from "react-bootstrap";
 import styles from "../../styles/components/navbar.module.css";
+import { properties } from "@/src/components/lib/static";
 
 export default function ExamsNavbar(props: PropsWithChildren) {
+  const { setLang } = useContext(LanguageContext);
   return (
     <div>
-      <Navbar expand={"lg"} className={styles.navigation}>
+      <Navbar expand={"sm"} className={styles.navigation}>
         <Container className={styles.container}>
           <NavbarBrand href={"/"} className={styles.brand}>
             <Image
@@ -17,13 +34,40 @@ export default function ExamsNavbar(props: PropsWithChildren) {
               height={32}
               width={32}
             />
-            {"CCNAExams"}
+            {properties.navBarHeading}
           </NavbarBrand>
-          <Nav>
-            <NavLink href={"/11-13"} className={styles.link}>
-              {"Module 11-13"}
-            </NavLink>
-          </Nav>
+          <NavbarToggle className={styles.toggle} />
+          <NavbarOffcanvas className={styles.offCanvas} placement="end">
+            <OffcanvasHeader closeButton>
+              <OffcanvasTitle className={`text-white`}>
+                {properties.navBarHeading}
+              </OffcanvasTitle>
+            </OffcanvasHeader>
+            <OffcanvasBody>
+              <Nav className={`justify-content-end flex-grow-1 pe-3`}>
+                <NavLink href={"/11-13"} className={styles.navLink}>
+                  {"Module 11-13"}
+                </NavLink>
+                <NavDropdown
+                  title={<span className={"text-white"}>Languages</span>}
+                >
+                  <NavDropdown.Item
+                    className={styles.dropdownItem}
+                    onClick={() => setLang("en")}
+                  >
+                    EN
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item
+                    className={styles.dropdownItem}
+                    onClick={() => setLang("de")}
+                  >
+                    GER
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </Nav>
+            </OffcanvasBody>
+          </NavbarOffcanvas>
         </Container>
       </Navbar>
       {props.children}

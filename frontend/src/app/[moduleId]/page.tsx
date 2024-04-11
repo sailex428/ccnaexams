@@ -8,6 +8,8 @@ import { DetailType } from "@/types/database";
 import global from "@/styles/globals.module.css";
 import styles from "@/styles/pages/modulepage.module.css";
 import AnswerContext from "@/src/components/answerContext";
+import LanguageContext from "@/src/components/languageContext";
+import { properties } from "@/src/components/lib/static";
 
 export default function StartExamPage({
   params,
@@ -16,8 +18,10 @@ export default function StartExamPage({
 }) {
   const router = useRouter();
   const { setExamIsFinished } = useContext(AnswerContext);
+  const { lang } = useContext(LanguageContext);
   const [detail, setDetail] = useState<DetailType>({} as DetailType);
   setExamIsFinished(false);
+
   useEffect(() => {
     const fetchDetails = async () => {
       await getDetail(params.moduleId).then((data) => {
@@ -38,12 +42,13 @@ export default function StartExamPage({
       <div className={styles.container}>
         <h2
           className={styles.headline}
-        >{`Module ${params.moduleId} : ${detail.title}`}</h2>
+        >{`Module ${params.moduleId} : ${detail.title[lang]}`}</h2>
         <div className={styles.info}>
           <p>
-            {"Überprüfen Sie Ihr Verständnis von " +
-              detail.title +
-              " mit praxisnahen Fragen für die CCNA-Prüfungsvorbereitung."}
+            {properties.modulePageText[lang].replace(
+              "${title}",
+              detail.title[lang],
+            )}
           </p>
           <Button
             variant="primary"
@@ -52,7 +57,7 @@ export default function StartExamPage({
               router.push(`/${params.moduleId}/1`);
             }}
           >
-            {"Starte den Test"}
+            {properties.modulePageButton[lang]}
           </Button>
         </div>
       </div>
