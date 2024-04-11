@@ -1,7 +1,7 @@
 package me.sailex.ccnaexams_backend.rest;
 
-import me.sailex.ccnaexams_backend.model.Answer;
 import me.sailex.ccnaexams_backend.database.QuestionCollection;
+import me.sailex.ccnaexams_backend.model.UserAnswer;
 import me.sailex.ccnaexams_backend.result.ResultManager;
 import org.bson.Document;
 import org.springframework.http.HttpStatus;
@@ -37,8 +37,9 @@ public class QuestionRestController {
     }
 
     @PostMapping(path = "/api/{moduleId}/result", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Integer>> postResult(@PathVariable String moduleId, @RequestBody List<Answer> userAnswer) {
+    public ResponseEntity<List<Integer>> postResult(@PathVariable String moduleId, @RequestBody List<UserAnswer> userAnswer) {
         try {
+            System.out.println(userAnswer);
             return new ResponseEntity<>(resultManager.getResult(userAnswer, moduleId).get(), HttpStatus.CREATED);
         } catch (InterruptedException | ExecutionException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

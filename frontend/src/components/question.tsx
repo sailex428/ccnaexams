@@ -4,6 +4,8 @@ import AnswerContext from "@/src/components/answerContext";
 import type { QuestionType } from "@/types/database";
 import styles from "@/styles/components/question.module.css";
 import ExamImage from "@/src/components/examImage";
+import LanguageContext from "@/src/components/languageContext";
+import { properties } from "@/src/components/lib/static";
 
 type QuestionProps = {
   question: QuestionType;
@@ -12,10 +14,11 @@ type QuestionProps = {
 
 export default function Question(props: QuestionProps) {
   const { setUserAnswers, userAnswers } = useContext(AnswerContext);
+  const { lang } = useContext(LanguageContext);
   const currentQuestion = props.question;
   let currentUserAnswers = userAnswers.find(
     (answer) => answer?.number == currentQuestion.number,
-  )?.answers;
+  )?.answer;
 
   const handleAnswerChange = (newUserAnswer: string) => {
     const newUserAnswers = userAnswers;
@@ -25,16 +28,22 @@ export default function Question(props: QuestionProps) {
     }
 
     if (currentUserAnswers == null || currentQuestion.type == "radio") {
-      currentUserAnswers = new Array(newUserAnswer);
+      currentUserAnswers = {
+        de: new Array(newUserAnswer),
+        en: new Array(newUserAnswer),
+      };
     } else {
-      if (!currentUserAnswers.includes(newUserAnswer)) {
-        currentUserAnswers.push(newUserAnswer);
+      if (!currentUserAnswers[lang].includes(newUserAnswer)) {
+        currentUserAnswers[lang].push(newUserAnswer);
       } else {
-        currentUserAnswers.splice(currentUserAnswers.indexOf(newUserAnswer), 1);
+        currentUserAnswers[lang].splice(
+          currentUserAnswers[lang].indexOf(newUserAnswer),
+          1,
+        );
       }
     }
     newUserAnswers[parseInt(currentQuestion.number)] = {
-      answers: currentUserAnswers,
+      answer: currentUserAnswers,
       number: currentQuestion.number,
     };
     setUserAnswers(newUserAnswers);
@@ -46,10 +55,10 @@ export default function Question(props: QuestionProps) {
         <h6 className="fw-bold">
           {currentQuestion.number}
           {". "}
-          {currentQuestion.question.de}
+          {currentQuestion.question[lang]}
         </h6>
-        <ExamImage image={currentQuestion.image} />
-        {currentQuestion.options.de.map((option, index) => (
+        <ExamImage img={currentQuestion.img} />
+        {currentQuestion.options[lang].map((option, index) => (
           <Form.Check key={index}>
             <Form.Check.Input
               type={currentQuestion.type}
@@ -57,27 +66,27 @@ export default function Question(props: QuestionProps) {
               onChange={() => handleAnswerChange(option)}
               defaultChecked={
                 currentUserAnswers != null
-                  ? currentUserAnswers.includes(option)
+                  ? currentUserAnswers[lang].includes(option)
                   : false
               }
               isValid={
                 props.examIsFinished
-                  ? currentQuestion.answer.de.includes(option)
+                  ? currentQuestion.answer[lang].includes(option)
                   : false
               }
               isInvalid={
                 props.examIsFinished
-                  ? !currentQuestion.answer.de.includes(option)
+                  ? !currentQuestion.answer[lang].includes(option)
                   : false
               }
             ></Form.Check.Input>
             <Form.Check.Label>{option}</Form.Check.Label>
           </Form.Check>
         ))}
-        {props.examIsFinished && currentQuestion.explanation ? (
+        {props.examIsFinished && currentQuestion.explanation[lang] ? (
           <div className={styles.explanation}>
-            <h6>{"Explanation: "}</h6>
-            {currentQuestion.explanation.de}
+            <h6>{properties.questionPageExplanation[lang]}</h6>
+            {currentQuestion.explanation[lang]}
           </div>
         ) : (
           <></>

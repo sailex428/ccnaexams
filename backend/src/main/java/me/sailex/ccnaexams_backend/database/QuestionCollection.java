@@ -4,6 +4,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
 import me.sailex.ccnaexams_backend.config.DatabaseConfiguration;
+import me.sailex.ccnaexams_backend.model.UserAnswer;
 import me.sailex.ccnaexams_backend.rest.QuestionRestController;
 import org.bson.Document;
 import org.slf4j.Logger;
@@ -56,21 +57,23 @@ public class QuestionCollection {
         return future;
     }
 
-    public CompletableFuture<Map<String, List<String>>> getAnswers(String moduleId) {
-        CompletableFuture<Map<String, List<String>>> future = new CompletableFuture<>();
-        Map<String, List<String>> answers = new HashMap<>();
+    public CompletableFuture<List<UserAnswer>> getAnswers(String moduleId) {
+        CompletableFuture<List<UserAnswer>> future = new CompletableFuture<>();
+        List<UserAnswer> answers = new ArrayList<>();
 
         getCollection().find(Filters.and(Filters.eq("module", moduleId), Filters.nin("type", "detail")))
-            .forEach(question -> {
-                try {
-                    answers.put(
-                            question.getString("number"),
-                            question.getList("answer", String.class)
-                    );
-                } catch (ClassCastException e) {
-                    log.error(e.getLocalizedMessage());
-                }
-        });
+                .forEach(answer -> {
+                    try {
+                        answers.add(
+                                new UserAnswer(
+                                        answer.get("answer", Map.class),
+                                        answer.getString("number")
+                                )
+                        );
+                    } catch (ClassCastException e) {
+                        log.error(e.getLocalizedMessage());
+                    }
+                });
         future.complete(answers);
         return future;
     }

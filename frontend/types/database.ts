@@ -13,12 +13,12 @@ export type DetailType = {
   title: LanguageStringType;
 };
 
-type LanguageArrayType = {
+export type LanguageArrayType = {
   en: string[];
   de: string[];
 };
 
-type LanguageStringType = {
+export type LanguageStringType = {
   en: string;
   de: string;
 };

@@ -16,11 +16,11 @@ export default function RootLayout({
         <link rel="icon" href="/logo.png" />
       </head>
       <body>
-        <ExamsNavbar>
-          <LanguageContextProvider>
+        <LanguageContextProvider>
+          <ExamsNavbar>
             <AnswerContextProvider>{children}</AnswerContextProvider>
-          </LanguageContextProvider>
-        </ExamsNavbar>
+          </ExamsNavbar>
+        </LanguageContextProvider>
       </body>
     </html>
   );

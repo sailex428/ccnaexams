@@ -10,7 +10,7 @@ const LanguageContext = createContext<LanguageContextType>({
 });
 
 export function LanguageContextProvider(props: PropsWithChildren) {
-  const [lang, setLang] = useState<string>("en");
+  const [lang, setLang] = useState<"de" | "en">("en");
 
   const languageContext: LanguageContextType = {
     lang,

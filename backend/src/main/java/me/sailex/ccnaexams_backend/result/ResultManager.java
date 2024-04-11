@@ -1,7 +1,7 @@
 package me.sailex.ccnaexams_backend.result;
 
 import me.sailex.ccnaexams_backend.database.QuestionCollection;
-import me.sailex.ccnaexams_backend.model.Answer;
+import me.sailex.ccnaexams_backend.model.UserAnswer;
 import me.sailex.ccnaexams_backend.rest.QuestionRestController;
 
 import java.util.*;
@@ -19,18 +19,32 @@ public class ResultManager {
     private final Logger log =
             LoggerFactory.getLogger(QuestionRestController.class);
 
-    public CompletableFuture<List<Integer>> getResult(List<Answer> userAnswers, String moduleId) {
+    public CompletableFuture<List<Integer>> getResult(List<UserAnswer> userAnswers, String moduleId) {
         CompletableFuture<List<Integer>> future = new CompletableFuture<>();
         int rightAnswers = 0;
+        boolean isLangNotNull = false;
 
         try {
-            Map<String, List<String>> answersMap = collection.getAnswers(moduleId).get();
-            for (Answer answer : userAnswers) {
-                List<String> correctAnswer = answersMap.get(answer.number());
-                Collections.sort(correctAnswer);
-                Collections.sort(answer.answers());
-                if (correctAnswer.equals(answer.answers())) {
-                    rightAnswers += 1;
+            List<UserAnswer> answersList = collection.getAnswers(moduleId).get();
+            for (UserAnswer userAnswer : userAnswers) {
+                UserAnswer correctAnswer = answersList.get(Integer.parseInt(userAnswer.number()) - 1);
+
+                if (correctAnswer.answer().get("de") != null && userAnswer.answer().get("de") != null) {
+                    isLangNotNull = true;
+                    Collections.sort(correctAnswer.answer().get("de"));
+                    Collections.sort(userAnswer.answer().get("de"));
+                }
+                if (correctAnswer.answer().get("en") != null && userAnswer.answer().get("en") != null) {
+                    isLangNotNull = true;
+                    Collections.sort(correctAnswer.answer().get("en"));
+                    Collections.sort(userAnswer.answer().get("en"));
+                }
+
+                if (isLangNotNull) {
+                    if (correctAnswer.answer().get("de").equals(userAnswer.answer().get("de"))
+                            || correctAnswer.answer().get("en").equals(userAnswer.answer().get("en"))) {
+                        rightAnswers += 1;
+                    }
                 }
             }
 

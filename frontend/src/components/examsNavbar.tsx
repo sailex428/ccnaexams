@@ -17,20 +17,14 @@ import {
   OffcanvasTitle,
 } from "react-bootstrap";
 import styles from "../../styles/components/navbar.module.css";
+import { properties } from "@/src/components/lib/static";
 
 export default function ExamsNavbar(props: PropsWithChildren) {
-  const { setLang, lang } = useContext(LanguageContext);
-  const handleLanguageChange = () => {
-    if (lang === "de") {
-      setLang("en");
-    } else {
-      setLang("de");
-    }
-  };
+  const { setLang } = useContext(LanguageContext);
   return (
     <div>
       <Navbar expand={"sm"} className={styles.navigation}>
-        <Container className={styles.container} fluid>
+        <Container className={styles.container}>
           <NavbarBrand href={"/"} className={styles.brand}>
             <Image
               priority={true}
@@ -40,39 +34,35 @@ export default function ExamsNavbar(props: PropsWithChildren) {
               height={32}
               width={32}
             />
-            {"CCNAExams"}
+            {properties.navBarHeading}
           </NavbarBrand>
-          <NavbarToggle className={styles.toggle} aria-controls={"sm"} />
+          <NavbarToggle className={styles.toggle} />
           <NavbarOffcanvas className={styles.offCanvas} placement="end">
             <OffcanvasHeader closeButton>
-              <OffcanvasTitle
-                id={`offcanvasNavbarLabel-expand-md`}
-                className={`text-white`}
-              >
-                CCNAExams
+              <OffcanvasTitle className={`text-white`}>
+                {properties.navBarHeading}
               </OffcanvasTitle>
             </OffcanvasHeader>
             <OffcanvasBody>
               <Nav className={`justify-content-end flex-grow-1 pe-3`}>
-                <NavLink href={"/11-13"} className={styles.link}>
+                <NavLink href={"/11-13"} className={styles.navLink}>
                   {"Module 11-13"}
                 </NavLink>
                 <NavDropdown
-                  title="Languages"
-                  id={`offcanvasNavbarDropdown-expand-sm`}
-                  className={"text-white"}
+                  title={<span className={"text-white"}>Languages</span>}
                 >
                   <NavDropdown.Item
                     className={styles.dropdownItem}
-                    onClick={() => handleLanguageChange}
+                    onClick={() => setLang("en")}
                   >
-                    English
+                    EN
                   </NavDropdown.Item>
+                  <NavDropdown.Divider />
                   <NavDropdown.Item
                     className={styles.dropdownItem}
-                    onClick={() => handleLanguageChange()}
+                    onClick={() => setLang("de")}
                   >
-                    German
+                    GER
                   </NavDropdown.Item>
                 </NavDropdown>
               </Nav>

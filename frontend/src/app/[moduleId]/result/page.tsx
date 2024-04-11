@@ -7,6 +7,8 @@ import AnswerContext from "@/src/components/answerContext";
 import styles from "@/styles/components/results.module.css";
 import { QuestionType } from "@/types/database";
 import ResultFooter from "@/src/components/resultFooter";
+import { properties } from "@/src/components/lib/static";
+import LanguageContext from "@/src/components/languageContext";
 
 export default function ResultPage({
   params,
@@ -15,8 +17,8 @@ export default function ResultPage({
 }) {
   const { numberOfQuestions, userAnswers, setExamIsFinished } =
     useContext(AnswerContext);
+  const { lang } = useContext(LanguageContext);
   const [result, setResult] = useState<number>(0);
-  setExamIsFinished(true);
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -24,6 +26,7 @@ export default function ResultPage({
         setResult(data);
       });
     };
+    setExamIsFinished(true);
     fetchQuestions();
   }, [params.moduleId]);
 
@@ -35,7 +38,7 @@ export default function ResultPage({
     <>
       <div className={styles.container}>
         <div className={styles.result}>
-          <h5 className="fw-bold">Result:</h5>
+          <h5 className="fw-bold">{properties.resultPageHeading[lang]}</h5>
           <div className={styles.pieChart}>
             <PieChart
               label={percentageOfRightAnswers.toFixed(2) + "%"}
@@ -43,7 +46,7 @@ export default function ResultPage({
               secondPartOfChart={numberOfQuestions - result}
             />
           </div>
-          <p className="fw-bold mt-3">{"... of your answers are right."}</p>
+          <p className="fw-bold mt-3">{properties.resultPageText[lang]}</p>
         </div>
       </div>
       <ResultFooter moduleId={params.moduleId} />

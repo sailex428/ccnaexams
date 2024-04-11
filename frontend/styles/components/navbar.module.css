@@ -15,7 +15,7 @@
     font-weight: bold;
 }
 
-.link {
+.navLink {
     color: white;
 }
 
@@ -32,5 +32,5 @@
 }
 
 .toggle {
-    color: white;
+    border: white 0;
 }

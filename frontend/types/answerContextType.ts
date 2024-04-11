@@ -1,4 +1,5 @@
 import type { Dispatch, SetStateAction } from "react";
+import { LanguageArrayType } from "@/types/database";
 
 export type AnswerContextType = {
   setUserAnswers: Dispatch<SetStateAction<UserAnswersType[]>>;
@@ -10,6 +11,6 @@ export type AnswerContextType = {
 };
 
 export type UserAnswersType = {
-  answers: string[];
+  answer: LanguageArrayType;
   number: string;
 };
