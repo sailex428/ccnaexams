@@ -10,9 +10,7 @@ if (!process.env.BACKEND_URI) {
 const uri = process.env.BACKEND_URI;
 
 export async function getQuestion(moduleId: string, questionId: number) {
-  const data: QuestionType[] = await fetch(`${uri}/${moduleId}/${questionId}`, {
-    cache: "force-cache",
-  })
+  const data: QuestionType[] = await fetch(`${uri}/${moduleId}/${questionId}`)
     .then((response) => {
       return response.json();
     })
@@ -23,9 +21,7 @@ export async function getQuestion(moduleId: string, questionId: number) {
 }
 
 export async function getDetail(moduleId: string) {
-  const data: DetailType[] = await fetch(`${uri}/${moduleId}/detail`, {
-    cache: "force-cache",
-  })
+  const data: DetailType[] = await fetch(`${uri}/${moduleId}/detail`)
     .then((response) => {
       return response.json();
     })

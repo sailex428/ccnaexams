@@ -55,14 +55,14 @@ export default function ExamsNavbar(props: PropsWithChildren) {
                     className={styles.dropdownItem}
                     onClick={() => setLang("en")}
                   >
-                    EN
+                    English
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item
                     className={styles.dropdownItem}
                     onClick={() => setLang("de")}
                   >
-                    GER
+                    German
                   </NavDropdown.Item>
                 </NavDropdown>
               </Nav>

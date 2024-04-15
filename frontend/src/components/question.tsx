@@ -66,7 +66,8 @@ export default function Question(props: QuestionProps) {
               onChange={() => handleAnswerChange(option)}
               defaultChecked={
                 currentUserAnswers != null
-                  ? currentUserAnswers[lang].includes(option)
+                  ? currentUserAnswers.de.includes(option) ||
+                    currentUserAnswers.en.includes(option)
                   : false
               }
               isValid={

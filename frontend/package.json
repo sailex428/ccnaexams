@@ -23,6 +23,7 @@
     "react-dom": "^18",
     "react-i18next": "^14.1.0",
     "sharp": "^0.33.2",
+    "swr": "^2.2.5",
     "victory": "^37.0.1"
   },
   "devDependencies": {
