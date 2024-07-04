@@ -52,11 +52,11 @@ export default function Question(props: QuestionProps) {
   return (
     <div className={styles.container}>
       <Form>
-        <h6 className="fw-bold">
+        <h5 className="fw-bold">
           {currentQuestion.number}
           {". "}
           {currentQuestion.question[lang]}
-        </h6>
+        </h5>
         <ExamImage img={currentQuestion.img} />
         {currentQuestion.options[lang].map((option, index) => (
           <Form.Check key={index}>
@@ -64,6 +64,7 @@ export default function Question(props: QuestionProps) {
               type={currentQuestion.type}
               name={"group"}
               onChange={() => handleAnswerChange(option)}
+              className={styles.checkbox}
               defaultChecked={
                 currentUserAnswers != null
                   ? currentUserAnswers.de.includes(option) ||
@@ -81,7 +82,9 @@ export default function Question(props: QuestionProps) {
                   : false
               }
             ></Form.Check.Input>
-            <Form.Check.Label>{option}</Form.Check.Label>
+            <Form.Check.Label className={styles.optionLabel}>
+              {option}
+            </Form.Check.Label>
           </Form.Check>
         ))}
         {props.examIsFinished && currentQuestion.explanation[lang] ? (

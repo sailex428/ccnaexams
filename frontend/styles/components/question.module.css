@@ -32,6 +32,16 @@
     align-content: center;
 }
 
+.checkbox {
+    transform: scale(1.5);
+    margin-top: 9px;
+}
+
+.optionLabel {
+    font-size: larger;
+    margin-top: 3px;
+}
+
 @media only screen and (max-width: 500px) {
     .options {
         flex-direction: column-reverse;

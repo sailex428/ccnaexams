@@ -5,7 +5,7 @@ export const properties = {
   },
   modulePageButton: {
     de: "Starte den Test",
-    en: "Start the test",
+    en: "Start the Exam",
   },
   questionPageExplanation: {
     de: "Erklärung: ",

@@ -17,6 +17,9 @@ export async function getQuestion(moduleId: string, questionId: number) {
     .catch(() => {
       console.log("Error: Fetch failed " + moduleId + " / " + questionId);
     });
+  if (data === undefined) {
+    return {} as QuestionType;
+  }
   return data[0];
 }
 
@@ -28,6 +31,9 @@ export async function getDetail(moduleId: string) {
     .catch(() => {
       console.log("Error: Fetch failed of detail of module " + moduleId);
     });
+  if (data === undefined) {
+    return {} as DetailType;
+  }
   return data[0];
 }
 
@@ -52,5 +58,8 @@ export async function postAnswers(
     .catch(() => {
       console.log("Error: Fetch failed of result " + moduleId);
     });
+  if (data === undefined) {
+    return {} as UserAnswersType;
+  }
   return data[0];
 }
