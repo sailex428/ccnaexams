@@ -33,11 +33,11 @@ public class QuestionCollection {
                 .first();
         if (question == null || question.isEmpty()) {
             future.complete(new ArrayList<>());
-            log.warn("Question " + moduleId + " / " + questionId + " could not be found");
+            log.warn("Question {} / {} could not be found", moduleId, questionId);
             return future;
         }
         future.complete(Collections.singletonList(question));
-        log.info("GET : question " + questionId +  " of module " + moduleId);
+        log.info("GET : question {} of module {}", questionId, moduleId);
         return future;
     }
 
@@ -49,11 +49,11 @@ public class QuestionCollection {
                 .first();
         if (detail == null || detail.isEmpty()) {
             future.complete(new ArrayList<>());
-            log.warn("Detail of " + moduleId + " could not be found");
+            log.warn("Detail of {} could not be found", moduleId);
             return future;
         }
         future.complete(Collections.singletonList(detail));
-        log.info("GET : detail of module " + moduleId);
+        log.info("GET : detail of module {}", moduleId);
         return future;
     }
 

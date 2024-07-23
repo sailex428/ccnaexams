@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-@RestController
+@RestController(value = "api")
 public class QuestionRestController {
 
     private QuestionCollection collection;
     private ResultManager resultManager;
 
-    @GetMapping("/api/{moduleId}/{questionId}")
+    @GetMapping("/{moduleId}/{questionId}")
     public ResponseEntity<List<Document>> getQuestion(@PathVariable String moduleId, @PathVariable String questionId) {
         try {
             return new ResponseEntity<>(collection.getQuestion(moduleId, questionId).get(), HttpStatus.OK);
@@ -27,7 +27,7 @@ public class QuestionRestController {
         }
     }
 
-    @GetMapping("/api/{moduleId}/detail")
+    @GetMapping("/{moduleId}/detail")
     public ResponseEntity<List<Document>> getDetail(@PathVariable String moduleId) {
         try {
             return new ResponseEntity<>(collection.getDetail(moduleId).get(), HttpStatus.OK);
@@ -36,7 +36,7 @@ public class QuestionRestController {
         }
     }
 
-    @PostMapping(path = "/api/{moduleId}/result", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/{moduleId}/result", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Integer>> postResult(@PathVariable String moduleId, @RequestBody List<UserAnswer> userAnswer) {
         try {
             return new ResponseEntity<>(resultManager.getResult(userAnswer, moduleId).get(), HttpStatus.CREATED);
