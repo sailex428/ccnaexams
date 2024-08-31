@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class Database {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(QuestionController.class);
+
     private MongoDatabase mongoDatabase;
 
     @Autowired
@@ -32,8 +34,7 @@ public class Database {
             this.mongoDatabase = client.getDatabase(databaseConfig.getDatabase());
 
         } catch (MongoSocketOpenException e) {
-            Logger log = LoggerFactory.getLogger(QuestionController.class);
-            log.error("Error connecting to database");
+            LOGGER.error("Error connecting to the database: {}", e.getMessage());
         }
     }
 }

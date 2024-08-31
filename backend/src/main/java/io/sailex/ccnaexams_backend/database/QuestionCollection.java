@@ -12,16 +12,17 @@ import lombok.Setter;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@Setter
 @Service
 public class QuestionCollection {
 
-    @Autowired private DatabaseConfig databaseConfig;
+    private static final Logger LOGGER = LoggerFactory.getLogger(QuestionController.class);
 
-    @Setter private Database database;
-    private final Logger log = LoggerFactory.getLogger(QuestionController.class);
+    private Database database;
+
+    private DatabaseConfig databaseConfig;
 
     public CompletableFuture<List<Document>> getQuestion(String moduleId, String questionId) {
         CompletableFuture<List<Document>> future = new CompletableFuture<>();
@@ -32,11 +33,11 @@ public class QuestionCollection {
                         .first();
         if (question == null || question.isEmpty()) {
             future.complete(new ArrayList<>());
-            log.warn("Question {} / {} could not be found", moduleId, questionId);
+            LOGGER.warn("Question {} / {} could not be found", moduleId, questionId);
             return future;
         }
         future.complete(Collections.singletonList(question));
-        log.info("GET : question {} of module {}", questionId, moduleId);
+        LOGGER.info("GET : question {} of module {}", questionId, moduleId);
         return future;
     }
 
@@ -49,11 +50,11 @@ public class QuestionCollection {
                         .first();
         if (detail == null || detail.isEmpty()) {
             future.complete(new ArrayList<>());
-            log.warn("Detail of {} could not be found", moduleId);
+            LOGGER.warn("Detail of {} could not be found", moduleId);
             return future;
         }
         future.complete(Collections.singletonList(detail));
-        log.info("GET : detail of module {}", moduleId);
+        LOGGER.info("GET : detail of module {}", moduleId);
         return future;
     }
 
@@ -69,7 +70,7 @@ public class QuestionCollection {
                                 answers.add(
                                         new UserAnswer(answer.get("answer", Map.class), answer.getString("number")));
                             } catch (ClassCastException e) {
-                                log.error(e.getLocalizedMessage());
+                                LOGGER.error(e.getLocalizedMessage());
                             }
                         });
         future.complete(answers);

@@ -21,9 +21,10 @@ public class AppConfig {
     }
 
     @Bean
-    public QuestionCollection questionCollection(Database database) {
+    public QuestionCollection questionCollection(Database database, DatabaseConfig databaseConfig) {
         QuestionCollection collection = new QuestionCollection();
         collection.setDatabase(database);
+        collection.setDatabaseConfig(databaseConfig);
         return collection;
     }
 
