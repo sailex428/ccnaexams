@@ -1,23 +1,22 @@
-package me.sailex.ccnaexams_backend.result;
+package io.sailex.ccnaexams_backend.result;
 
-import me.sailex.ccnaexams_backend.database.QuestionCollection;
-import me.sailex.ccnaexams_backend.model.UserAnswer;
-import me.sailex.ccnaexams_backend.rest.QuestionRestController;
-
+import io.sailex.ccnaexams_backend.database.QuestionCollection;
+import io.sailex.ccnaexams_backend.model.UserAnswer;
+import io.sailex.ccnaexams_backend.rest.QuestionController;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
-
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+@Setter
 @Service
 public class ResultManager {
 
-    private QuestionCollection collection;
+    private static final Logger log = LoggerFactory.getLogger(QuestionController.class);
 
-    private final Logger log =
-            LoggerFactory.getLogger(QuestionRestController.class);
+    private QuestionCollection collection;
 
     public CompletableFuture<List<Integer>> getResult(List<UserAnswer> userAnswers, String moduleId) {
         CompletableFuture<List<Integer>> future = new CompletableFuture<>();
@@ -57,9 +56,4 @@ public class ResultManager {
         log.info("POST : result {}", userAnswers);
         return future;
     }
-
-    public void setCollection(QuestionCollection collection) {
-        this.collection = collection;
-    }
-
 }

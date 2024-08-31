@@ -15,12 +15,12 @@ dependencies {
     api(libs.org.springframework.boot.spring.boot.starter)
     api(libs.org.springframework.boot.spring.boot.starter.data.mongodb)
     api(libs.org.springframework.boot.spring.boot.starter.web)
-    runtimeOnly(libs.org.springframework.boot.spring.boot.devtools)
-    runtimeOnly(libs.org.springframework.boot.spring.boot.docker.compose)
     testImplementation(libs.org.springframework.boot.spring.boot.starter.test)
+    compileOnly("org.projectlombok:lombok:1.18.34")
+    annotationProcessor("org.projectlombok:lombok:1.18.34")
 }
 
-group = "me.sailex"
+group = "io.sailex"
 version = "1.0.0"
 description = "backend"
 java.sourceCompatibility = JavaVersion.VERSION_21
