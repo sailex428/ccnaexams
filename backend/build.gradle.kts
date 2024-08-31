@@ -1,6 +1,7 @@
 plugins {
     `java-library`
     `maven-publish`
+    id("com.diffplug.spotless") version "7.0.0.BETA2"
 }
 
 repositories {
@@ -28,6 +29,14 @@ java.targetCompatibility = JavaVersion.VERSION_21
 publishing {
     publications.create<MavenPublication>("maven") {
         from(components["java"])
+    }
+}
+
+spotless {
+    java {
+        googleJavaFormat("1.23.0")
+        indentWithTabs(2)
+        indentWithSpaces(4)
     }
 }
 
