@@ -29,7 +29,7 @@ public class QuestionCollection {
         Document question =
                 getCollection()
                         .find(Filters.and(Filters.eq("module", moduleId), Filters.eq("number", questionId)))
-                        .projection(Projections.excludeId())
+                        .projection(Projections.excludeId()).projection(Projections.exclude("answer"))
                         .first();
         if (question == null || question.isEmpty()) {
             future.complete(new ArrayList<>());
