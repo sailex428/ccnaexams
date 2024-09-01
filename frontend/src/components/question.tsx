@@ -12,85 +12,50 @@ type QuestionProps = {
   examIsFinished: boolean;
 };
 
-export default function Question(props: QuestionProps) {
+export default function Question({ question, examIsFinished }: QuestionProps) {
   const { setUserAnswers, userAnswers } = useContext(AnswerContext);
   const { lang } = useContext(LanguageContext);
-  const currentQuestion = props.question;
-  let currentUserAnswers = userAnswers.find(
-    (answer) => answer?.number == currentQuestion.number,
-  )?.answer;
 
-  const handleAnswerChange = (newUserAnswer: string) => {
-    const newUserAnswers = userAnswers;
-
-    if (newUserAnswers === undefined) {
-      return;
-    }
-
-    if (currentUserAnswers == null || currentQuestion.type == "radio") {
-      currentUserAnswers = {
-        de: new Array(newUserAnswer),
-        en: new Array(newUserAnswer),
-      };
-    } else {
-      if (!currentUserAnswers[lang].includes(newUserAnswer)) {
-        currentUserAnswers[lang].push(newUserAnswer);
-      } else {
-        currentUserAnswers[lang].splice(
-          currentUserAnswers[lang].indexOf(newUserAnswer),
-          1,
-        );
-      }
-    }
-    newUserAnswers[parseInt(currentQuestion.number)] = {
-      answer: currentUserAnswers,
-      number: currentQuestion.number,
-    };
-    setUserAnswers(newUserAnswers);
+  const handleAnswerChange = (id: string) => {
+    setUserAnswers((prevUserAnswers = []) =>
+      prevUserAnswers.length === 0
+        ? [{ answer: id, number: question.number }]
+        : [
+            ...prevUserAnswers.map((answer) =>
+              answer.number === question.number
+                ? { ...answer, answer: id }
+                : answer,
+            ),
+          ],
+    );
   };
 
   return (
     <div className={styles.container}>
       <Form>
         <h5 className="fw-bold">
-          {currentQuestion.number}
+          {question.number}
           {". "}
-          {currentQuestion.question[lang]}
+          {question.question[lang]}
         </h5>
-        <ExamImage img={currentQuestion.img} />
-        {currentQuestion.options[lang].map((option, index) => (
+        <ExamImage img={question.img} />
+        {question.options.map((option, index) => (
           <Form.Check key={index}>
             <Form.Check.Input
-              type={currentQuestion.type}
+              type={question.type}
               name={"group"}
-              onChange={() => handleAnswerChange(option)}
+              onChange={() => handleAnswerChange(option.id)}
               className={styles.checkbox}
-              defaultChecked={
-                currentUserAnswers != null
-                  ? currentUserAnswers.de.includes(option) ||
-                    currentUserAnswers.en.includes(option)
-                  : false
-              }
-              isValid={
-                props.examIsFinished
-                  ? currentQuestion.answer[lang].includes(option)
-                  : false
-              }
-              isInvalid={
-                props.examIsFinished
-                  ? !currentQuestion.answer[lang].includes(option)
-                  : false
-              }
             ></Form.Check.Input>
             <Form.Check.Label className={styles.optionLabel}>
-              {option}
+              {option[lang]}
             </Form.Check.Label>
           </Form.Check>
         ))}
-        {props.examIsFinished && currentQuestion.explanation[lang] ? (
+        {examIsFinished && question.explanation[lang] ? (
           <div className={styles.explanation}>
             <h6>{properties.questionPageExplanation[lang]}</h6>
-            {currentQuestion.explanation[lang]}
+            {question.explanation[lang]}
           </div>
         ) : (
           <></>

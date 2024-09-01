@@ -21,6 +21,7 @@ public class QuestionController {
     private QuestionCollection collection;
     private ResultManager resultManager;
 
+    @CrossOrigin
     @GetMapping(value = "/question/{moduleId}/{questionId}")
     public ResponseEntity<List<Document>> getQuestion(
             @PathVariable("moduleId") String moduleId, @PathVariable("questionId") String questionId) {
@@ -32,6 +33,7 @@ public class QuestionController {
         }
     }
 
+    @CrossOrigin
     @GetMapping(value = "/detail/{moduleId}")
     public ResponseEntity<List<Document>> getDetail(@PathVariable("moduleId") String moduleId) {
         try {
@@ -41,6 +43,7 @@ public class QuestionController {
         }
     }
 
+    @CrossOrigin
     @PostMapping(value = "/result/{moduleId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Result> postAnswers(
             @PathVariable("moduleId") String moduleId, @RequestBody List<Answer> answer) {

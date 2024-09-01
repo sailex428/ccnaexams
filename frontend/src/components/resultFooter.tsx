@@ -12,7 +12,6 @@ export default function ResultFooter(props: { moduleId: string }) {
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
-        <div></div>
         <Button
           className={global.button}
           onClick={() => {

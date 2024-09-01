@@ -1,11 +1,15 @@
 export type QuestionType = {
   number: string;
   question: LanguageStringType;
-  options: LanguageArrayType;
+  options: OptionType[];
   explanation: LanguageStringType;
   type: "checkbox" | "radio";
   img: string;
 };
+
+export type OptionType = {
+  id: string;
+} & LanguageArrayType;
 
 export type DetailType = {
   numberOfQuestions: number;

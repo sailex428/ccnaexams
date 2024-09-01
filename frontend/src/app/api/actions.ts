@@ -1,5 +1,5 @@
-"use server";
-
+import useSWR from "swr";
+import useSWRMutation from "swr/mutation";
 import {
   AnswersType,
   DetailType,
@@ -7,59 +7,63 @@ import {
   ResultType,
 } from "@/types/database";
 
-if (!process.env.BACKEND_URI) {
-  throw new Error("Invalid/Missing BACKEND_URI");
-}
+//TODO: move uri to env file
+const uri = "http://localhost:10051/api";
 
-const uri = process.env.BACKEND_URI;
+const fetcher = (url: string) => fetch(url).then((response) => response.json());
 
-export async function getQuestion(moduleId: string, questionId: number) {
-  const data: QuestionType[] = await fetch(
-    `${uri}/question/${moduleId}/${questionId}`,
-  )
-    .then((response) => {
-      return response.json();
-    })
-    .catch(() => {
-      console.log("Error: Fetch failed " + moduleId + " / " + questionId);
-    });
-  if (data === undefined) {
-    return {} as QuestionType;
-  }
-  return data[0];
-}
-
-export async function getDetail(moduleId: string) {
-  const data: DetailType[] = await fetch(`${uri}/detail/${moduleId}`)
-    .then((response) => {
-      return response.json();
-    })
-    .catch(() => {
-      console.log("Error: Fetch failed of detail of module " + moduleId);
-    });
-  if (data === undefined) {
-    return {} as DetailType;
-  }
-  return data[0];
-}
-
-export async function postAnswers(
-  moduleId: string,
-  userAnswers: AnswersType[],
-) {
-  const data: ResultType = await fetch(`${uri}/result/${moduleId}`, {
+const postAnswersFetcher = async (
+  url: string,
+  { arg: userAnswers }: { arg: AnswersType[] },
+) => {
+  const response = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(userAnswers),
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .catch(() => {
-      console.log("Error: Fetch failed of result " + moduleId);
-    });
-  if (data === undefined) {
-    return {} as ResultType;
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to post answers");
   }
-  return data;
+
+  return response.json();
+};
+
+export function useQuestion(moduleId: string, questionId: number) {
+  const { data, isLoading, error } = useSWR<QuestionType[]>(
+    `${uri}/question/${moduleId}/${questionId}`,
+    fetcher,
+  );
+
+  return {
+    question: data === undefined ? ({} as QuestionType) : data[0],
+    isLoading: isLoading,
+    isError: error,
+  };
+}
+
+export function useDetail(moduleId: string) {
+  const { data, isLoading, error } = useSWR<DetailType[]>(
+    `${uri}/detail/${moduleId}`,
+    fetcher,
+  );
+  return {
+    detail: data === undefined ? ({} as DetailType) : data[0],
+    isLoading: isLoading,
+    isError: error,
+  };
+}
+
+export function useAnswers(moduleId: string) {
+  const { trigger, data, error, isMutating } = useSWRMutation<ResultType>(
+    `${uri}/result/${moduleId}`,
+    postAnswersFetcher,
+  );
+
+  return {
+    postAnswers: trigger,
+    data,
+    error,
+    isMutating,
+  };
 }

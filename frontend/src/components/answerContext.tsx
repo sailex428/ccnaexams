@@ -2,7 +2,8 @@
 
 import type { PropsWithChildren } from "react";
 import { createContext, useState } from "react";
-import { AnswerContextType, UserAnswersType } from "@/types/answerContextType";
+import { AnswerContextType } from "@/types/answerContextType";
+import { AnswersType } from "@/types/database";
 
 const AnswerContext = createContext<AnswerContextType>({
   userAnswers: [],
@@ -14,7 +15,7 @@ const AnswerContext = createContext<AnswerContextType>({
 });
 
 export function AnswerContextProvider(props: PropsWithChildren) {
-  const [userAnswers, setUserAnswers] = useState<UserAnswersType[]>([]);
+  const [userAnswers, setUserAnswers] = useState<AnswersType[]>([]);
   const [numberOfQuestions, setNumberOfQuestions] = useState<number>(0);
   const [examIsFinished, setExamIsFinished] = useState<boolean>(false);
 
