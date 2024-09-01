@@ -4,21 +4,16 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
 import io.sailex.ccnaexams_backend.config.DatabaseConfig;
-import io.sailex.ccnaexams_backend.model.UserAnswer;
-import io.sailex.ccnaexams_backend.rest.QuestionController;
+import io.sailex.ccnaexams_backend.model.Answer;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import lombok.Setter;
 import org.bson.Document;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Setter
 @Service
 public class QuestionCollection {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(QuestionController.class);
 
     private Database database;
 
@@ -26,55 +21,48 @@ public class QuestionCollection {
 
     public CompletableFuture<List<Document>> getQuestion(String moduleId, String questionId) {
         CompletableFuture<List<Document>> future = new CompletableFuture<>();
-        Document question =
-                getCollection()
-                        .find(Filters.and(Filters.eq("module", moduleId), Filters.eq("number", questionId)))
-                        .projection(Projections.excludeId()).projection(Projections.exclude("answer"))
-                        .first();
-        if (question == null || question.isEmpty()) {
-            future.complete(new ArrayList<>());
-            LOGGER.warn("Question {} / {} could not be found", moduleId, questionId);
-            return future;
-        }
-        future.complete(Collections.singletonList(question));
-        LOGGER.info("GET : question {} of module {}", questionId, moduleId);
+        List<Document> question = new ArrayList<>();
+        question.add(
+                this.getCollection()
+                        .find(
+                                Filters.and(
+                                        Filters.eq(Fields.MODULE, moduleId), Filters.eq(Fields.NUMBER, questionId)))
+                        .projection(Projections.exclude(Fields.ANSWER, Fields._ID))
+                        .first());
+        future.complete(question);
         return future;
     }
 
     public CompletableFuture<List<Document>> getDetail(String moduleId) {
         CompletableFuture<List<Document>> future = new CompletableFuture<>();
-        Document detail =
-                getCollection()
-                        .find(Filters.and(Filters.eq("module", moduleId), Filters.eq("type", "detail")))
-                        .projection(Projections.exclude("module", "type", "_id"))
-                        .first();
-        if (detail == null || detail.isEmpty()) {
-            future.complete(new ArrayList<>());
-            LOGGER.warn("Detail of {} could not be found", moduleId);
-            return future;
-        }
-        future.complete(Collections.singletonList(detail));
-        LOGGER.info("GET : detail of module {}", moduleId);
+        List<Document> detail = new ArrayList<>();
+        detail.add(
+                this.getCollection()
+                        .find(
+                                Filters.and(
+                                        Filters.eq(Fields.MODULE, moduleId), Filters.eq(Fields.TYPE, Fields.DETAIL)))
+                        .projection(Projections.exclude(Fields.MODULE, Fields.TYPE, Fields._ID))
+                        .first());
+        future.complete(detail);
         return future;
     }
 
-    public CompletableFuture<List<UserAnswer>> getAnswers(String moduleId) {
-        CompletableFuture<List<UserAnswer>> future = new CompletableFuture<>();
-        List<UserAnswer> answers = new ArrayList<>();
-
-        getCollection()
-                .find(Filters.and(Filters.eq("module", moduleId), Filters.nin("type", "detail")))
-                .forEach(
-                        answer -> {
-                            try {
-                                answers.add(
-                                        new UserAnswer(answer.get("answer", Map.class), answer.getString("number")));
-                            } catch (ClassCastException e) {
-                                LOGGER.error(e.getLocalizedMessage());
-                            }
-                        });
+    public CompletableFuture<List<Answer>> getAnswers(String moduleId) {
+        CompletableFuture<List<Answer>> future = new CompletableFuture<>();
+        List<Answer> answers = new ArrayList<>();
+        this.getCollection()
+                .find(
+                        Filters.and(
+                                Filters.eq(Fields.MODULE, moduleId), Filters.nin(Fields.TYPE, Fields.DETAIL)))
+                .projection(Projections.include(Fields.ANSWER, Fields.NUMBER))
+                .forEach(answerObject -> answers.add(createAnswerObject(answerObject)));
         future.complete(answers);
         return future;
+    }
+
+    private Answer createAnswerObject(Document answerObject) {
+        return new Answer(
+                (List<String>) answerObject.get(Fields.ANSWER), answerObject.getString(Fields.NUMBER));
     }
 
     private MongoCollection<Document> getCollection() {

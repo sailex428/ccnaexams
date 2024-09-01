@@ -29,18 +29,16 @@ public class AppConfig {
     }
 
     @Bean
+    public ResultManager resultManager() {
+        return new ResultManager();
+    }
+
+    @Bean
     public QuestionController questionController(
             QuestionCollection questionCollection, ResultManager resultManager) {
         QuestionController controller = new QuestionController();
         controller.setCollection(questionCollection);
         controller.setResultManager(resultManager);
         return controller;
-    }
-
-    @Bean
-    public ResultManager resultManager(QuestionCollection collection) {
-        ResultManager resultManager = new ResultManager();
-        resultManager.setCollection(collection);
-        return resultManager;
     }
 }
