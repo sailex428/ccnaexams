@@ -25,16 +25,10 @@ public class Database {
         try {
             MongoClient client =
                     MongoClients.create(
-                            "mongodb://"
-                                    + databaseConfig.getHost()
-                                    + ":"
-                                    + databaseConfig.getPort()
-                                    + "/"
-                                    + databaseConfig.getDatabase());
+                            "mongodb://" + databaseConfig.getUri() + databaseConfig.getDatabase());
             this.mongoDatabase = client.getDatabase(databaseConfig.getDatabase());
-
         } catch (MongoSocketOpenException e) {
-            LOGGER.error("Error connecting to the database: {}", e.getMessage());
+            LOGGER.error("Error connecting to the database", e);
         }
     }
 }

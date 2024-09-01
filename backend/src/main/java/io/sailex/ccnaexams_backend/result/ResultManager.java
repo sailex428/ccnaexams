@@ -2,7 +2,6 @@ package io.sailex.ccnaexams_backend.result;
 
 import io.sailex.ccnaexams_backend.model.Answer;
 import io.sailex.ccnaexams_backend.model.Result;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;

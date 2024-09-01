@@ -9,9 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "spring.data.mongodb")
 public class DatabaseConfig {
 
-    private String host;
-
-    private int port;
+    private String uri;
 
     private String database;
 
