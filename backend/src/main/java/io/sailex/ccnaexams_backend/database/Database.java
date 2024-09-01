@@ -24,9 +24,9 @@ public class Database {
     public Database(DatabaseConfig databaseConfig) {
         try {
             MongoClient client =
-                    MongoClients.create(
-                            "mongodb://" + databaseConfig.getUri() + databaseConfig.getDatabase());
+                    MongoClients.create(databaseConfig.getUri() + databaseConfig.getDatabase());
             this.mongoDatabase = client.getDatabase(databaseConfig.getDatabase());
+
         } catch (MongoSocketOpenException e) {
             LOGGER.error("Error connecting to the database", e);
         }
