@@ -17,9 +17,7 @@ public class ResultManager {
 
     public CompletableFuture<Result> getResult(List<Answer> rightAnswers, List<Answer> userAnswers) {
         CompletableFuture<Result> future = new CompletableFuture<>();
-
         rightAnswerCount = 0;
-
         for (Answer userAnswer : userAnswers) {
             Optional<Answer> currentRightAnswer =
                     rightAnswers.stream()

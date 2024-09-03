@@ -13,20 +13,23 @@ type QuestionProps = {
 };
 
 export default function Question({ question, examIsFinished }: QuestionProps) {
-  const { setUserAnswers, userAnswers } = useContext(AnswerContext);
+  const { setUserAnswers } = useContext(AnswerContext);
   const { lang } = useContext(LanguageContext);
 
   const handleAnswerChange = (id: string) => {
     setUserAnswers((prevUserAnswers = []) =>
       prevUserAnswers.length === 0
-        ? [{ answer: id, number: question.number }]
-        : [
-            ...prevUserAnswers.map((answer) =>
-              answer.number === question.number
-                ? { ...answer, answer: id }
-                : answer,
-            ),
-          ],
+        ? [{ answer: [id], number: question.number }]
+        : prevUserAnswers.map((answer) =>
+            answer.number === question.number
+              ? {
+                  ...answer,
+                  answer: answer.answer.includes(id)
+                    ? answer.answer.filter((a) => a !== id)
+                    : [...answer.answer, id],
+                }
+              : answer,
+          ),
     );
   };
 

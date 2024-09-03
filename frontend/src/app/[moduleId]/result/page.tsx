@@ -1,7 +1,7 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
-import { postAnswers } from "@/src/app/api/actions";
+import { useContext, useEffect } from "react";
+import { useResult } from "@/src/app/api/actions";
 import PieChart from "@/src/components/pieChart";
 import AnswerContext from "@/src/components/answerContext";
 import styles from "@/styles/components/results.module.css";
@@ -18,22 +18,38 @@ export default function ResultPage({
   const { numberOfQuestions, userAnswers, setExamIsFinished } =
     useContext(AnswerContext);
   const { lang } = useContext(LanguageContext);
-  const [result, setResult] = useState<number>(0);
+  const { result, isError, isMutating, postAnswers } = useResult(
+    params.moduleId,
+  );
 
   useEffect(() => {
-    const fetchQuestions = async () => {
-      await postAnswers(params.moduleId, userAnswers).then((data) => {
-        setResult(data);
-      });
-    };
     setExamIsFinished(true);
-    fetchQuestions();
-  }, [params.moduleId]);
+    postAnswers([...userAnswers]);
+  }, [userAnswers]);
 
-  let percentageOfRightAnswers = result;
-  if (result != 0) {
-    percentageOfRightAnswers = (result / numberOfQuestions) * 100;
+  if (isMutating) {
+    return (
+      <div className={styles.container}>
+        <div className="fw-bold mt-4">Module is loading...</div>
+      </div>
+    );
   }
+
+  if (isError) {
+    return (
+      <div className={styles.container}>
+        <div className="fw-bold mt-4">An Error occurred</div>
+      </div>
+    );
+  }
+
+  const percentageOfRightAnswers =
+    result.rightAnswersCount != 0
+      ? ((result.rightAnswersCount / numberOfQuestions) * 100).toFixed(2)
+      : 0;
+
+  console.log(numberOfQuestions);
+
   return (
     <>
       <div className={styles.container}>
@@ -41,9 +57,9 @@ export default function ResultPage({
           <h5 className="fw-bold">{properties.resultPageHeading[lang]}</h5>
           <div className={styles.pieChart}>
             <PieChart
-              label={percentageOfRightAnswers.toFixed(2) + "%"}
-              firstPartOfChart={result}
-              secondPartOfChart={numberOfQuestions - result}
+              label={percentageOfRightAnswers + "%"}
+              firstPartOfChart={result.rightAnswersCount}
+              secondPartOfChart={numberOfQuestions - result.rightAnswersCount}
             />
           </div>
           <p className="fw-bold mt-3">{properties.resultPageText[lang]}</p>
