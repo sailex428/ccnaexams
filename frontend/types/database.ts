@@ -27,11 +27,11 @@ export type LanguageStringType = {
 };
 
 export type AnswersType = {
-  answer: string;
+  answer: string[];
   number: string;
 };
 
 export type ResultType = {
   answers: AnswersType[];
-  rightAnswers: number;
+  rightAnswersCount: number;
 };
