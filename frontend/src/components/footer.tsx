@@ -9,7 +9,7 @@ import {
   faArrowRight,
   faFlagCheckered,
 } from "@fortawesome/free-solid-svg-icons";
-import global from "@/styles/globals.module.css";
+import global from "@/styles/globals.css";
 import styles from "@/styles/components/footer.module.css";
 import AnswerContext from "@/src/components/answerContext";
 

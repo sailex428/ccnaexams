@@ -48,8 +48,6 @@ export default function ResultPage({
       ? ((result.rightAnswersCount / numberOfQuestions) * 100).toFixed(2)
       : 0;
 
-  console.log(numberOfQuestions);
-
   return (
     <>
       <div className={styles.container}>

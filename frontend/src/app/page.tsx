@@ -1,22 +1,27 @@
+import clsx from "clsx";
 import styles from "@/styles/pages/homepage.module.css";
-import { news } from "@/src/components/lib/news";
+import ExamsNavbar from "@/src/components/examsNavbar";
 
 export default function Homepage() {
   return (
-    <div className={styles.container}>
-      <div className={styles.content}>
-        <h2 className={styles.headline}>{"What's new: "}</h2>
-        {news.newsEntries.map((newsEntry, index) => (
-          <div className={styles.entryWrapper} key={index}>
-            <h5>{newsEntry.date.toLocaleDateString()}</h5>
-            <ul>
-              {newsEntry.entries.map((entry, index) => (
-                <li key={index}>{entry}</li>
-              ))}
-            </ul>
-          </div>
-        ))}
+    <main className={styles.mainBackground}>
+      <ExamsNavbar />
+      <div className={styles.container}>
+        <div className={styles.content}>
+          <h1 className={clsx(styles.headline, styles.type, "defaultText")}>
+            Learn the
+          </h1>
+          <h1
+            className={clsx(
+              styles.headline,
+              styles.typeAndDelete,
+              "defaultText",
+            )}
+          >
+            CCNA Exam Questions.
+          </h1>
+        </div>
       </div>
-    </div>
+    </main>
   );
 }

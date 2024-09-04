@@ -1,4 +1,4 @@
-import styles from "@/styles/globals.module.css";
+import styles from "@/styles/globals.css";
 import Image from "next/image";
 
 export default function ExamImage(question: { img: string }) {

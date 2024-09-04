@@ -1,9 +1,9 @@
 "use client";
 
+import clsx from "clsx";
 import { useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "react-bootstrap";
-import global from "@/styles/globals.module.css";
 import styles from "@/styles/pages/modulepage.module.css";
 import AnswerContext from "@/src/components/answerContext";
 import LanguageContext from "@/src/components/languageContext";
@@ -56,7 +56,7 @@ export default function StartExamPage({
         </p>
         <Button
           variant="primary"
-          className={global.button}
+          className={clsx("button")}
           onClick={() => {
             router.push(`/${params.moduleId}/1`);
           }}
