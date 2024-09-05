@@ -7,7 +7,7 @@ import AnswerContext from "@/src/components/answerContext";
 import styles from "@/styles/components/results.module.css";
 import { QuestionType } from "@/types/database";
 import ResultFooter from "@/src/components/resultFooter";
-import { properties } from "@/src/components/lib/static";
+import { PROPERTIES } from "@/src/components/lib/static";
 import LanguageContext from "@/src/components/languageContext";
 
 export default function ResultPage({
@@ -52,7 +52,7 @@ export default function ResultPage({
     <>
       <div className={styles.container}>
         <div className={styles.result}>
-          <h5 className="fw-bold">{properties.resultPageHeading[lang]}</h5>
+          <h5 className="fw-bold">{PROPERTIES.resultPageHeading[lang]}</h5>
           <div className={styles.pieChart}>
             <PieChart
               label={percentageOfRightAnswers + "%"}
@@ -60,7 +60,7 @@ export default function ResultPage({
               secondPartOfChart={numberOfQuestions - result.rightAnswersCount}
             />
           </div>
-          <p className="fw-bold mt-3">{properties.resultPageText[lang]}</p>
+          <p className="fw-bold mt-3">{PROPERTIES.resultPageText[lang]}</p>
         </div>
       </div>
       <ResultFooter moduleId={params.moduleId} />

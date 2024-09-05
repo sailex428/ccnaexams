@@ -7,7 +7,7 @@ import { Button } from "react-bootstrap";
 import styles from "@/styles/pages/modulepage.module.css";
 import AnswerContext from "@/src/components/answerContext";
 import LanguageContext from "@/src/components/languageContext";
-import { properties } from "@/src/components/lib/static";
+import { PROPERTIES } from "@/src/components/lib/static";
 import { useDetail } from "@/src/app/api/actions";
 
 export default function StartExamPage({
@@ -49,7 +49,7 @@ export default function StartExamPage({
       >{`Module ${params.moduleId} : ${detail.title[lang]}`}</h2>
       <div className={styles.info}>
         <p>
-          {properties.modulePageText[lang].replace(
+          {PROPERTIES.modulePageText[lang].replace(
             "${title}",
             detail.title[lang],
           )}
@@ -61,7 +61,7 @@ export default function StartExamPage({
             router.push(`/${params.moduleId}/1`);
           }}
         >
-          {properties.modulePageButton[lang]}
+          {PROPERTIES.modulePageButton[lang]}
         </Button>
       </div>
     </div>

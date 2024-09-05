@@ -17,7 +17,7 @@ import {
   OffcanvasTitle,
 } from "react-bootstrap";
 import styles from "../../styles/components/navbar.module.css";
-import { properties } from "@/src/components/lib/static";
+import { PROPERTIES } from "@/src/components/lib/static";
 
 export default function ExamsNavbar(props: PropsWithChildren) {
   const { setLang } = useContext(LanguageContext);
@@ -34,13 +34,13 @@ export default function ExamsNavbar(props: PropsWithChildren) {
               height={32}
               width={32}
             />
-            {properties.navBarHeading}
+            {PROPERTIES.navBarHeading}
           </NavbarBrand>
           <NavbarToggle className={styles.toggle} />
           <NavbarOffcanvas className={styles.offCanvas} placement="end">
             <OffcanvasHeader closeButton>
               <OffcanvasTitle className={`text-white`}>
-                {properties.navBarHeading}
+                {PROPERTIES.navBarHeading}
               </OffcanvasTitle>
             </OffcanvasHeader>
             <OffcanvasBody>

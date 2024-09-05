@@ -5,7 +5,7 @@ import type { QuestionType } from "@/types/database";
 import styles from "@/styles/components/question.module.css";
 import ExamImage from "@/src/components/examImage";
 import LanguageContext from "@/src/components/languageContext";
-import { properties } from "@/src/components/lib/static";
+import { PROPERTIES } from "@/src/components/lib/static";
 
 type QuestionProps = {
   question: QuestionType;
@@ -57,7 +57,7 @@ export default function Question({ question, examIsFinished }: QuestionProps) {
         ))}
         {examIsFinished && question.explanation[lang] ? (
           <div className={styles.explanation}>
-            <h6>{properties.questionPageExplanation[lang]}</h6>
+            <h6>{PROPERTIES.questionPageExplanation[lang]}</h6>
             {question.explanation[lang]}
           </div>
         ) : (
