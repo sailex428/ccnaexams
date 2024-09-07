@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
-import styles from "@/styles/components/footer.module.css";
+import styles from "@/styles/components/footer.module.scss";
 import { Button } from "react-bootstrap";
 import { PROPERTIES } from "@/src/components/lib/static";
 import { useContext } from "react";

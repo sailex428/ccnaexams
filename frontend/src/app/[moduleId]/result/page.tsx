@@ -4,7 +4,7 @@ import { useContext, useEffect } from "react";
 import { useResult } from "@/src/app/api/actions";
 import PieChart from "@/src/components/pieChart";
 import AnswerContext from "@/src/components/answerContext";
-import styles from "@/styles/components/results.module.css";
+import styles from "@/styles/components/results.module.scss";
 import { QuestionType } from "@/types/database";
 import ResultFooter from "@/src/components/resultFooter";
 import { PROPERTIES } from "@/src/components/lib/static";

@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "react-bootstrap";
-import styles from "@/styles/pages/modulepage.module.css";
+import styles from "@/styles/pages/modulepage.module.scss";
 import AnswerContext from "@/src/components/answerContext";
 import LanguageContext from "@/src/components/languageContext";
 import { PROPERTIES } from "@/src/components/lib/static";

@@ -16,7 +16,7 @@ import {
   OffcanvasHeader,
   OffcanvasTitle,
 } from "react-bootstrap";
-import styles from "../../styles/components/navbar.module.css";
+import styles from "../../styles/components/navbar.module.scss";
 import { PROPERTIES } from "@/src/components/lib/static";
 
 export default function ExamsNavbar(props: PropsWithChildren) {

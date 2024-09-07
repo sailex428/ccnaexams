@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Form } from "react-bootstrap";
 import AnswerContext from "@/src/components/answerContext";
 import type { QuestionType } from "@/types/database";
-import styles from "@/styles/components/question.module.css";
+import styles from "@/styles/components/question.module.scss";
 import ExamImage from "@/src/components/examImage";
 import LanguageContext from "@/src/components/languageContext";
 import { PROPERTIES } from "@/src/components/lib/static";

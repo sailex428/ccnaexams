@@ -7,7 +7,7 @@ import {
   faArrowRight,
   faFlagCheckered,
 } from "@fortawesome/free-solid-svg-icons";
-import styles from "@/styles/components/footer.module.css";
+import styles from "@/styles/components/footer.module.scss";
 import AnswerContext from "@/src/components/answerContext";
 import clsx from "clsx";
 

@@ -3,7 +3,7 @@
 import Footer from "@/src/components/footer";
 import { useQuestion } from "@/src/app/api/actions";
 import { QuestionType } from "@/types/database";
-import styles from "@/styles/pages/questionpage.module.css";
+import styles from "@/styles/pages/questionpage.module.scss";
 import Question from "@/src/components/question";
 import { useContext } from "react";
 import AnswerContext from "@/src/components/answerContext";
