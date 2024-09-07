@@ -12,9 +12,13 @@ const uri = "http://localhost:10051/api";
 
 const fetcher = (url: string) => fetch(url).then((response) => response.json());
 
-export function useQuestion(moduleId: string, questionId: number) {
+export function useQuestion(
+  examId: string,
+  moduleId: string,
+  questionId: number,
+) {
   const { data, isLoading, error } = useSWR<QuestionType[]>(
-    `${uri}/question/${moduleId}/${questionId}`,
+    `${uri}/question/${examId}/${moduleId}/${questionId}`,
     fetcher,
   );
 
@@ -25,11 +29,13 @@ export function useQuestion(moduleId: string, questionId: number) {
   };
 }
 
-export function useDetail(moduleId: string) {
-  const { data, isLoading, error } = useSWR<DetailType[]>(
-    `${uri}/detail/${moduleId}`,
-    fetcher,
-  );
+export function useDetail(examId: string, moduleId?: string) {
+  const url = moduleId
+    ? `${uri}/detail/${examId}/${moduleId}`
+    : `${uri}/detail/${examId}`;
+
+  const { data, isLoading, error } = useSWR<DetailType[]>(url, fetcher);
+
   return {
     detail: data === undefined ? ({} as DetailType) : data[0],
     isLoading: isLoading,
@@ -37,14 +43,14 @@ export function useDetail(moduleId: string) {
   };
 }
 
-export function useResult(moduleId: string) {
+export function useResult(examId: string, moduleId: string) {
   const { trigger, data, error, isMutating } = useSWRMutation<
     ResultType,
     Error,
     string,
     AnswersType[]
   >(
-    `${uri}/result/${moduleId}`,
+    `${uri}/result/${examId}/${moduleId}`,
     async (url, { arg }: { arg: AnswersType[] }) => {
       const response = await fetch(url, {
         method: "POST",

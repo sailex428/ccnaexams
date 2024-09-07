@@ -54,12 +54,14 @@ public class QuestionController {
         }
     }
 
-    @PostMapping(value = "/result/{moduleId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/result/{examId}/{moduleId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Result> postAnswers(
-            @PathVariable("moduleId") String moduleId, @RequestBody List<Answer> answer) {
+            @PathVariable("examId") String examId,
+            @PathVariable("moduleId") String moduleId,
+            @RequestBody List<Answer> answer) {
         try {
             return new ResponseEntity<>(
-                    resultManager.getResult(collection.getAnswers(moduleId).get(), answer).get(),
+                    resultManager.getResult(collection.getAnswers(examId, moduleId).get(), answer).get(),
                     HttpStatus.CREATED);
         } catch (InterruptedException | ExecutionException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

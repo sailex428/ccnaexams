@@ -59,13 +59,15 @@ public class QuestionCollection {
         return future;
     }
 
-    public CompletableFuture<List<Answer>> getAnswers(String moduleId) {
+    public CompletableFuture<List<Answer>> getAnswers(String examId, String moduleId) {
         CompletableFuture<List<Answer>> future = new CompletableFuture<>();
         List<Answer> answers = new ArrayList<>();
         this.getCollection()
                 .find(
                         Filters.and(
-                                Filters.eq(Fields.MODULE, moduleId), Filters.nin(Fields.TYPE, Fields.DETAIL)))
+                                Filters.eq(Fields.MODULE, moduleId),
+                                Filters.eq(Fields.EXAM, examId),
+                                Filters.nin(Fields.TYPE, Fields.DETAIL)))
                 .projection(Projections.include(Fields.ANSWER, Fields.NUMBER))
                 .forEach(answerObject -> answers.add(createAnswerObject(answerObject)));
         future.complete(answers);
