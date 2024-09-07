@@ -1,5 +1,3 @@
-"use client";
-
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { Button } from "react-bootstrap";
@@ -9,9 +7,9 @@ import {
   faArrowRight,
   faFlagCheckered,
 } from "@fortawesome/free-solid-svg-icons";
-import global from "@/styles/globals.css";
 import styles from "@/styles/components/footer.module.css";
 import AnswerContext from "@/src/components/answerContext";
+import clsx from "clsx";
 
 type FooterProps = {
   questionId: number;
@@ -27,7 +25,7 @@ export default function Footer({ questionId, moduleId }: FooterProps) {
         {questionId > 1 ? (
           <Button
             title={"back"}
-            className={global.button}
+            className={clsx("button")}
             onClick={() => {
               router.push(`/${moduleId}/${questionId - 1}`);
             }}
@@ -42,7 +40,7 @@ export default function Footer({ questionId, moduleId }: FooterProps) {
         {!examIsFinished ? (
           <Button
             title={"show result"}
-            className={global.button}
+            className={clsx("button")}
             onClick={() => {
               router.push(`/${moduleId}/result`);
             }}
@@ -55,7 +53,7 @@ export default function Footer({ questionId, moduleId }: FooterProps) {
         {questionId < numberOfQuestions ? (
           <Button
             title={"next"}
-            className={global.button}
+            className={clsx("button")}
             onClick={() => {
               router.push(`/${moduleId}/${parseInt(questionId + "") + 1}`);
             }}

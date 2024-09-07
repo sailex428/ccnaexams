@@ -1,5 +1,5 @@
-import styles from "@/styles/globals.css";
 import Image from "next/image";
+import clsx from "clsx";
 
 export default function ExamImage(question: { img: string }) {
   return (
@@ -8,7 +8,7 @@ export default function ExamImage(question: { img: string }) {
         <Image
           src={"data:image/png;base64," + question.img}
           alt={"question image"}
-          className={styles.image}
+          className={clsx("image")}
         />
       ) : (
         <></>

@@ -31,8 +31,10 @@ export default function Homepage() {
           >
             {subTitle}
           </h1>
-          <ModuleSelector />
         </div>
+      </div>
+      <div className={styles.moduleSelector}>
+        <ModuleSelector />
       </div>
     </main>
   );

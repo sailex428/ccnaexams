@@ -1,5 +1,3 @@
-"use client";
-
 import { VictoryLabel, VictoryPie } from "victory";
 
 type PieChartProps = {

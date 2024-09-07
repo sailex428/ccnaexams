@@ -13,12 +13,15 @@ export default function ModuleSelector() {
   const [examSection] = useProperties([MODULE_SELECTOR_EXAM_SECTION]);
   return (
     <div className={styles.selectionContainer}>
-      <button className={styles.dropDownButton}>
-        <FontAwesomeIcon icon={faAngleDown} />
-      </button>
-      <div className={clsx(styles.examSection, "defaultText")}>
-        {examSection}
-      </div>
+      {examSection.map((section) => (
+        <div className={styles.examSection} key={section}>
+          <div className={clsx(styles.examText, "defaultText")}>{section}</div>
+          <FontAwesomeIcon
+            icon={faAngleDown}
+            className={styles.dropDownButton}
+          />
+        </div>
+      ))}
     </div>
   );
 }

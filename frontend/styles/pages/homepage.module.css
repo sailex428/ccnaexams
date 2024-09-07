@@ -6,6 +6,7 @@
 
 .container {
     height: 50%;
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,6 +21,11 @@
     color: var(--text-color);
     font-weight: normal;
     font-size: 41px;
+}
+
+.moduleSelector {
+    display: flex;
+    justify-content: center;
 }
 
 .type {
