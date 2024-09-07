@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Setter
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/api")
 public class QuestionController {
@@ -21,29 +22,38 @@ public class QuestionController {
     private QuestionCollection collection;
     private ResultManager resultManager;
 
-    @CrossOrigin
-    @GetMapping(value = "/question/{moduleId}/{questionId}")
+    @GetMapping(value = "/question/{examId}/{moduleId}/{questionId}")
     public ResponseEntity<List<Document>> getQuestion(
-            @PathVariable("moduleId") String moduleId, @PathVariable("questionId") String questionId) {
+            @PathVariable("examId") String examId,
+            @PathVariable("moduleId") String moduleId,
+            @PathVariable("questionId") String questionId) {
         try {
             return new ResponseEntity<>(
-                    collection.getQuestion(moduleId, questionId).get(), HttpStatus.OK);
+                    collection.getQuestion(examId, moduleId, questionId).get(), HttpStatus.OK);
         } catch (InterruptedException | ExecutionException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @CrossOrigin
-    @GetMapping(value = "/detail/{moduleId}")
-    public ResponseEntity<List<Document>> getDetail(@PathVariable("moduleId") String moduleId) {
+    @GetMapping(value = "/detail/{examId}/{moduleId}")
+    public ResponseEntity<List<Document>> getDetail(
+            @PathVariable("examId") String examId, @PathVariable("moduleId") String moduleId) {
         try {
-            return new ResponseEntity<>(collection.getDetail(moduleId).get(), HttpStatus.OK);
+            return new ResponseEntity<>(collection.getDetail(examId, moduleId).get(), HttpStatus.OK);
         } catch (InterruptedException | ExecutionException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @CrossOrigin
+    @GetMapping(value = "/detail/{examId}")
+    public ResponseEntity<List<Document>> getDetail(@PathVariable("examId") String examId) {
+        try {
+            return new ResponseEntity<>(collection.getDetail(examId, null).get(), HttpStatus.OK);
+        } catch (InterruptedException | ExecutionException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping(value = "/result/{moduleId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Result> postAnswers(
             @PathVariable("moduleId") String moduleId, @RequestBody List<Answer> answer) {

@@ -12,5 +12,7 @@ public class Fields {
 
     public static String MODULE = "module";
 
+    public static String EXAM = "exam";
+
     public static String TYPE = "type";
 }

@@ -9,6 +9,7 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import lombok.Setter;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.springframework.stereotype.Service;
 
 @Setter
@@ -19,30 +20,41 @@ public class QuestionCollection {
 
     private DatabaseConfig databaseConfig;
 
-    public CompletableFuture<List<Document>> getQuestion(String moduleId, String questionId) {
+    public CompletableFuture<List<Document>> getQuestion(
+            String examId, String moduleId, String questionId) {
         CompletableFuture<List<Document>> future = new CompletableFuture<>();
         List<Document> question = new ArrayList<>();
         question.add(
                 this.getCollection()
                         .find(
                                 Filters.and(
-                                        Filters.eq(Fields.MODULE, moduleId), Filters.eq(Fields.NUMBER, questionId)))
+                                        Filters.eq(Fields.MODULE, moduleId),
+                                        Filters.eq(Fields.NUMBER, questionId),
+                                        Filters.eq(Fields.EXAM, examId)))
                         .projection(Projections.exclude(Fields.ANSWER, Fields._ID))
                         .first());
         future.complete(question);
         return future;
     }
 
-    public CompletableFuture<List<Document>> getDetail(String moduleId) {
+    public CompletableFuture<List<Document>> getDetail(String examId, String moduleId) {
         CompletableFuture<List<Document>> future = new CompletableFuture<>();
         List<Document> detail = new ArrayList<>();
+
+        Bson filter =
+                moduleId != null
+                        ? Filters.and(
+                                Filters.eq(Fields.MODULE, moduleId),
+                                Filters.eq(Fields.EXAM, examId),
+                                Filters.eq(Fields.TYPE, Fields.DETAIL))
+                        : Filters.and(Filters.eq(Fields.EXAM, examId), Filters.eq(Fields.TYPE, Fields.DETAIL));
+
         detail.add(
                 this.getCollection()
-                        .find(
-                                Filters.and(
-                                        Filters.eq(Fields.MODULE, moduleId), Filters.eq(Fields.TYPE, Fields.DETAIL)))
+                        .find(filter)
                         .projection(Projections.exclude(Fields.MODULE, Fields.TYPE, Fields._ID))
                         .first());
+
         future.complete(detail);
         return future;
     }
