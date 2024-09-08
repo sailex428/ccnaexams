@@ -35,9 +35,9 @@ export function useDetail(examId: string, moduleId?: string) {
     : `${uri}/detail/${examId}`;
 
   const { data, isLoading, error } = useSWR<DetailType[]>(url, fetcher);
-
+  console.log(data);
   return {
-    detail: data === undefined ? ({} as DetailType) : data[0],
+    details: data === undefined ? ([] as DetailType[]) : data,
     isLoading: isLoading,
     isError: error,
   };

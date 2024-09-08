@@ -49,11 +49,10 @@ public class QuestionCollection {
                                 Filters.eq(Fields.TYPE, Fields.DETAIL))
                         : Filters.and(Filters.eq(Fields.EXAM, examId), Filters.eq(Fields.TYPE, Fields.DETAIL));
 
-        detail.add(
-                this.getCollection()
-                        .find(filter)
-                        .projection(Projections.exclude(Fields.TYPE, Fields._ID))
-                        .first());
+        this.getCollection()
+                .find(filter)
+                .projection(Projections.exclude(Fields.TYPE, Fields._ID))
+                .forEach(detail::add);
 
         future.complete(detail);
         return future;
