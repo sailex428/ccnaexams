@@ -14,6 +14,7 @@ export type OptionType = {
 export type DetailType = {
   numberOfQuestions: number;
   title: LanguageStringType;
+  module: string;
 };
 
 export type LanguageArrayType = {

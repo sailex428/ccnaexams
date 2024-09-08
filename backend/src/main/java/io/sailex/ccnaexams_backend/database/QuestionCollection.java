@@ -52,7 +52,7 @@ public class QuestionCollection {
         detail.add(
                 this.getCollection()
                         .find(filter)
-                        .projection(Projections.exclude(Fields.MODULE, Fields.TYPE, Fields._ID))
+                        .projection(Projections.exclude(Fields.TYPE, Fields._ID))
                         .first());
 
         future.complete(detail);
