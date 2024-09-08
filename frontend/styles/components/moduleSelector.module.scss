@@ -1,3 +1,5 @@
+@import '../../styles/mixins.scss';
+
 .selectionContainer {
   display: flex;
   flex-direction: column;
@@ -8,16 +10,48 @@
   max-width: 550px;
   height: fit-content;
 
+  padding: 10px;
+
   border: 1px solid #232323;
   border-radius: 20px;
-
-  padding: 10px;
 
   background: linear-gradient(0deg, rgba(87, 87, 87, 0.16), rgba(5, 206, 69, 0));
 }
 
+.examContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border: 1px solid #232323;
+  border-radius: 15px;
+
+  width: 100%;
+}
+
 .examText {
   font-size: 22px;
+  color: var(--text-color);
+}
+
+.module {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.moduleContent {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 5px 20px 5px 20px;
+
+  @include defaultTextHover;
+}
+
+.moduleText {
+  font-size: 15px;
   color: var(--text-color);
 }
 
@@ -29,11 +63,17 @@
 .examSection {
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
   width: 100%;
-
-  border: 1px solid #232323;
-  border-radius: 15px;
+  cursor: pointer;
 
   padding: 15px;
+  border-radius: 15px;
+
+  transition: background 300ms ease-in-out;
+
+  &:hover {
+    background: rgba(108, 108, 108, 0.2);
+  }
 }
