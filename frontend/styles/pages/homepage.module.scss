@@ -39,8 +39,10 @@
     justify-content: center;
     background: black;
 
-    height: 30vh;
+    min-height: 30vh;
+    height: 100%;
     width: 100%;
+    padding-bottom: 20px;
 }
 
 .type {
