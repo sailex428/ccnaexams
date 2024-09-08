@@ -1,5 +1,5 @@
 .mainBackground {
-    height: 75vh;
+    height: 70vh;
     width: 100%;
     background: black;
     position: relative;
@@ -18,7 +18,7 @@
 }
 
 .container {
-    height: 60%;
+    height: 70vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -30,7 +30,7 @@
 }
 
 .headline {
-    color: white;
+    color: var(--text-color);
     font-weight: normal;
 }
 
@@ -39,7 +39,7 @@
     justify-content: center;
     background: black;
 
-    height: 25vh;
+    height: 30vh;
     width: 100%;
 }
 

@@ -24,6 +24,10 @@ export const PROPERTIES = {
     de: "... ihrer Antworten waren richtig.",
     en: "... of your answers are right.",
   },
+  NAVBAR: {
+    NAVBAR_LINK_HOME: "NAVBAR.LINK.HOME",
+    NAVBAR_LINK_EXAM: "NAVBAR.LINK.EXAM",
+  },
   HOMEPAGE: {
     HOMEPAGE_HEADLINE_TITLE: "HOMEPAGE.HEADLINE.TITLE",
     HOMEPAGE_HEADLINE_SUBTITLE: "HOMEPAGE.HEADLINE.SUBTITLE",

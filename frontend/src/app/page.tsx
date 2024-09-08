@@ -1,6 +1,5 @@
 import clsx from "clsx";
 import styles from "@/styles/pages/homepage.module.scss";
-import ExamsNavbar from "@/src/components/examsNavbar";
 import { useProperties } from "@/src/components/hooks/useProperties";
 import { PROPERTIES } from "@/src/components/lib/static";
 import ModuleSelector from "@/src/components/moduleSelector";
@@ -21,7 +20,6 @@ export default function Homepage() {
           <source src="/videos/dotsWave.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-        <ExamsNavbar />
         <div className={styles.container}>
           <div className={styles.content}>
             <h1 className={clsx(styles.headline, styles.type, "defaultText")}>
