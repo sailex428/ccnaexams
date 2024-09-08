@@ -5,23 +5,23 @@
   gap: 10px;
 
   width: 500px;
-  height: 55%;
+  height: fit-content;
 
   border: 1px solid #232323;
   border-radius: 20px;
 
   padding: 10px;
 
-  background: linear-gradient(0deg, rgba(127, 127, 127, 0.16), rgba(5, 206, 69, 0));
+  background: linear-gradient(0deg, rgba(87, 87, 87, 0.16), rgba(5, 206, 69, 0));
 }
 
 .examText {
-  font-size: 1.5rem;
+  font-size: 22px;
   color: var(--text-color);
 }
 
 .dropDownButton {
-  height: 35px;
+  height: 22px;
   color: var(--text-color);
 }
 

@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import styles from "@/styles/pages/homepage.module.css";
+import styles from "@/styles/pages/homepage.module.scss";
 import ExamsNavbar from "@/src/components/examsNavbar";
 import { useProperties } from "@/src/components/hooks/useProperties";
 import { PROPERTIES } from "@/src/components/lib/static";
@@ -15,27 +15,33 @@ export default function Homepage() {
     HOMEPAGE_HEADLINE_SUBTITLE,
   ]);
   return (
-    <main className={styles.mainBackground}>
-      <ExamsNavbar />
-      <div className={styles.container}>
-        <div className={styles.content}>
-          <h1 className={clsx(styles.headline, styles.type, "defaultText")}>
-            {title}
-          </h1>
-          <h1
-            className={clsx(
-              styles.headline,
-              styles.typeAndDelete,
-              "defaultText",
-            )}
-          >
-            {subTitle}
-          </h1>
+    <>
+      <div className={styles.mainBackground}>
+        <video className={styles.videoBackground} autoPlay loop muted>
+          <source src="/videos/dotsWave.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <ExamsNavbar />
+        <div className={styles.container}>
+          <div className={styles.content}>
+            <h1 className={clsx(styles.headline, styles.type, "defaultText")}>
+              {title}
+            </h1>
+            <h1
+              className={clsx(
+                styles.headline,
+                styles.typeAndDelete,
+                "defaultText",
+              )}
+            >
+              {subTitle}
+            </h1>
+          </div>
         </div>
       </div>
       <div className={styles.moduleSelector}>
         <ModuleSelector />
       </div>
-    </main>
+    </>
   );
 }

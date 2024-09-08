@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import styles from "../../styles/components/moduleSelector.module.css";
+import styles from "../../styles/components/moduleSelector.module.scss";
 import { PROPERTIES } from "@/src/components/lib/static";
 import { useProperties } from "./hooks/useProperties";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

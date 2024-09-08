@@ -11,13 +11,13 @@
 .brand {
     display: flex;
     align-items: center;
-    color: white;
+    color: var(--text-color);
     font-weight: bold;
     font-size: x-large;
 }
 
 .navLink {
-    color: white;
+    color: var(--text-color);
 }
 
 .dropdownItem {
