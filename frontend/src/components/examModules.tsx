@@ -29,7 +29,7 @@ export default function ExamModules(modules: {
   };
 
   return (
-    <div className={styles.examContainer}>
+    <div className={styles.examContainer} ref={sectionRef}>
       <div className={styles.examSection} onClick={() => handleClick()}>
         <div className={clsx(styles.examText, "defaultText")}>
           {modules.section}
