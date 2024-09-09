@@ -1,76 +1,36 @@
-"use client";
+import React, { PropsWithChildren } from "react";
+import styles from "../../styles/components/navbar.module.scss";
+import { PROPERTIES } from "@/src/components/lib/static";
+import { useProperties } from "@/src/components/hooks/useProperties";
+import clsx from "clsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDesktop } from "@fortawesome/free-solid-svg-icons";
 
-import Image from "next/image";
-import React, { PropsWithChildren, useContext } from "react";
-import LanguageContext from "@/src/components/languageContext";
-import {
-  Container,
-  Nav,
-  Navbar,
-  NavbarBrand,
-  NavbarOffcanvas,
-  NavbarToggle,
-  NavDropdown,
-  NavLink,
-  OffcanvasBody,
-  OffcanvasHeader,
-  OffcanvasTitle,
-} from "react-bootstrap";
-import styles from "../../styles/components/navbar.module.css";
-import { properties } from "@/src/components/lib/static";
+const {
+  NAVBAR: { NAVBAR_LINK_HOME, NAVBAR_LINK_EXAM },
+} = PROPERTIES;
 
 export default function ExamsNavbar(props: PropsWithChildren) {
-  const { setLang } = useContext(LanguageContext);
+  const [navbarHome, navbarExam] = useProperties([
+    NAVBAR_LINK_HOME,
+    NAVBAR_LINK_EXAM,
+  ]);
   return (
-    <div>
-      <Navbar expand={"sm"} className={styles.navigation}>
-        <Container className={styles.container}>
-          <NavbarBrand href={"/"} className={styles.brand}>
-            <Image
-              priority={true}
-              src="/logo-high.png"
-              alt="Logo"
-              className={styles.logo}
-              height={32}
-              width={32}
-            />
-            {properties.navBarHeading}
-          </NavbarBrand>
-          <NavbarToggle className={styles.toggle} />
-          <NavbarOffcanvas className={styles.offCanvas} placement="end">
-            <OffcanvasHeader closeButton>
-              <OffcanvasTitle className={`text-white`}>
-                {properties.navBarHeading}
-              </OffcanvasTitle>
-            </OffcanvasHeader>
-            <OffcanvasBody>
-              <Nav className={`justify-content-end flex-grow-1 pe-3`}>
-                <NavLink href={"/11-13"} className={styles.navLink}>
-                  {"Module 11-13"}
-                </NavLink>
-                <NavDropdown
-                  title={<span className={"text-white"}>Languages</span>}
-                >
-                  <NavDropdown.Item
-                    className={styles.dropdownItem}
-                    onClick={() => setLang("en")}
-                  >
-                    EN
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item
-                    className={styles.dropdownItem}
-                    onClick={() => setLang("de")}
-                  >
-                    GER
-                  </NavDropdown.Item>
-                </NavDropdown>
-              </Nav>
-            </OffcanvasBody>
-          </NavbarOffcanvas>
-        </Container>
-      </Navbar>
-      {props.children}
+    <div className={styles.navbarContainer}>
+      <div className={styles.navbar}>
+        <div className={styles.navLinkWrapper}>
+          <a className={clsx(styles.navLink, "defaultText")} href={"/"}>
+            <FontAwesomeIcon icon={faDesktop} className={styles.navIcon} />
+            {navbarHome}
+          </a>
+        </div>
+        <div className={styles.navLinkWrapper}>
+          <a className={clsx(styles.navLink, "defaultText")} href={"/"}>
+            {navbarExam}
+          </a>
+        </div>
+        {props.children}
+      </div>
     </div>
   );
 }

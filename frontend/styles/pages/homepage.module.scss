@@ -1,0 +1,94 @@
+.mainBackground {
+    height: 70vh;
+    width: 100%;
+    background: black;
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.videoBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.container {
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    width: 90%;
+    max-width: 500px;
+}
+
+.headline {
+    color: var(--text-color);
+    font-weight: normal;
+}
+
+.moduleSelector {
+    display: flex;
+    justify-content: center;
+    background: black;
+
+    min-height: 30vh;
+    height: 100%;
+    width: 100%;
+    padding-bottom: 20px;
+}
+
+.type {
+    width: 150px;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: type 750ms steps(20) normal both,
+    blinkTextCursor 500ms steps(20) 2 normal both;
+}
+
+.typeAndDelete {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typeAndDelete 6s steps(20) 700ms infinite normal both,
+    blinkTextCursor 750ms steps(20) 1s infinite normal;
+}
+
+@keyframes type {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 45%;
+    }
+}
+
+@keyframes typeAndDelete {
+    0% {
+        width: 0;
+    }
+    20% {
+        width: 100%;
+    }
+    80% {
+        width: 100%;
+    }
+    100% {
+        width: 0;
+    }
+}
+
+@keyframes blinkTextCursor {
+    from {
+        border-right: 3px solid rgba(193, 193, 193, 0.8);
+    }
+    to {
+        border-right: 3px solid rgba(193, 193, 193, 0);
+    }
+}

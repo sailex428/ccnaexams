@@ -1,0 +1,40 @@
+@import '../../styles/mixins.scss';
+
+.navbarContainer {
+    display: flex;
+    justify-content: center;
+
+    height: 7vh;
+    width: 100%;
+
+    position: fixed;
+    z-index: 1;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 90%;
+    max-width: 550px;
+}
+
+.navLinkWrapper {
+    @include defaultTextHover;
+}
+
+.navLink {
+    display: flex;
+    align-items: center;
+
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 19px;
+}
+
+.navIcon {
+    color: var(--text-color);
+    height: 16px;
+    margin-right: 5px;
+}

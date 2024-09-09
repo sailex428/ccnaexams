@@ -2,91 +2,63 @@ import { useContext } from "react";
 import { Form } from "react-bootstrap";
 import AnswerContext from "@/src/components/answerContext";
 import type { QuestionType } from "@/types/database";
-import styles from "@/styles/components/question.module.css";
+import styles from "@/styles/components/question.module.scss";
 import ExamImage from "@/src/components/examImage";
 import LanguageContext from "@/src/components/languageContext";
-import { properties } from "@/src/components/lib/static";
+import { PROPERTIES } from "@/src/components/lib/static";
 
 type QuestionProps = {
   question: QuestionType;
   examIsFinished: boolean;
 };
 
-export default function Question(props: QuestionProps) {
-  const { setUserAnswers, userAnswers } = useContext(AnswerContext);
+export default function Question({ question, examIsFinished }: QuestionProps) {
+  const { setUserAnswers } = useContext(AnswerContext);
   const { lang } = useContext(LanguageContext);
-  const currentQuestion = props.question;
-  let currentUserAnswers = userAnswers.find(
-    (answer) => answer?.number == currentQuestion.number,
-  )?.answer;
 
-  const handleAnswerChange = (newUserAnswer: string) => {
-    const newUserAnswers = userAnswers;
-
-    if (newUserAnswers === undefined) {
-      return;
-    }
-
-    if (currentUserAnswers == null || currentQuestion.type == "radio") {
-      currentUserAnswers = {
-        de: new Array(newUserAnswer),
-        en: new Array(newUserAnswer),
-      };
-    } else {
-      if (!currentUserAnswers[lang].includes(newUserAnswer)) {
-        currentUserAnswers[lang].push(newUserAnswer);
-      } else {
-        currentUserAnswers[lang].splice(
-          currentUserAnswers[lang].indexOf(newUserAnswer),
-          1,
-        );
-      }
-    }
-    newUserAnswers[parseInt(currentQuestion.number)] = {
-      answer: currentUserAnswers,
-      number: currentQuestion.number,
-    };
-    setUserAnswers(newUserAnswers);
+  const handleAnswerChange = (id: string) => {
+    setUserAnswers((prevUserAnswers = []) =>
+      prevUserAnswers.length === 0
+        ? [{ answer: [id], number: question.number }]
+        : prevUserAnswers.map((answer) =>
+            answer.number === question.number
+              ? {
+                  ...answer,
+                  answer: answer.answer.includes(id)
+                    ? answer.answer.filter((a) => a !== id)
+                    : [...answer.answer, id],
+                }
+              : answer,
+          ),
+    );
   };
 
   return (
     <div className={styles.container}>
       <Form>
-        <h6 className="fw-bold">
-          {currentQuestion.number}
+        <h5 className="fw-bold">
+          {question.number}
           {". "}
-          {currentQuestion.question[lang]}
-        </h6>
-        <ExamImage img={currentQuestion.img} />
-        {currentQuestion.options[lang].map((option, index) => (
+          {question.question[lang]}
+        </h5>
+        <ExamImage img={question.img} />
+        {question.options.map((option, index) => (
           <Form.Check key={index}>
             <Form.Check.Input
-              type={currentQuestion.type}
+              type={question.type}
               name={"group"}
-              onChange={() => handleAnswerChange(option)}
-              defaultChecked={
-                currentUserAnswers != null
-                  ? currentUserAnswers[lang].includes(option)
-                  : false
-              }
-              isValid={
-                props.examIsFinished
-                  ? currentQuestion.answer[lang].includes(option)
-                  : false
-              }
-              isInvalid={
-                props.examIsFinished
-                  ? !currentQuestion.answer[lang].includes(option)
-                  : false
-              }
+              onChange={() => handleAnswerChange(option.id)}
+              className={styles.checkbox}
             ></Form.Check.Input>
-            <Form.Check.Label>{option}</Form.Check.Label>
+            <Form.Check.Label className={styles.optionLabel}>
+              {option[lang]}
+            </Form.Check.Label>
           </Form.Check>
         ))}
-        {props.examIsFinished && currentQuestion.explanation[lang] ? (
+        {examIsFinished && question.explanation[lang] ? (
           <div className={styles.explanation}>
-            <h6>{properties.questionPageExplanation[lang]}</h6>
-            {currentQuestion.explanation[lang]}
+            <h6>{PROPERTIES.questionPageExplanation[lang]}</h6>
+            {question.explanation[lang]}
           </div>
         ) : (
           <></>

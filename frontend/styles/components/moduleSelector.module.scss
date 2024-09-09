@@ -1,0 +1,112 @@
+@import '../../styles/mixins.scss';
+
+.selectionContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  width: 90%;
+  max-width: 550px;
+  height: fit-content;
+
+  padding: 10px;
+
+  border: 1px solid #151515;
+  border-radius: 20px;
+}
+
+.examContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border: 1px solid #151515;
+  border-radius: 15px;
+
+  width: 100%;
+}
+
+.examText {
+  font-size: 22px;
+  color: var(--text-color);
+}
+
+.module {
+  width: 100%;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.75s ease-in-out, opacity 0.75s ease-in-out;
+  opacity: 0;
+}
+
+.module.open {
+  max-height: 1000px;
+  opacity: 1;
+}
+
+.moduleContent {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+
+  text-decoration: none;
+  color: var(--text-color);
+
+  padding: 5px 20px 5px 20px;
+
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  animation: fadeIn 0.5s forwards;
+  animation-delay: 0.5s;
+
+  @include defaultTextHover;
+}
+
+.module.open .moduleContent {
+  opacity: 1;
+}
+
+.moduleText {
+  font-size: 15px;
+  color: var(--text-color);
+}
+
+.dropDownButton {
+  height: 22px;
+  color: var(--text-color);
+}
+
+.examSection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  cursor: pointer;
+
+  padding: 15px;
+  border-radius: 15px;
+
+  transition: background 300ms ease-in-out;
+
+  &:hover {
+    background: rgb(21, 21, 21, 0.7);
+  }
+}
+
+.rotate {
+  transition: transform 250ms ease-out;
+  transform: rotate(180deg);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

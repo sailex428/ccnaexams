@@ -1,12 +1,16 @@
-"use client";
-
 import { VictoryLabel, VictoryPie } from "victory";
 
-export default function PieChart(props: {
+type PieChartProps = {
   firstPartOfChart: number;
   secondPartOfChart: number;
   label: string;
-}) {
+};
+
+export default function PieChart({
+  firstPartOfChart,
+  secondPartOfChart,
+  label,
+}: PieChartProps) {
   return (
     <>
       <svg height={"200px"} width={"200px"} viewBox={"0 0 200 200"}>
@@ -15,8 +19,8 @@ export default function PieChart(props: {
           width={200}
           height={200}
           data={[
-            { x: "", y: props.firstPartOfChart },
-            { x: "", y: props.secondPartOfChart },
+            { x: "", y: firstPartOfChart },
+            { x: "", y: secondPartOfChart },
           ]}
           innerRadius={80}
           labelRadius={100}
@@ -33,7 +37,7 @@ export default function PieChart(props: {
             fontFamily: "Helvetica",
             fontWeight: "bold",
           }}
-          text={props.label}
+          text={label}
         />
       </svg>
     </>
