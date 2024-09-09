@@ -12,10 +12,8 @@
 
   padding: 10px;
 
-  border: 1px solid #232323;
+  border: 1px solid #151515;
   border-radius: 20px;
-
-  background: linear-gradient(0deg, rgba(87, 87, 87, 0.16), rgba(5, 206, 69, 0));
 }
 
 .examContainer {
@@ -23,7 +21,7 @@
   flex-direction: column;
   align-items: center;
 
-  border: 1px solid #232323;
+  border: 1px solid #151515;
   border-radius: 15px;
 
   width: 100%;
@@ -36,18 +34,39 @@
 
 .module {
   width: 100%;
-  margin-bottom: 10px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.75s ease-in-out, opacity 0.75s ease-in-out;
+  opacity: 0;
+}
+
+.module.open {
+  max-height: 1000px;
+  opacity: 1;
 }
 
 .moduleContent {
+  @include defaultTextHover;
+
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  gap: 20px;
+
+  text-decoration: none;
+  color: var(--text-color);
 
   padding: 5px 20px 5px 20px;
 
-  @include defaultTextHover;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  animation: fadeIn 0.5s forwards;
+  animation-delay: 0.5s;
+}
+
+.module.open .moduleContent {
+  opacity: 1;
 }
 
 .moduleText {
@@ -74,6 +93,20 @@
   transition: background 300ms ease-in-out;
 
   &:hover {
-    background: rgba(108, 108, 108, 0.2);
+    background: rgb(21, 21, 21, 0.7);
+  }
+}
+
+.rotate {
+  transition: transform 250ms ease-out;
+  transform: rotate(180deg);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
