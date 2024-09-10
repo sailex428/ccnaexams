@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useRef } from "react";
 import styles from "../../styles/components/moduleSelector.module.scss";
 import clsx from "clsx";
@@ -13,16 +11,17 @@ import Link from "next/link";
 
 export default function ExamModules(modules: {
   section: string;
-  exam: number;
+  exam: string;
 }) {
+  console.log(modules.exam);
   const { lang } = useContext(LanguageContext);
   const { details, isLoading, isError } = useDetail(`${modules.exam}`);
-  const [openSection, setOpenSection] = useState<number>(0);
+  const [openSection, setOpenSection] = useState<string>("");
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const handleClick = () => {
     const isOpening = modules.exam !== openSection;
-    setOpenSection(isOpening ? modules.exam : 0);
+    setOpenSection(isOpening ? modules.exam : "");
     if (isOpening && sectionRef.current) {
       sectionRef.current.scrollIntoView({ behavior: "smooth" });
     }
@@ -52,7 +51,7 @@ export default function ExamModules(modules: {
           </Spinner>
         )}
         {isError && (
-          <div className="mx-3 mt-2 fw-bold defaultText">
+          <div className="mt-2 mx-2 fw-bold defaultText">
             An Error occurred.
           </div>
         )}

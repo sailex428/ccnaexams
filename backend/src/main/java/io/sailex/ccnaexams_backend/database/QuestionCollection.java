@@ -58,6 +58,17 @@ public class QuestionCollection {
         return future;
     }
 
+    public CompletableFuture<List<Document>> getExams() {
+        CompletableFuture<List<Document>> future = new CompletableFuture<>();
+        List<Document> exams = new ArrayList<>();
+        this.getCollection()
+                .find(Filters.eq(Fields.TYPE, Fields.EXAM))
+                .projection(Projections.exclude(Fields.TYPE, Fields._ID))
+                .forEach(exams::add);
+        future.complete(exams);
+        return future;
+    }
+
     public CompletableFuture<List<Answer>> getAnswers(String examId, String moduleId) {
         CompletableFuture<List<Answer>> future = new CompletableFuture<>();
         List<Answer> answers = new ArrayList<>();

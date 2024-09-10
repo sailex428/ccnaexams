@@ -54,6 +54,15 @@ public class QuestionController {
         }
     }
 
+    @GetMapping(value = "/exams")
+    public ResponseEntity<List<Document>> getExams() {
+        try {
+            return new ResponseEntity<>(collection.getExams().get(), HttpStatus.OK);
+        } catch (InterruptedException | ExecutionException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping(value = "/result/{examId}/{moduleId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Result> postAnswers(
             @PathVariable("examId") String examId,

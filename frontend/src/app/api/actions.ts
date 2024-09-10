@@ -3,6 +3,7 @@ import useSWRMutation from "swr/mutation";
 import {
   AnswersType,
   DetailType,
+  ExamType,
   QuestionType,
   ResultType,
 } from "@/types/database";
@@ -35,9 +36,22 @@ export function useDetail(examId: string, moduleId?: string) {
     : `${uri}/detail/${examId}`;
 
   const { data, isLoading, error } = useSWR<DetailType[]>(url, fetcher);
-  console.log(data);
+
   return {
     details: data === undefined ? ([] as DetailType[]) : data,
+    isLoading: isLoading,
+    isError: error,
+  };
+}
+
+export function useExams() {
+  const { data, isLoading, error } = useSWR<ExamType[]>(
+    `${uri}/exams`,
+    fetcher,
+  );
+
+  return {
+    exams: data === undefined ? ([] as ExamType[]) : data,
     isLoading: isLoading,
     isError: error,
   };

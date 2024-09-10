@@ -6,14 +6,12 @@ import ExamModulesSelector from "@/src/components/examModulesSelector";
 
 const {
   HOMEPAGE: { HOMEPAGE_HEADLINE_TITLE, HOMEPAGE_HEADLINE_SUBTITLE },
-  MODULE_SELECTOR: { MODULE_SELECTOR_EXAM_SECTION },
 } = PROPERTIES;
 
 export default function Homepage() {
-  const [title, subTitle, examSections] = useProperties([
+  const [title, subTitle] = useProperties([
     HOMEPAGE_HEADLINE_TITLE,
     HOMEPAGE_HEADLINE_SUBTITLE,
-    MODULE_SELECTOR_EXAM_SECTION,
   ]);
   return (
     <>
@@ -40,7 +38,7 @@ export default function Homepage() {
         </div>
       </div>
       <div className={styles.moduleSelector}>
-        <ExamModulesSelector examSections={examSections} />
+        <ExamModulesSelector />
       </div>
     </>
   );

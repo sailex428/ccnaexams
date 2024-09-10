@@ -11,10 +11,16 @@ import AnswerContext from "@/src/components/answerContext";
 export default function QuestionPage({
   params,
 }: {
-  params: { questionId: number; moduleId: string; question: QuestionType[] };
+  params: {
+    examId: string;
+    questionId: number;
+    moduleId: string;
+    question: QuestionType[];
+  };
 }) {
   const { examIsFinished } = useContext(AnswerContext);
   const { question, isLoading, isError } = useQuestion(
+    params.examId,
     params.moduleId,
     params.questionId,
   );

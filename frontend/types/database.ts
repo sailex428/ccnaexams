@@ -11,6 +11,11 @@ export type OptionType = {
   id: string;
 } & LanguageArrayType;
 
+export type ExamType = {
+  exam: string;
+  title: string;
+};
+
 export type DetailType = {
   numberOfQuestions: number;
   title: LanguageStringType;

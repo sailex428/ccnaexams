@@ -13,12 +13,18 @@ import LanguageContext from "@/src/components/languageContext";
 export default function ResultPage({
   params,
 }: {
-  params: { moduleId: string; questionId: number; question: QuestionType[] };
+  params: {
+    examId: string;
+    moduleId: string;
+    questionId: number;
+    question: QuestionType[];
+  };
 }) {
   const { numberOfQuestions, userAnswers, setExamIsFinished } =
     useContext(AnswerContext);
   const { lang } = useContext(LanguageContext);
   const { result, isError, isMutating, postAnswers } = useResult(
+    params.examId,
     params.moduleId,
   );
 
