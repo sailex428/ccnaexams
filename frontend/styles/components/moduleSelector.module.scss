@@ -12,8 +12,8 @@
 
   padding: 10px;
 
-  border: 1px solid #151515;
-  border-radius: 20px;
+  //border: 1px solid #151515;
+  //border-radius: 20px;
 }
 
 .examContainer {
@@ -55,7 +55,7 @@
   text-decoration: none;
   color: var(--text-color);
 
-  padding: 5px 20px 5px 20px;
+  padding: 5px 17px 5px 17px;
 
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
@@ -63,6 +63,10 @@
   animation-delay: 0.5s;
 
   @include defaultTextHover;
+}
+
+.moduleContentWrapper {
+  margin-bottom: 10px;
 }
 
 .module.open .moduleContent {

@@ -55,8 +55,8 @@ export default function ExamModules(modules: {
             An Error occurred.
           </div>
         )}
-        {details && (
-          <div>
+        {details.length !== 0 && (
+          <div className={styles.moduleContentWrapper}>
             {details.map((detail) => (
               <Link
                 className={styles.moduleContent}
