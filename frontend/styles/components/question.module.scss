@@ -1,49 +1,66 @@
-.container {
-    margin: 20px 0 35% 0;
-    padding: 15px;
-    border-radius: 10px;
-    background-color: aliceblue;
-}
+@import '../../styles/mixins.scss';
 
 .heading {
     font-weight: bold;
+    color: var(--text-color);
     word-wrap: anywhere;
 }
 
-.answerContainer {
+.optionContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+
+    margin-top: 17px;
+    margin-bottom: 5px;
+}
+
+.optionContainer input {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.optionContainer input[type=checkbox] + label {
+    color: var(--text-color);
+    font-size: 18px;
+    border: 1px solid rgba(21, 21, 21, 0.7);
+    border-radius: 15px;
+    min-height: 50px;
+
+    @include defaultButtonHover;
+}
+
+.optionContainer input[type=checkbox]:checked + label {
+    font-weight: bold;
+    border: 1px solid #212121;
+    background: rgba(23, 31, 54, 0.7);
+}
+
+.hidden {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.optionLabel {
     display: flex;
-    justify-content: space-around;
-    flex-direction: column;
-    word-wrap: anywhere;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+}
+
+.optionText {
+    font-size: 20px;
+    color: var(--text-color);
 }
 
 .explanation {
     margin-top: 15px;
     padding: 7px;
-    background-color: #9fea9f;
+    background-color: #003600;
     border-radius: 5px;
     word-wrap: anywhere;
-}
-
-.options {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-content: center;
-}
-
-.checkbox {
-    transform: scale(1.5);
-    margin-top: 9px;
-}
-
-.optionLabel {
-    font-size: larger;
-    margin-top: 3px;
-}
-
-@media only screen and (max-width: 500px) {
-    .options {
-        flex-direction: column-reverse;
-    }
 }

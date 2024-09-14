@@ -1,0 +1,28 @@
+@import '../../styles/mixins.scss';
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  max-width: 550px;
+  width: 90%;
+
+  border: 1px solid rgba(21, 21, 21, 0.7);
+  border-radius: 15px;
+  padding: 15px 20px;
+  background: rgba(15, 20, 34, 0.7);
+}
+
+.button {
+  padding: 10px 25px;
+  cursor: pointer;
+
+  border: 1px solid rgba(21, 21, 21, 0.7);
+  border-radius: 15px;
+  background: rgba(0, 0, 0);
+
+  @include defaultButtonHover;
+}
+
+.arrowIcon {
+  color: var(--text-color);
+}
