@@ -88,6 +88,7 @@ export default function QuestionPage({
         <Question
           question={randomizedQuestions[currentQuestionIndex]}
           examIsFinished={examIsFinished}
+          currentQuestion={currentQuestionIndex + 1}
         />
       </div>
       {isDesktop && (

@@ -10,9 +10,14 @@ import LanguageContext from "@/src/components/context/languageContext";
 type QuestionProps = {
   question: QuestionType;
   examIsFinished: boolean;
+  currentQuestion: number;
 };
 
-export default function Question({ question, examIsFinished }: QuestionProps) {
+export default function Question({
+  question,
+  examIsFinished,
+  currentQuestion,
+}: QuestionProps) {
   const { setUserAnswers } = useContext(AnswerContext);
   const { lang } = useContext(LanguageContext);
 
@@ -21,7 +26,7 @@ export default function Question({ question, examIsFinished }: QuestionProps) {
   return (
     <div>
       <h5 className={clsx(styles.heading, "defaultText")}>
-        {question.question[lang]}
+        {`${currentQuestion}. ${question.question[lang]}`}
       </h5>
       <ExamImage img={question.img} />
       <div className={styles.optionContainer}>
