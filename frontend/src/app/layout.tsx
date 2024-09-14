@@ -1,9 +1,9 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.scss";
-import { AnswerContextProvider } from "@/src/components/answerContext";
-import { LanguageContextProvider } from "@/src/components/languageContext";
 import ExamsNavbar from "@/src/components/examsNavbar";
+import { LanguageContextProvider } from "@/src/components/context/languageContext";
+import { AnswerContextProvider } from "@/src/components/context/answerContext";
 
 export default function RootLayout({
   children,
