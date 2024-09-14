@@ -1,7 +1,7 @@
 import Image from "next/image";
 import clsx from "clsx";
 
-export default function ExamImage(question: { img: string }) {
+const ExamImage = (question: { img: string }) => {
   return (
     <>
       {question.img ? (
@@ -15,4 +15,6 @@ export default function ExamImage(question: { img: string }) {
       )}
     </>
   );
-}
+};
+
+export default ExamImage;

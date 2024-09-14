@@ -6,11 +6,11 @@ type PieChartProps = {
   label: string;
 };
 
-export default function PieChart({
+const ExamPieChart = ({
   firstPartOfChart,
   secondPartOfChart,
   label,
-}: PieChartProps) {
+}: PieChartProps) => {
   return (
     <>
       <svg height={"200px"} width={"200px"} viewBox={"0 0 200 200"}>
@@ -42,4 +42,6 @@ export default function PieChart({
       </svg>
     </>
   );
-}
+};
+
+export default ExamPieChart;

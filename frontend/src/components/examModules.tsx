@@ -5,15 +5,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { useDetail } from "@/src/app/api/actions";
 import { useContext, useState } from "react";
-import LanguageContext from "@/src/components/languageContext";
 import { Spinner } from "react-bootstrap";
 import Link from "next/link";
+import LanguageContext from "@/src/components/context/languageContext";
 
-export default function ExamModules(modules: {
-  section: string;
-  exam: string;
-}) {
-  console.log(modules.exam);
+const ExamModules = (modules: { section: string; exam: string }) => {
   const { lang } = useContext(LanguageContext);
   const { details, isLoading, isError } = useDetail(`${modules.exam}`);
   const [openSection, setOpenSection] = useState<string>("");
@@ -76,4 +72,6 @@ export default function ExamModules(modules: {
       </div>
     </div>
   );
-}
+};
+
+export default ExamModules;

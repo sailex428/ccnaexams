@@ -2,13 +2,12 @@
 
 import { useContext, useEffect } from "react";
 import { useResult } from "@/src/app/api/actions";
-import PieChart from "@/src/components/pieChart";
-import AnswerContext from "@/src/components/answerContext";
+import ExamPieChart from "@/src/components/examPieChart";
 import styles from "@/styles/components/results.module.scss";
 import { QuestionType } from "@/types/database";
-import ResultFooter from "@/src/components/resultFooter";
 import { PROPERTIES } from "@/src/components/lib/static";
-import LanguageContext from "@/src/components/languageContext";
+import AnswerContext from "@/src/components/context/answerContext";
+import LanguageContext from "@/src/components/context/languageContext";
 
 export default function ResultPage({
   params,
@@ -60,7 +59,7 @@ export default function ResultPage({
         <div className={styles.result}>
           <h5 className="fw-bold">{PROPERTIES.resultPageHeading[lang]}</h5>
           <div className={styles.pieChart}>
-            <PieChart
+            <ExamPieChart
               label={percentageOfRightAnswers + "%"}
               firstPartOfChart={result.rightAnswersCount}
               secondPartOfChart={numberOfQuestions - result.rightAnswersCount}
@@ -69,7 +68,6 @@ export default function ResultPage({
           <p className="fw-bold mt-3">{PROPERTIES.resultPageText[lang]}</p>
         </div>
       </div>
-      <ResultFooter moduleId={params.moduleId} />
     </>
   );
 }

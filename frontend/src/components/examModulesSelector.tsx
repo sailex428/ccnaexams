@@ -6,7 +6,7 @@ import { useExams } from "@/src/app/api/actions";
 import { Spinner } from "react-bootstrap";
 import React from "react";
 
-export default function ExamModulesSelector() {
+const ExamModulesSelector = () => {
   const { exams, isError, isLoading } = useExams();
 
   if (isLoading) {
@@ -28,4 +28,6 @@ export default function ExamModulesSelector() {
       ))}
     </div>
   );
-}
+};
+
+export default ExamModulesSelector;

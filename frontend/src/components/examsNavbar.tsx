@@ -10,7 +10,7 @@ const {
   NAVBAR: { NAVBAR_LINK_HOME, NAVBAR_LINK_EXAM },
 } = PROPERTIES;
 
-export default function ExamsNavbar(props: PropsWithChildren) {
+const ExamsNavbar = (props: PropsWithChildren) => {
   const [navbarHome, navbarExam] = useProperties([
     NAVBAR_LINK_HOME,
     NAVBAR_LINK_EXAM,
@@ -33,4 +33,6 @@ export default function ExamsNavbar(props: PropsWithChildren) {
       </div>
     </div>
   );
-}
+};
+
+export default ExamsNavbar;
