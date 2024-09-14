@@ -3,7 +3,6 @@ export type QuestionType = {
   question: LanguageStringType;
   options: OptionType[];
   explanation: LanguageStringType;
-  type: "checkbox" | "radio";
   img: string;
 };
 

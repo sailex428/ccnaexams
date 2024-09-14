@@ -20,20 +20,19 @@ public class QuestionCollection {
 
     private DatabaseConfig databaseConfig;
 
-    public CompletableFuture<List<Document>> getQuestion(
-            String examId, String moduleId, String questionId) {
+    public CompletableFuture<List<Document>> getQuestions(String examId, String moduleId) {
         CompletableFuture<List<Document>> future = new CompletableFuture<>();
-        List<Document> question = new ArrayList<>();
-        question.add(
-                this.getCollection()
-                        .find(
-                                Filters.and(
-                                        Filters.eq(Fields.MODULE, moduleId),
-                                        Filters.eq(Fields.NUMBER, questionId),
-                                        Filters.eq(Fields.EXAM, examId)))
-                        .projection(Projections.exclude(Fields.ANSWER, Fields._ID))
-                        .first());
-        future.complete(question);
+        List<Document> questions = new ArrayList<>();
+
+        this.getCollection()
+                .find(
+                        Filters.and(
+                                Filters.eq(Fields.MODULE, moduleId),
+                                Filters.eq(Fields.EXAM, examId),
+                                Filters.eq(Fields.TYPE, Fields.QUESTION)))
+                .projection(Projections.exclude(Fields.ANSWER, Fields._ID))
+                .forEach(questions::add);
+        future.complete(questions);
         return future;
     }
 

@@ -13,18 +13,14 @@ const uri = "http://localhost:10051/api";
 
 const fetcher = (url: string) => fetch(url).then((response) => response.json());
 
-export function useQuestion(
-  examId: string,
-  moduleId: string,
-  questionId: number,
-) {
+export function useQuestions(examId: string, moduleId: string) {
   const { data, isLoading, error } = useSWR<QuestionType[]>(
-    `${uri}/question/${examId}/${moduleId}/${questionId}`,
+    `${uri}/questions/${examId}/${moduleId}`,
     fetcher,
   );
 
   return {
-    question: data === undefined ? ({} as QuestionType) : data[0],
+    questions: data === undefined ? ([] as QuestionType[]) : data,
     isLoading: isLoading,
     isError: error,
   };
