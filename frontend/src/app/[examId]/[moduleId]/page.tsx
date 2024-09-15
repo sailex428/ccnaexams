@@ -3,7 +3,7 @@
 import { useDetail, useQuestions } from "@/src/app/api/actions";
 import { QuestionType } from "@/types/database";
 import styles from "@/styles/pages/questionpage.module.scss";
-import Question from "@/src/components/question";
+import ExamQuestion from "@/src/components/examQuestion";
 import React, { useContext, useEffect, useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import { isDesktop, isMobile } from "react-device-detect";
@@ -105,7 +105,7 @@ export default function QuestionPage({
           setQuestionAnimation(0);
         }}
       >
-        <Question
+        <ExamQuestion
           question={randomizedQuestions[currentQuestionIndex]}
           examIsFinished={examIsFinished}
           currentQuestion={currentQuestionIndex}

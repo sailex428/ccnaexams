@@ -13,7 +13,7 @@ type QuestionProps = {
   currentQuestion: number;
 };
 
-export default function Question({
+export default function ExamQuestion({
   question,
   examIsFinished,
   currentQuestion,
