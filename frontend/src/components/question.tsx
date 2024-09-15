@@ -24,9 +24,9 @@ export default function Question({
   const handleAnswerChange = (id: string) => {};
 
   return (
-    <div>
+    <>
       <h5 className={clsx(styles.heading, "defaultText")}>
-        {`${currentQuestion}. ${question.question[lang]}`}
+        {`${currentQuestion + 1}. ${question.question[lang]}`}
       </h5>
       <ExamImage img={question.img} />
       <div className={styles.optionContainer}>
@@ -55,6 +55,6 @@ export default function Question({
       ) : (
         <></>
       )}
-    </div>
+    </>
   );
 }

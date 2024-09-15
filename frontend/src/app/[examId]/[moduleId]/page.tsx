@@ -4,11 +4,12 @@ import { useDetail, useQuestions } from "@/src/app/api/actions";
 import { QuestionType } from "@/types/database";
 import styles from "@/styles/pages/questionpage.module.scss";
 import Question from "@/src/components/question";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import { isDesktop, isMobile } from "react-device-detect";
 import ExamNavigationButtons from "@/src/components/examNavigationButtons";
 import AnswerContext from "@/src/components/context/answerContext";
+import { getCookie, setCookie } from "cookies-next";
 
 export default function QuestionPage({
   params,
@@ -19,7 +20,11 @@ export default function QuestionPage({
     question: QuestionType[];
   };
 }) {
+  const [randomizedQuestions, setRandomizedQuestions] = useState<
+    QuestionType[]
+  >([] as QuestionType[]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
+  const [questionAnimation, setQuestionAnimation] = useState<number>(0);
   const { examIsFinished } = useContext(AnswerContext);
   const {
     details,
@@ -32,24 +37,39 @@ export default function QuestionPage({
     params.moduleId,
   );
 
-  const randomizeQuestions = (questions: QuestionType[], length: number) => {
-    return Array.from({ length }, (_, i) => i + 1)
-      .sort(() => Math.random() - 0.5)
-      .map(
-        (n) =>
-          questions.find((q) => parseInt(q.number) === n) ??
-          ({} as QuestionType),
-      );
+  useEffect(() => {
+    if (!isLoading && !isDetailLoading && questions.length > 0) {
+      const savedOrder = getCookie("questionOrder");
+      if (savedOrder) {
+        const order = JSON.parse(savedOrder);
+        const orderedQuestions = order.map((index: number) => questions[index]);
+        setRandomizedQuestions(orderedQuestions);
+      } else {
+        const order = randomizeOrder(questions.length);
+        const orderedQuestions = order.map((index: number) => questions[index]);
+        setRandomizedQuestions(orderedQuestions);
+        setCookie("questionOrder", JSON.stringify(order), {
+          expires: new Date(new Date().getTime() + 1000 * 60 * 60 * 24),
+          sameSite: "strict",
+        });
+      }
+    }
+  }, [isLoading, isDetailLoading, questions, details]);
+
+  const randomizeOrder = (length: number) => {
+    return Array.from({ length }, (_, i) => i).sort(() => Math.random() - 0.5);
   };
 
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
+      setQuestionAnimation(1);
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     }
   };
 
   const handlePreviousQuestion = () => {
     if (currentQuestionIndex > 0) {
+      setQuestionAnimation(-1);
       setCurrentQuestionIndex(currentQuestionIndex - 1);
     }
   };
@@ -57,15 +77,9 @@ export default function QuestionPage({
   const swipeHandler = useSwipeable({
     onSwipedLeft: handleNextQuestion,
     onSwipedRight: handlePreviousQuestion,
-    trackMouse: true,
   });
 
-  const randomizedQuestions = randomizeQuestions(
-    questions ?? [],
-    details[0]?.numberOfQuestions,
-  );
-
-  if (isLoading || isDetailLoading) {
+  if (isLoading || isDetailLoading || randomizedQuestions.length === 0) {
     return <></>;
   }
 
@@ -84,21 +98,27 @@ export default function QuestionPage({
       {...(isMobile ? swipeHandler : {})}
       className={styles.questionBackground}
     >
-      <div className={styles.questionContainer}>
+      <div
+        className={styles.questionContainer}
+        data-question={questionAnimation}
+        onAnimationEnd={() => {
+          setQuestionAnimation(0);
+        }}
+      >
         <Question
           question={randomizedQuestions[currentQuestionIndex]}
           examIsFinished={examIsFinished}
-          currentQuestion={currentQuestionIndex + 1}
+          currentQuestion={currentQuestionIndex}
         />
+        {isDesktop && (
+          <ExamNavigationButtons
+            currentQuestionIndex={currentQuestionIndex}
+            totalQuestions={details[0]?.numberOfQuestions}
+            onPreviousQuestion={handlePreviousQuestion}
+            onNextQuestion={handleNextQuestion}
+          />
+        )}
       </div>
-      {isDesktop && (
-        <ExamNavigationButtons
-          currentQuestionIndex={currentQuestionIndex}
-          totalQuestions={details[0]?.numberOfQuestions}
-          onPreviousQuestion={handlePreviousQuestion}
-          onNextQuestion={handleNextQuestion}
-        />
-      )}
     </div>
   );
 }

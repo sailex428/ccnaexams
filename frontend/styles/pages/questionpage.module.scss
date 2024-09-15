@@ -4,9 +4,8 @@
     align-items: center;
     justify-content: center;
 
-    background-color: #000000;
+    background: linear-gradient(135deg, #000000, #090c15);
     min-height: 100vh;
-    gap: 17px;
 }
 
 .questionContainer {
@@ -18,4 +17,35 @@
     border: 1px solid rgba(21, 21, 21, 0.7);
     border-radius: 15px;
     background: rgba(15, 20, 34, 0.7);
+    overflow: hidden;
+}
+
+.questionContainer[data-question='-1'] {
+    animation: preQuestion 0.5s ease-in-out;
+}
+
+.questionContainer[data-question='1'] {
+    animation: nextQuestion 0.5s ease-in-out;
+}
+
+@keyframes preQuestion {
+    from {
+        opacity: 0;
+        transform: translateX(-100vw);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes nextQuestion {
+    from {
+        opacity: 0;
+        transform: translateX(100vw);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }

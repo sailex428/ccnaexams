@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import styles from "@/styles/pages/homepage.module.scss";
-import { useProperties } from "@/src/components/hooks/useProperties";
+import { useProperties } from "@/src/components/hook/useProperties";
 import { PROPERTIES } from "@/src/components/lib/static";
 import ExamModulesSelector from "@/src/components/examModulesSelector";
 

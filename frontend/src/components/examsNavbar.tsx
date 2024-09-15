@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import styles from "../../styles/components/navbar.module.scss";
 import { PROPERTIES } from "@/src/components/lib/static";
-import { useProperties } from "@/src/components/hooks/useProperties";
+import { useProperties } from "@/src/components/hook/useProperties";
 import clsx from "clsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDesktop } from "@fortawesome/free-solid-svg-icons";
