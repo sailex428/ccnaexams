@@ -11,9 +11,9 @@
   padding: 15px 25px;
   cursor: pointer;
 
-  border: 1px solid rgba(21, 21, 21, 0.7);
+  border: 1px solid rgba(21, 21, 21, 0.9);
   border-radius: 15px;
-  background: rgba(0, 0, 0);
+  background-color: rgba(18, 25, 44, 0.7);
 
   @include defaultButtonHover;
 }
