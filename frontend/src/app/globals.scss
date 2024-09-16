@@ -9,20 +9,6 @@
     font-style: normal;
 }
 
-.button {
-    padding: 12px 30px 12px 30px;
-    background-color: rgb(70, 179, 243);
-    border: solid 2px rgb(72, 182, 246);
-    border-radius: 13px;
-
-}
-
-.button:hover {
-    color: rgb(70, 179, 243);
-    background-color: white;
-    border: solid 2px rgb(72, 182, 246);
-}
-
 .defaultBackground {
     display: flex;
     justify-content: center;
@@ -31,6 +17,10 @@
 
     background-color: black;
     color: white;
+}
+
+.defaultIcon {
+    color: var(--text-color);
 }
 
 .notfound {
@@ -47,12 +37,4 @@
     margin-top: 100px;
     width: 550px;
     max-width: 90%;
-}
-
-@media only screen and (max-width: 500px) {
-    .image {
-        max-height: none;
-        max-width: 100%;
-        margin-bottom: 10px;
-    }
 }

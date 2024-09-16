@@ -5,7 +5,7 @@ import { useResult } from "@/src/app/api/actions";
 import ExamPieChart from "@/src/components/examPieChart";
 import styles from "@/styles/components/results.module.scss";
 import { QuestionType } from "@/types/database";
-import { PROPERTIES } from "@/src/components/lib/static";
+import { CONSTANTS } from "@/src/components/lib/constants";
 import AnswerContext from "@/src/components/context/answerContext";
 import LanguageContext from "@/src/components/context/languageContext";
 
@@ -57,7 +57,7 @@ export default function ResultPage({
     <>
       <div className={styles.container}>
         <div className={styles.result}>
-          <h5 className="fw-bold">{PROPERTIES.resultPageHeading[lang]}</h5>
+          <h5 className="fw-bold">{CONSTANTS.resultPageHeading[lang]}</h5>
           <div className={styles.pieChart}>
             <ExamPieChart
               label={percentageOfRightAnswers + "%"}
@@ -65,7 +65,7 @@ export default function ResultPage({
               secondPartOfChart={numberOfQuestions - result.rightAnswersCount}
             />
           </div>
-          <p className="fw-bold mt-3">{PROPERTIES.resultPageText[lang]}</p>
+          <p className="fw-bold mt-3">{CONSTANTS.resultPageText[lang]}</p>
         </div>
       </div>
     </>

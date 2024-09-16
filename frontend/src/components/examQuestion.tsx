@@ -2,7 +2,7 @@ import { useContext } from "react";
 import type { QuestionType } from "@/types/database";
 import styles from "@/styles/components/question.module.scss";
 import ExamImage from "@/src/components/examImage";
-import { PROPERTIES } from "@/src/components/lib/static";
+import { CONSTANTS } from "@/src/components/lib/constants";
 import clsx from "clsx";
 import AnswerContext from "@/src/components/context/answerContext";
 import LanguageContext from "@/src/components/context/languageContext";
@@ -49,7 +49,7 @@ export default function ExamQuestion({
       </div>
       {examIsFinished && question.explanation[lang] ? (
         <div className={styles.explanation}>
-          <h6>{PROPERTIES.questionPageExplanation[lang]}</h6>
+          <h6>{CONSTANTS.questionPageExplanation[lang]}</h6>
           {question.explanation[lang]}
         </div>
       ) : (

@@ -19,15 +19,23 @@ const ExamNavigationButtons = ({
   return (
     <div className={styles.buttonContainer}>
       {currentQuestionIndex > 0 ? (
-        <button className={clsx(styles.button)} onClick={onPreviousQuestion}>
-          <FontAwesomeIcon icon={faArrowLeft} className={styles.arrowIcon} />
+        <button
+          className={clsx(styles.button)}
+          onClick={onPreviousQuestion}
+          title={"Previous"}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} className={"defaultIcon"} />
         </button>
       ) : (
         <div></div>
       )}
       {currentQuestionIndex < totalQuestions - 1 ? (
-        <button className={clsx(styles.button)} onClick={onNextQuestion}>
-          <FontAwesomeIcon icon={faArrowRight} className={styles.arrowIcon} />
+        <button
+          className={clsx(styles.button)}
+          onClick={onNextQuestion}
+          title={"Next"}
+        >
+          <FontAwesomeIcon icon={faArrowRight} className={"defaultIcon"} />
         </button>
       ) : (
         <div></div>

@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import styles from "../../styles/components/navbar.module.scss";
-import { PROPERTIES } from "@/src/components/lib/static";
+import { CONSTANTS } from "@/src/components/lib/constants";
 import { useProperties } from "@/src/components/hook/useProperties";
 import clsx from "clsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,7 +8,7 @@ import { faDesktop } from "@fortawesome/free-solid-svg-icons";
 
 const {
   NAVBAR: { NAVBAR_LINK_HOME, NAVBAR_LINK_EXAM },
-} = PROPERTIES;
+} = CONSTANTS;
 
 const ExamsNavbar = (props: PropsWithChildren) => {
   const [navbarHome, navbarExam] = useProperties([

@@ -10,6 +10,8 @@ import { isDesktop, isMobile } from "react-device-detect";
 import ExamNavigationButtons from "@/src/components/examNavigationButtons";
 import AnswerContext from "@/src/components/context/answerContext";
 import { getCookie, setCookie } from "cookies-next";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFlag } from "@fortawesome/free-solid-svg-icons";
 
 export default function QuestionPage({
   params,
@@ -119,6 +121,19 @@ export default function QuestionPage({
           />
         )}
       </div>
+      {isMobile && (
+        <div className={styles.examResultButtonWrapper}>
+          <button
+            className={styles.examResultButton}
+            onClick={() => {
+              //TODO: call result
+            }}
+            title={"Finish"}
+          >
+            <FontAwesomeIcon className={"defaultIcon"} icon={faFlag} />
+          </button>
+        </div>
+      )}
     </div>
   );
 }

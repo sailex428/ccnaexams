@@ -1,12 +1,12 @@
 import clsx from "clsx";
 import styles from "@/styles/pages/homepage.module.scss";
 import { useProperties } from "@/src/components/hook/useProperties";
-import { PROPERTIES } from "@/src/components/lib/static";
+import { CONSTANTS } from "@/src/components/lib/constants";
 import ExamModulesSelector from "@/src/components/examModulesSelector";
 
 const {
   HOMEPAGE: { HOMEPAGE_HEADLINE_TITLE, HOMEPAGE_HEADLINE_SUBTITLE },
-} = PROPERTIES;
+} = CONSTANTS;
 
 export default function Homepage() {
   const [title, subTitle] = useProperties([
