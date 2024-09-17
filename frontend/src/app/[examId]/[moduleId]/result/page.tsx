@@ -1,13 +1,11 @@
 "use client";
 
 import { useContext, useEffect } from "react";
-import { useResult } from "@/src/app/api/actions";
+import { useDetail, useResult } from "@/src/app/api/actions";
 import ExamPieChart from "@/src/components/examPieChart";
 import styles from "@/styles/components/results.module.scss";
-import { QuestionType } from "@/types/database";
-import { CONSTANTS } from "@/src/components/lib/constants";
 import AnswerContext from "@/src/components/context/answerContext";
-import LanguageContext from "@/src/components/context/languageContext";
+import clsx from "clsx";
 
 export default function ResultPage({
   params,
@@ -15,59 +13,66 @@ export default function ResultPage({
   params: {
     examId: string;
     moduleId: string;
-    questionId: number;
-    question: QuestionType[];
   };
 }) {
-  const { numberOfQuestions, userAnswers, setExamIsFinished } =
-    useContext(AnswerContext);
-  const { lang } = useContext(LanguageContext);
+  const { userAnswers, setExamIsFinished } = useContext(AnswerContext);
   const { result, isError, isMutating, postAnswers } = useResult(
     params.examId,
     params.moduleId,
   );
+  const {
+    details,
+    isLoading,
+    isError: isDetailError,
+  } = useDetail(params.examId, params.moduleId);
 
   useEffect(() => {
-    setExamIsFinished(true);
     postAnswers([...userAnswers]);
+    setExamIsFinished(true);
   }, [userAnswers]);
-
-  if (isMutating) {
-    return (
-      <div className={styles.container}>
-        <div className="fw-bold mt-4">Module is loading...</div>
-      </div>
-    );
-  }
-
-  if (isError) {
-    return (
-      <div className={styles.container}>
-        <div className="fw-bold mt-4">An Error occurred</div>
-      </div>
-    );
-  }
 
   const percentageOfRightAnswers =
     result.rightAnswersCount != 0
-      ? ((result.rightAnswersCount / numberOfQuestions) * 100).toFixed(2)
+      ? (
+          (result.rightAnswersCount / details[0]?.numberOfQuestions) *
+          100
+        ).toFixed(2)
       : 0;
 
-  return (
-    <>
-      <div className={styles.container}>
+  if (isMutating || isLoading) {
+    return (
+      <div className={"defaultBackground align-items-center"}>
         <div className={styles.result}>
-          <h5 className="fw-bold">{CONSTANTS.resultPageHeading[lang]}</h5>
-          <div className={styles.pieChart}>
-            <ExamPieChart
-              label={percentageOfRightAnswers + "%"}
-              firstPartOfChart={result.rightAnswersCount}
-              secondPartOfChart={numberOfQuestions - result.rightAnswersCount}
-            />
-          </div>
-          <p className="fw-bold mt-3">{CONSTANTS.resultPageText[lang]}</p>
+          <div className="fw-bold">Result is loading...</div>
         </div>
       </div>
-    </>
+    );
+  }
+
+  if (isError || isDetailError) {
+    return (
+      <div className={"defaultBackground align-items-center"}>
+        <div className={styles.result}>
+          <div className="fw-bold">An Error occurred</div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={"defaultBackground align-items-center"}>
+      <div className={styles.result}>
+        <h5 className={styles.text}>Exam Result</h5>
+        <div className={clsx(styles.pieChart, "defaultText")}>
+          <ExamPieChart
+            label={percentageOfRightAnswers + "%"}
+            firstPartOfChart={result.rightAnswersCount}
+            secondPartOfChart={
+              details[0]?.numberOfQuestions - result.rightAnswersCount
+            }
+          />
+        </div>
+      </div>
+    </div>
   );
 }

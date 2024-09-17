@@ -1,19 +1,26 @@
 @import '../../styles/mixins.scss';
 
 .buttonContainer {
-  display: flex;
+  display: grid;
+  grid-template-columns: 70px 70px 70px;
   justify-content: space-between;
   width: 100%;
   margin-top: 20px;
 }
 
-.button {
+.examResultButton {
+  bottom: 25px;
+  right: 25px;
+
   padding: 15px 25px;
   cursor: pointer;
 
-  border: 1px solid rgba(21, 21, 21, 0.9);
-  border-radius: 15px;
-  background-color: rgba(18, 25, 44, 0.7);
+  @include defaultButtonHover;
+}
+
+.button {
+  padding: 15px 25px;
+  cursor: pointer;
 
   @include defaultButtonHover;
 }

@@ -32,8 +32,8 @@ export type LanguageStringType = {
 };
 
 export type AnswersType = {
-  answer: string[];
   number: string;
+  answer: string[];
 };
 
 export type ResultType = {

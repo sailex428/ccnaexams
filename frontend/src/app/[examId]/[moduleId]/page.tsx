@@ -6,7 +6,7 @@ import styles from "@/styles/pages/questionpage.module.scss";
 import ExamQuestion from "@/src/components/examQuestion";
 import React, { useContext, useEffect, useState } from "react";
 import { useSwipeable } from "react-swipeable";
-import { isDesktop, isMobile } from "react-device-detect";
+import { isDesktop, isMobile, isTablet } from "react-device-detect";
 import ExamNavigationButtons from "@/src/components/examNavigationButtons";
 import AnswerContext from "@/src/components/context/answerContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,6 +16,7 @@ import {
   setQuestionOrderCookie,
 } from "@/utils/cookies";
 import { getOrderedQuestions, randomizeOrder } from "@/utils/questionOrder";
+import { useRouter } from "next/navigation";
 
 export default function QuestionPage({
   params,
@@ -32,6 +33,7 @@ export default function QuestionPage({
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [questionAnimation, setQuestionAnimation] = useState<number>(0);
   const { examIsFinished } = useContext(AnswerContext);
+  const router = useRouter();
   const {
     details,
     isLoading: isDetailLoading,
@@ -93,7 +95,7 @@ export default function QuestionPage({
 
   return (
     <div
-      {...(isMobile ? swipeHandler : {})}
+      {...(isMobile || isTablet ? swipeHandler : {})}
       className={styles.questionBackground}
     >
       <div
@@ -114,15 +116,16 @@ export default function QuestionPage({
             totalQuestions={details[0]?.numberOfQuestions}
             onPreviousQuestion={handlePreviousQuestion}
             onNextQuestion={handleNextQuestion}
+            params={params}
           />
         )}
       </div>
-      {isMobile && (
+      {(isMobile || isTablet) && (
         <div className={styles.examResultButtonWrapper}>
           <button
             className={styles.examResultButton}
             onClick={() => {
-              //TODO: call result
+              router.push(`/${params.examId}/${params.moduleId}/result`);
             }}
             title={"Finish"}
           >
