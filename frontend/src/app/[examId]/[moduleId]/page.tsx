@@ -9,9 +9,13 @@ import { useSwipeable } from "react-swipeable";
 import { isDesktop, isMobile } from "react-device-detect";
 import ExamNavigationButtons from "@/src/components/examNavigationButtons";
 import AnswerContext from "@/src/components/context/answerContext";
-import { getCookie, setCookie } from "cookies-next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFlag } from "@fortawesome/free-solid-svg-icons";
+import {
+  getQuestionOrderCookie,
+  setQuestionOrderCookie,
+} from "@/utils/cookies";
+import { getOrderedQuestions, randomizeOrder } from "@/utils/questionOrder";
 
 export default function QuestionPage({
   params,
@@ -41,26 +45,18 @@ export default function QuestionPage({
 
   useEffect(() => {
     if (!isLoading && !isDetailLoading && questions.length > 0) {
-      const savedOrder = getCookie("questionOrder");
+      const savedOrder = getQuestionOrderCookie();
       if (savedOrder) {
-        const order = JSON.parse(savedOrder);
-        const orderedQuestions = order.map((index: number) => questions[index]);
-        setRandomizedQuestions(orderedQuestions);
+        setRandomizedQuestions(
+          getOrderedQuestions(questions, JSON.parse(savedOrder)),
+        );
       } else {
         const order = randomizeOrder(questions.length);
-        const orderedQuestions = order.map((index: number) => questions[index]);
-        setRandomizedQuestions(orderedQuestions);
-        setCookie("questionOrder", JSON.stringify(order), {
-          expires: new Date(new Date().getTime() + 1000 * 60 * 60 * 24),
-          sameSite: "strict",
-        });
+        setRandomizedQuestions(getOrderedQuestions(questions, order));
+        setQuestionOrderCookie(order);
       }
     }
   }, [isLoading, isDetailLoading, questions, details]);
-
-  const randomizeOrder = (length: number) => {
-    return Array.from({ length }, (_, i) => i).sort(() => Math.random() - 0.5);
-  };
 
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
