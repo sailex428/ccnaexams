@@ -29,7 +29,7 @@ const ExamPieChart = ({
   return (
     <>
       <svg height={"200px"} width={"200px"} viewBox={"0 0 200 200"}>
-        <VictoryAnimation duration={1000} data={animatedData}>
+        <VictoryAnimation duration={2000} data={animatedData}>
           {(newProps) => (
             <VictoryPie
               standalone={false}

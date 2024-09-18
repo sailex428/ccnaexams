@@ -42,8 +42,8 @@ export default function ResultPage({
   if (isMutating || isLoading) {
     return (
       <div className={"defaultBackground align-items-center"}>
-        <div className={styles.result}>
-          <div className="fw-bold">Result is loading...</div>
+        <div className={clsx(styles.result, "defaultText")}>
+          <h5 className={styles.text}>Result is loading...</h5>
         </div>
       </div>
     );
@@ -52,8 +52,8 @@ export default function ResultPage({
   if (isError || isDetailError) {
     return (
       <div className={"defaultBackground align-items-center"}>
-        <div className={styles.result}>
-          <div className="fw-bold">An Error occurred</div>
+        <div className={clsx(styles.result, "defaultText")}>
+          <h5 className={styles.text}>An Error occurred</h5>
         </div>
       </div>
     );
@@ -61,9 +61,9 @@ export default function ResultPage({
 
   return (
     <div className={"defaultBackground align-items-center"}>
-      <div className={styles.result}>
+      <div className={clsx(styles.result, "defaultText")}>
         <h5 className={styles.text}>Exam Result</h5>
-        <div className={clsx(styles.pieChart, "defaultText")}>
+        <div className={styles.pieChart}>
           <ExamPieChart
             label={percentageOfRightAnswers + "%"}
             firstPartOfChart={result.rightAnswersCount}
