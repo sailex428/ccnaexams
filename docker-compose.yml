@@ -1,30 +1,51 @@
-version: '3'
+version: '3.9'
 
 services:
   frontend:
-    image: ccna-exams/frontend:dev
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "10052:10052"
     environment:
-      - BACKEND_URI=http://backend:8080/api
+      - BACKEND_URI=http://backend:10051/api
     networks:
       - app
     depends_on:
       - backend
 
   backend:
-    image: ccna-exams/backend:dev
-    ports:
-      - "8080:8080"
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      - MONGO_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
     networks:
       - app
     depends_on:
-      - mongodb
+      - mongo
 
-  mongodb:
+  mongo:
     image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+    networks:
+      - app
+
+  mongo-express:
+    image: mongo-express
+    restart: always
     ports:
-      - "27017:27017"
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_ROOT_PASSWORD}
+      ME_CONFIG_MONGODB_URL: mongodb://root:${MONGO_ROOT_PASSWORD}@mongo:27017/
+      ME_CONFIG_BASICAUTH: false
+    depends_on:
+      - mongo
     networks:
       - app
 
