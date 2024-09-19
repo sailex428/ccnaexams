@@ -1,25 +1,18 @@
 FROM node:20-alpine
-
-# image label
 LABEL authors="sailex"
 
-# set workdirectory
-WORKDIR /src/app
+WORKDIR ./frontend
 
-# set env for db
-ENV BACKEND_URI=http://backend:8080/api
+ENV BACKEND_URI=http://backend:10052/api
 
-# copy dependency files
-COPY package.json ./
-COPY package-lock.json ./
+ENV TZ=Europe/Berlin
 
-# copy complete app
-COPY . ./
+COPY . .
 
-# install dependencies
 RUN npm install
 
-EXPOSE 3000
+RUN npm run build
 
-# start app
+EXPOSE 10052
+
 CMD ["npm","start"]
