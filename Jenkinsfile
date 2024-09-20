@@ -16,9 +16,10 @@ pipeline {
                         ssh -o StrictHostKeyChecking=no ubuntu@ec2-18-199-99-51.eu-central-1.compute.amazonaws.com << EOF
                         sudo git clone -b develop ${GITHUB_API_URL}
                         echo "Cloned the repository"
-                        cd ccnaexams
+                        cd ccnaexams/backend
                         sudo gradle clean build
                         echo "Built the project"
+                        cd ..
                         sudo docker compose up -d
                         echo "Deployed the containers"
                         EOF
