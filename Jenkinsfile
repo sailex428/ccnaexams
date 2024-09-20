@@ -12,6 +12,7 @@ pipeline {
                 sshagent(credentials: ["ce-ssh-key"]) {
                     sh 'echo "SSH Agent Started"'
                     sh '''
+                        #!/bin/bash
                         ssh -o StrictHostKeyChecking=no ubuntu@ec2-18-199-99-51.eu-central-1.compute.amazonaws.com << EOF
                         sudo git clone -b develop ${env.GITHUB_API_URL}
                         echo "Cloned the repository"
