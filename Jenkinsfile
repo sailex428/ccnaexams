@@ -17,7 +17,6 @@ pipeline {
                         sudo git clone -b develop ${GITHUB_API_URL}
                         echo "Cloned the repository"
                         cd ccnaexams/backend
-                        sudo gradle clean
                         sudo gradle build
                         echo "Built the project"
                         cd ..
