@@ -13,15 +13,15 @@ pipeline {
                     sh 'echo "SSH Agent Started"'
                     sh '''
                         bash -c '
-                        ssh -o StrictHostKeyChecking=no ubuntu@ec2-3-65-182-227.eu-central-1.compute.amazonaws.com <<-EOF
-                        sudo git clone -b develop ${GITHUB_API_URL}
-                        echo "Cloned the repository"
-                        cd ccnaexams/backend
-                        sudo gradle build
-                        echo "Built the project"
-                        cd ../
-                        sudo docker compose up -d
-                        echo "Deployed the containers"
+                        ssh -o StrictHostKeyChecking=no ubuntu@ec2-3-65-182-227.eu-central-1.compute.amazonaws.com << EOF
+                            sudo git clone -b develop ${GITHUB_API_URL}
+                            echo "Cloned the repository"
+                            cd ccnaexams/backend
+                            sudo gradle build
+                            echo "Built the project"
+                            cd ../
+                            sudo docker compose up -d
+                            echo "Deployed the containers"
                         EOF
                         '
                     '''
