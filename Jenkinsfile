@@ -13,7 +13,7 @@ pipeline {
                     sh 'echo "SSH Agent Started"'
                     sh '''
                         bash -c '
-                        ssh -o StrictHostKeyChecking=no ubuntu@ec2-18-199-99-51.eu-central-1.compute.amazonaws.com << EOF
+                        ssh -o StrictHostKeyChecking=no ubuntu@ec2-3-65-182-227.eu-central-1.compute.amazonaws.com << EOF
                         sudo git clone -b develop ${GITHUB_API_URL}
                         echo "Cloned the repository"
                         cd ccnaexams/backend
