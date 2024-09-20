@@ -2,7 +2,6 @@ pipeline {
     agent { label "agent1" }
 
     environment {
-        SSH_CREDENTIALS_ID = 'ce-ssh-key'
         GITHUB_API_URL = 'https://github.com/sailex428/ccnaexams.git'
     }
 
@@ -10,7 +9,7 @@ pipeline {
         stage("Deploy Containers") {
             steps {
                 sh 'echo "Deploying Containers"'
-                sshAgent([env.SSH_CREDENTIALS_ID]) {
+                sshagent(credentials: ["ce-ssh-key"]) {
                     sh 'echo "SSH Agent Started"'
                     sh '''
                         ssh -o StrictHostKeyChecking=no ubuntu@ec2-18-199-99-51.eu-central-1.compute.amazonaws.com << EOF
