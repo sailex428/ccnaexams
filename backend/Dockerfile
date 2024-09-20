@@ -2,7 +2,7 @@ FROM openjdk:21-oracle
 
 LABEL authors="sailex"
 
-WORKDIR ./backend
+WORKDIR /backend
 
 ENV TZ=Europe/Berlin
 
