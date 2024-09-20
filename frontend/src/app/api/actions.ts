@@ -9,7 +9,7 @@ import {
 } from "@/types/database";
 
 //TODO: move uri to env file
-const uri = "http://localhost:10051/api";
+const uri = "http://backend:10051/api";
 
 const fetcher = (url: string) => fetch(url).then((response) => response.json());
 

@@ -1,18 +1,7 @@
-.footer {
+.container {
     display: flex;
     justify-content: center;
     position: fixed;
-    bottom: 10px;
     width: 100%;
-}
-
-.container {
-    display: flex;
-    justify-content: space-between;
-    background-color: aliceblue;
-
-    border-radius: 15px;
-    padding: 10px;
-    width: 95%;
-    max-width: 750px;
+    height: 50px;
 }
