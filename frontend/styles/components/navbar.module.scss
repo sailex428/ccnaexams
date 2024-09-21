@@ -20,10 +20,6 @@
     max-width: 550px;
 }
 
-.navLinkWrapper {
-    @include defaultTextHover;
-}
-
 .navLink {
     display: flex;
     align-items: center;
@@ -31,10 +27,11 @@
     text-decoration: none;
     color: var(--text-color);
     font-size: 19px;
+
+    @include defaultTextHover;
 }
 
 .navIcon {
-    color: var(--text-color);
     height: 16px;
     margin-right: 5px;
 }

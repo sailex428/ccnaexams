@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 
 :root {
-    --text-color: #d2d2d2;
+    --text-color: #bababa;
     --primary: rgba(15, 20, 34, 0.7);
 }
 
@@ -13,7 +13,7 @@
 .defaultBackground {
     display: flex;
     justify-content: center;
-    height: 100vh;
+    height: 90vh;
     width: 100%;
 
     background-color: black;
@@ -24,15 +24,7 @@
     color: var(--text-color);
 }
 
-.notfound {
-    display: flex;
-    flex-direction: column;
-    margin-top: 100px;
-    width: 550px;
-    max-width: 90%;
-}
-
-.error {
+.defaultPageLayout {
     display: flex;
     flex-direction: column;
     margin-top: 100px;

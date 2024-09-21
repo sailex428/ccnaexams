@@ -4,6 +4,7 @@ import "./globals.scss";
 import ExamsNavbar from "@/src/components/examsNavbar";
 import { LanguageContextProvider } from "@/src/components/context/languageContext";
 import { AnswerContextProvider } from "@/src/components/context/answerContext";
+import ExamFooter from "@/src/components/examFooter";
 
 export default function RootLayout({
   children,
@@ -20,6 +21,7 @@ export default function RootLayout({
         <LanguageContextProvider>
           <ExamsNavbar />
           <AnswerContextProvider>{children}</AnswerContextProvider>
+            <ExamFooter />
         </LanguageContextProvider>
       </body>
     </html>

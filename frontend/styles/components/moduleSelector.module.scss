@@ -8,12 +8,15 @@
 
   width: 90%;
   max-width: 550px;
-  height: fit-content;
+  height: 100%;
 
   padding: 10px;
+}
 
-  //border: 1px solid #151515;
-  //border-radius: 20px;
+.spinnerBorder {
+  height: 52px;
+  border: 1px solid #151515;
+  border-radius: 20px;
 }
 
 .examContainer {
@@ -75,8 +78,10 @@
 }
 
 .moduleText {
-  font-size: 18px;
+  font-size: 17px;
   color: var(--text-color);
+
+  @include defaultTextHover;
 }
 
 .dropDownButton {

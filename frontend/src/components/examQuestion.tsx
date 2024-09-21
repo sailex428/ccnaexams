@@ -26,22 +26,15 @@ const ExamQuestion = ({
       (answer) => answer.number === question.number,
     );
     if (questionIndex === -1) {
-      console.log("Adding new answer:", {
-        number: question.number,
-        answer: [id],
-      });
       newAnswers.push({ number: question.number, answer: [id] });
     } else {
       const answerIndex = newAnswers[questionIndex].answer.indexOf(id);
       if (answerIndex === -1) {
-        console.log("Pushing answer id:", id);
         newAnswers[questionIndex].answer.push(id);
       } else {
-        console.log("Splicing answer id:", id);
         newAnswers[questionIndex].answer.splice(answerIndex, 1);
       }
     }
-    console.log("New answers:", newAnswers);
     setUserAnswers(newAnswers);
   };
 
@@ -60,7 +53,6 @@ const ExamQuestion = ({
               className={styles.hidden}
               onClick={() => {
                 handleAnswerChange(option.id);
-                console.log("clicked");
               }}
               defaultChecked={userAnswers.some(
                 (answer) =>

@@ -3,8 +3,9 @@
   font-weight 300ms ease-in-out;
 
   &:hover {
-    font-weight: 900;
-    color: white;
+    font-weight: bold;
+    color: #e5e5e5;
+    background-color: transparent !important;
     cursor: pointer;
   }
 }

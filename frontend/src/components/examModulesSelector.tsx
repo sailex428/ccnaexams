@@ -5,15 +5,18 @@ import ExamModules from "@/src/components/examModules";
 import { useExams } from "@/src/app/api/actions";
 import { Spinner } from "react-bootstrap";
 import React from "react";
+import clsx from "clsx";
 
 const ExamModulesSelector = () => {
   const { exams, isError, isLoading } = useExams();
 
   if (isLoading) {
     return (
-      <Spinner animation="border" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </Spinner>
+      <div className={clsx(styles.selectionContainer, styles.spinnerBorder)}>
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
     );
   }
 
