@@ -4,7 +4,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "10052:10052"
+      - "10052:3000"
     environment:
       - BACKEND_URI=http://backend:10051/api
     networks:
@@ -17,18 +17,22 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     environment:
-      MONGODB_URI: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@mongo:27017/
+      MONGODB_URI: mongodb://${MONGO_BACKEND_USER}:${MONGO_BACKEND_PWD}@mongo:27017/
     networks:
       - app
     depends_on:
       - mongo
+    ports:
+      - "10051:10051"
 
   mongo:
     image: mongo
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PWD}
+    volumes:
+      - ../db:/data/db
     networks:
       - app
 
@@ -38,10 +42,10 @@ services:
     ports:
       - "10050:8081"
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_USER}
-      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_PASSWORD}
-      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@mongo:27017/
-      ME_CONFIG_BASICAUTH: true
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_ROOT_USER}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_ROOT_PWD}
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_ROOT_USER}:${MONGO_ROOT_PWD}@mongo:27017/
+      ME_CONFIG_BASICAUTH: false
     depends_on:
       - mongo
     networks:
