@@ -1,11 +1,12 @@
 "use client";
 
 import { useContext, useEffect } from "react";
-import { useDetail, useResult } from "@/src/app/api/actions";
 import ExamPieChart from "@/src/components/examPieChart";
 import styles from "@/styles/components/results.module.scss";
 import AnswerContext from "@/src/components/context/answerContext";
 import clsx from "clsx";
+import { useResult } from "@/src/components/hook/useResult";
+import { useDetail } from "@/src/components/hook/useDetails";
 
 export default function ResultPage({
   params,

@@ -2,10 +2,10 @@
 
 import styles from "../../styles/components/moduleSelector.module.scss";
 import ExamModules from "@/src/components/examModules";
-import { useExams } from "@/src/app/api/actions";
 import { Spinner } from "react-bootstrap";
 import React from "react";
 import clsx from "clsx";
+import { useExams } from "@/src/components/hook/useExams";
 
 const ExamModulesSelector = () => {
   const { exams, isError, isLoading } = useExams();
@@ -21,7 +21,11 @@ const ExamModulesSelector = () => {
   }
 
   if (isError) {
-    return <div className={styles.selectionContainer}>An Error occurred</div>;
+    return (
+      <div className={clsx(styles.selectionContainer, styles.spinnerBorder)}>
+        <div className={styles.selectionContainer}>An Error occurred</div>
+      </div>
+    );
   }
 
   return (

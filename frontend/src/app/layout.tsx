@@ -5,6 +5,7 @@ import ExamsNavbar from "@/src/components/examsNavbar";
 import { LanguageContextProvider } from "@/src/components/context/languageContext";
 import { AnswerContextProvider } from "@/src/components/context/answerContext";
 import ExamFooter from "@/src/components/examFooter";
+import "dotenv/config";
 
 export default function RootLayout({
   children,
@@ -21,7 +22,7 @@ export default function RootLayout({
         <LanguageContextProvider>
           <ExamsNavbar />
           <AnswerContextProvider>{children}</AnswerContextProvider>
-            <ExamFooter />
+          <ExamFooter />
         </LanguageContextProvider>
       </body>
     </html>

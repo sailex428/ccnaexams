@@ -1,6 +1,5 @@
 "use client";
 
-import { useDetail, useQuestions } from "@/src/app/api/actions";
 import { QuestionType } from "@/types/database";
 import styles from "@/styles/pages/questionpage.module.scss";
 import ExamQuestion from "@/src/components/examQuestion";
@@ -17,6 +16,8 @@ import {
 } from "@/utils/cookies";
 import { getOrderedQuestions, randomizeOrder } from "@/utils/questionOrder";
 import { useRouter } from "next/navigation";
+import { useDetail } from "@/src/components/hook/useDetails";
+import { useQuestions } from "@/src/components/hook/useQuestions";
 
 export default function QuestionPage({
   params,

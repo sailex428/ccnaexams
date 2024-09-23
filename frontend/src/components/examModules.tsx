@@ -3,11 +3,11 @@ import styles from "../../styles/components/moduleSelector.module.scss";
 import clsx from "clsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { useDetail } from "@/src/app/api/actions";
 import { useContext, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import Link from "next/link";
 import LanguageContext from "@/src/components/context/languageContext";
+import { useDetail } from "@/src/components/hook/useDetails";
 
 const ExamModules = (modules: { section: string; exam: string }) => {
   const { lang } = useContext(LanguageContext);
