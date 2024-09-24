@@ -42,12 +42,14 @@ const ExamModules = (modules: { section: string; exam: string }) => {
         })}
       >
         {isLoading && (
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
+          <div className={"my-2 mx-3"}>
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
         )}
         {isError && (
-          <div className="mt-2 mx-2 fw-bold defaultText">
+          <div className="my-2 mx-3 fw-bold defaultText">
             An Error occurred.
           </div>
         )}
