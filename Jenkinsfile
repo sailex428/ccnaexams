@@ -27,7 +27,9 @@ pipeline {
         stage("Build Image") {
             steps {
                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PWD')]) {
+                    sh 'ls'
                     sh 'cd frontend'
+                    sh 'ls'
                     sh "sudo docker build -t ${DOCKERHUB_USER}/ccnaexams_frontend:dev ."
                     sh 'cd ../backend'
                     sh "sudo docker build -t ${DOCKERHUB_USER}/ccnaexams_backend:dev ."

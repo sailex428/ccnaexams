@@ -3,8 +3,6 @@ LABEL authors="sailex"
 
 WORKDIR ./frontend
 
-ENV BACKEND_URI=http://backend:10052/api
-
 ENV TZ=Europe/Berlin
 
 COPY . .
