@@ -18,7 +18,7 @@ pipeline {
             steps {
                 sh 'cd backend'
                 sh 'echo "Building the backend"'
-                sh './gradlew clean build'
+                sh 'gradle clean build'
             }
         }
 
