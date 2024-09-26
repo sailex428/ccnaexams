@@ -30,9 +30,9 @@ pipeline {
                     sh 'ls'
                     sh 'cd frontend'
                     sh 'ls'
-                    sh "sudo docker build -t ${DOCKERHUB_USER}/ccnaexams_frontend:dev ."
+                    sh "sudo docker build -t ${DOCKERHUB_USER}/ccnaexams_frontend:dev -f frontend/Dockerfile frontend"
                     sh 'cd ../backend'
-                    sh "sudo docker build -t ${DOCKERHUB_USER}/ccnaexams_backend:dev ."
+                    sh "sudo docker build -t ${DOCKERHUB_USER}/ccnaexams_backend:dev -f backend/Dockerfile backend"
                     sh 'echo "Logging in to Docker Hub"'
                     sh "sudo docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PWD}"
                     sh 'echo "Pushing images to Docker Hub"'
