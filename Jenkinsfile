@@ -16,9 +16,11 @@ pipeline {
 
         stage("Build Backend") {
             steps {
-                sh 'cd backend'
-                sh 'echo "Building the backend"'
-                sh 'gradle clean build'
+                script {
+                    dir('backend') {
+                        sh './gradlew clean build'
+                    }
+                }
             }
         }
 
