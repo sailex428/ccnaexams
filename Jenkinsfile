@@ -27,8 +27,9 @@ pipeline {
         stage("Build Image") {
             steps {
                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PWD')]) {
-                    sh 'echo "Building Image"'
+                    sh 'cd frontend'
                     sh "sudo docker build -t ${DOCKERHUB_USER}/ccnaexams_frontend:dev ."
+                    sh 'cd ../backend'
                     sh "sudo docker build -t ${DOCKERHUB_USER}/ccnaexams_backend:dev ."
                     sh 'echo "Logging in to Docker Hub"'
                     sh "sudo docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PWD}"
@@ -45,8 +46,6 @@ pipeline {
 
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PWD')]) {
                     sshagent(credentials: ['ce-ssh-key']) {
-                        sh 'echo "SSH Agent Started"'
-
                         sh '''
                             ssh -o StrictHostKeyChecking=no ubuntu@ec2-3-68-199-220.eu-central-1.compute.amazonaws.com << EOF
                                 echo "Cloning the repository"

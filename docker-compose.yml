@@ -1,10 +1,8 @@
 services:
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    image: eliashahn12/ccnaexams_frontend:dev
     ports:
-      - "10052:3000"
+      - "10052:10052"
     environment:
       - BACKEND_URI=http://backend:10051/api
     networks:
@@ -13,17 +11,15 @@ services:
       - backend
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    image: eliashahn12/ccnaexams_backend:dev
+    ports:
+      - "10051:10051"
     environment:
       MONGODB_URI: mongodb://${MONGO_BACKEND_USER}:${MONGO_BACKEND_PWD}@mongo:27017/
     networks:
       - app
     depends_on:
       - mongo
-    ports:
-      - "10051:10051"
 
   mongo:
     image: mongo
