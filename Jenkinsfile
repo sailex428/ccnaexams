@@ -1,9 +1,8 @@
 pipeline {
-    agent { label "agent1" }
+    agent { label "jenkins_agent_dind" }
 
     environment {
         GITHUB_API_URL = 'https://github.com/sailex428/ccnaexams.git'
-        DOCKER_CREDENTIALS_ID = 'dockerhub'
     }
 
     stages {
@@ -25,41 +24,49 @@ pipeline {
 
         stage("Build Image") {
             steps {
-                withCredentials([string(credentialsId: 'dockerhub', variable: 'DOCKERHUB_PWD')]) {
+               withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PWD')]) {
                     sh 'echo "Building Image"'
-                    sh 'sudo docker build -t eliashahn12/ccnaexams_frontend:dev .'
-                    sh 'sudo docker build -t eliashahn12/ccnaexams_backend:dev .'
+                    sh "sudo docker build -t ${DOCKERHUB_USER}/ccnaexams_frontend:dev ."
+                    sh "sudo docker build -t ${DOCKERHUB_USER}/ccnaexams_backend:dev ."
                     sh 'echo "Logging in to Docker Hub"'
-                    sh "sudo docker login -u eliashahn12 -p ${DOCKERHUB_PWD}"
+                    sh "sudo docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PWD}"
                     sh 'echo "Pushing images to Docker Hub"'
-                    sh 'sudo docker push eliashahn12/ccnaexams_frontend:dev'
-                    sh 'sudo docker push eliashahn12/ccnaexams_backend:dev'
-                }
+                    sh "sudo docker push ${DOCKERHUB_USER}/ccnaexams_frontend:dev"
+                    sh "sudo docker push ${DOCKERHUB_USER}/ccnaexams_backend:dev"
+               }
             }
         }
 
         stage("Deploy Containers") {
             steps {
-                sh 'echo "Deploying Containers"'
-                sshagent(credentials: ["ce-ssh-key"]) {
-                    sh 'echo "SSH Agent Started"'
-                    sh '''
-                        ssh -o StrictHostKeyChecking=no ubuntu@ec2-3-68-199-220.eu-central-1.compute.amazonaws.com << EOF
-                            echo "Cloning the repository"
-                            sudo git clone -b develop ${GITHUB_API_URL}
-                            echo "Logging in to Docker Hub"
-                            sudo docker login -u eliashahn12 -p ${DOCKERHUB_PWD}
-                            echo "Pulling the images"
-                            sudo docker pull eliashahn12/ccnaexams_frontend:dev
-                            sudo docker pull eliashahn12/ccnaexams_backend:dev
-                            cd ccnaexams
-                            echo "Deploying the containers"
-                            sudo docker compose up -d
-                        EOF
-                    '''
+                echo "Deploying Containers"
+
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PWD')]) {
+                    sshagent(credentials: ['ce-ssh-key']) {
+                        sh 'echo "SSH Agent Started"'
+
+                        sh '''
+                            ssh -o StrictHostKeyChecking=no ubuntu@ec2-3-68-199-220.eu-central-1.compute.amazonaws.com << EOF
+                                echo "Cloning the repository"
+                                sudo git clone -b develop ${GITHUB_API_URL}
+
+                                echo "Logging in to Docker Hub"
+                                sudo docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PWD}
+
+                                echo "Pulling the images"
+                                sudo docker pull ${DOCKERHUB_USER}/ccnaexams_frontend:dev
+                                sudo docker pull ${DOCKERHUB_USER}/ccnaexams_backend:dev
+
+                                cd ccnaexams
+                                echo "Deploying the containers"
+                                sudo docker compose up -d
+                            EOF
+                        '''
+                    }
                 }
             }
         }
+
     }
 
     post {
