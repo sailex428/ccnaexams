@@ -1,10 +1,10 @@
-import { useContext } from "react";
-import type { QuestionType } from "@/types/database";
+import { useContext, useEffect, useState } from "react";
+import type { AnswersType, QuestionType } from "@/types/database";
 import styles from "@/styles/components/question.module.scss";
 import ExamImage from "@/src/components/examImage";
 import clsx from "clsx";
-import AnswerContext from "@/src/components/context/answerContext";
 import LanguageContext from "@/src/components/context/languageContext";
+import { getCookieUserAnswers, setCookieUserAnswers } from "@/utils/cookies";
 
 type QuestionProps = {
   question: QuestionType;
@@ -17,8 +17,15 @@ const ExamQuestion = ({
   examIsFinished,
   currentQuestion,
 }: QuestionProps) => {
-  const { setUserAnswers, userAnswers } = useContext(AnswerContext);
+  const [userAnswers, setUserAnswers] = useState<AnswersType[]>([]);
   const { lang } = useContext(LanguageContext);
+
+  useEffect(() => {
+    const savedUserAnswers = getCookieUserAnswers();
+    if (savedUserAnswers) {
+      setUserAnswers(JSON.parse(savedUserAnswers));
+    }
+  }, []);
 
   const handleAnswerChange = (id: string) => {
     const newAnswers = userAnswers;
@@ -35,7 +42,7 @@ const ExamQuestion = ({
         newAnswers[questionIndex].answer.splice(answerIndex, 1);
       }
     }
-    setUserAnswers(newAnswers);
+    setCookieUserAnswers(newAnswers);
   };
 
   return (

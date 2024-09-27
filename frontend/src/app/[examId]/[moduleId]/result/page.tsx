@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import ExamPieChart from "@/src/components/examPieChart";
 import styles from "@/styles/components/results.module.scss";
 import AnswerContext from "@/src/components/context/answerContext";
@@ -8,6 +8,7 @@ import clsx from "clsx";
 import { useResult } from "@/src/components/hook/useResult";
 import { useDetail } from "@/src/components/hook/useDetails";
 import { getCookieUserAnswers } from "@/utils/cookies";
+import { AnswersType } from "@/types/database";
 
 export default function ResultPage({
   params,
@@ -17,8 +18,8 @@ export default function ResultPage({
     moduleId: string;
   };
 }) {
-  const { userAnswers, setUserAnswers, setExamIsFinished } =
-    useContext(AnswerContext);
+  const [userAnswers, setUserAnswers] = useState<AnswersType[]>([]);
+  const { setExamIsFinished } = useContext(AnswerContext);
   const { result, isError, isMutating, postAnswers } = useResult(
     params.examId,
     params.moduleId,
@@ -34,7 +35,7 @@ export default function ResultPage({
       setExamIsFinished(true);
       const savedUserAnswers = getCookieUserAnswers();
       if (savedUserAnswers) {
-        setUserAnswers(userAnswers);
+        setUserAnswers(JSON.parse(savedUserAnswers));
       }
     }
     postAnswers([...userAnswers]);

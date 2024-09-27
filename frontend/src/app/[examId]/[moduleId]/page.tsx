@@ -11,8 +11,8 @@ import AnswerContext from "@/src/components/context/answerContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFlag } from "@fortawesome/free-solid-svg-icons";
 import {
-  getQuestionOrderCookie,
-  setQuestionOrderCookie,
+  getCookieQuestionOrder,
+  setCookieQuestionOrder,
 } from "@/utils/cookies";
 import { getOrderedQuestions, randomizeOrder } from "@/utils/questionOrder";
 import { useRouter } from "next/navigation";
@@ -48,7 +48,7 @@ export default function QuestionPage({
 
   useEffect(() => {
     if (!isLoading && !isDetailLoading && questions.length > 0) {
-      const savedOrder = getQuestionOrderCookie();
+      const savedOrder = getCookieQuestionOrder();
       if (savedOrder) {
         setRandomizedQuestions(
           getOrderedQuestions(questions, JSON.parse(savedOrder)),
@@ -56,7 +56,7 @@ export default function QuestionPage({
       } else {
         const order = randomizeOrder(questions.length);
         setRandomizedQuestions(getOrderedQuestions(questions, order));
-        setQuestionOrderCookie(order);
+        setCookieQuestionOrder(order);
       }
     }
   }, [isLoading, isDetailLoading, questions, details]);
