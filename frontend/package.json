@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "node_modules/.bin/next dev -p 10052",
     "build": "node_modules/.bin/next build",
-    "start": "node_modules/.bin/next start -p 10052",
+    "start": "node_modules/.bin/next start",
     "lint": "node_modules/.bin/next lint"
   },
   "dependencies": {

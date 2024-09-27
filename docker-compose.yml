@@ -2,7 +2,7 @@ services:
   frontend:
     image: eliashahn12/ccnaexams_frontend:dev
     ports:
-      - "10052:10052"
+      - "3000:3000"
     environment:
       - BACKEND_URI=http://backend:10051/api
     networks:
@@ -13,7 +13,7 @@ services:
   backend:
     image: eliashahn12/ccnaexams_backend:dev
     ports:
-      - "10051:10051"
+      - "8080:8080"
     environment:
       MONGODB_URI: mongodb://${MONGO_BACKEND_USER}:${MONGO_BACKEND_PWD}@mongo:27017/
     networks:
@@ -36,7 +36,7 @@ services:
     image: mongo-express
     restart: always
     ports:
-      - "10050:8081"
+      - "8081:8081"
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_ROOT_USER}
       ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_ROOT_PWD}
