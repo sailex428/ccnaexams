@@ -13,4 +13,4 @@ RUN npm run build
 
 EXPOSE 10052
 
-CMD ["npm","start"]
+CMD ["npm", "start", "-p", "10052"]
