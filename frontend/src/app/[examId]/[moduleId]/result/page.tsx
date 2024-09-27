@@ -7,6 +7,7 @@ import AnswerContext from "@/src/components/context/answerContext";
 import clsx from "clsx";
 import { useResult } from "@/src/components/hook/useResult";
 import { useDetail } from "@/src/components/hook/useDetails";
+import { getCookieUserAnswers } from "@/utils/cookies";
 
 export default function ResultPage({
   params,
@@ -16,7 +17,8 @@ export default function ResultPage({
     moduleId: string;
   };
 }) {
-  const { userAnswers, setExamIsFinished } = useContext(AnswerContext);
+  const { userAnswers, setUserAnswers, setExamIsFinished } =
+    useContext(AnswerContext);
   const { result, isError, isMutating, postAnswers } = useResult(
     params.examId,
     params.moduleId,
@@ -28,9 +30,15 @@ export default function ResultPage({
   } = useDetail(params.examId, params.moduleId);
 
   useEffect(() => {
+    if (!isLoading || result) {
+      setExamIsFinished(true);
+      const savedUserAnswers = getCookieUserAnswers();
+      if (savedUserAnswers) {
+        setUserAnswers(userAnswers);
+      }
+    }
     postAnswers([...userAnswers]);
-    setExamIsFinished(true);
-  }, [userAnswers]);
+  }, [userAnswers, isLoading, details]);
 
   const percentageOfRightAnswers =
     result.rightAnswersCount != 0

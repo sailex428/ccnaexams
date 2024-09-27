@@ -1,7 +1,7 @@
 FROM node:20-alpine
 LABEL authors="sailex"
 
-WORKDIR ./frontend
+WORKDIR /frontend
 
 ENV TZ=Europe/Berlin
 
