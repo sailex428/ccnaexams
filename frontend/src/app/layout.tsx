@@ -3,7 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.scss";
 import ExamsNavbar from "@/src/components/examsNavbar";
 import { LanguageContextProvider } from "@/src/components/context/languageContext";
-import { AnswerContextProvider } from "@/src/components/context/answerContext";
 import ExamFooter from "@/src/components/examFooter";
 
 export default function RootLayout({
@@ -20,7 +19,7 @@ export default function RootLayout({
       <body>
         <LanguageContextProvider>
           <ExamsNavbar />
-          <AnswerContextProvider>{children}</AnswerContextProvider>
+          {children}
           <ExamFooter />
         </LanguageContextProvider>
       </body>
