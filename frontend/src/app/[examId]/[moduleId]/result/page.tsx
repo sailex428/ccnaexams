@@ -1,9 +1,8 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ExamPieChart from "@/src/components/examPieChart";
 import styles from "@/styles/components/results.module.scss";
-import AnswerContext from "@/src/components/context/answerContext";
 import clsx from "clsx";
 import { useResult } from "@/src/components/hook/useResult";
 import { useDetail } from "@/src/components/hook/useDetails";
