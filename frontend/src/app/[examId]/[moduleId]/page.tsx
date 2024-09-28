@@ -3,21 +3,24 @@
 import { QuestionType } from "@/types/database";
 import styles from "@/styles/pages/questionpage.module.scss";
 import ExamQuestion from "@/src/components/examQuestion";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import { isDesktop, isMobile, isTablet } from "react-device-detect";
 import ExamNavigationButtons from "@/src/components/examNavigationButtons";
-import AnswerContext from "@/src/components/context/answerContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFlag } from "@fortawesome/free-solid-svg-icons";
 import {
+  getCookieCurrentQuestion,
   getCookieQuestionOrder,
+  setCookieCurrentQuestion,
+  setCookieExamIsFinished,
   setCookieQuestionOrder,
 } from "@/utils/cookies";
 import { getOrderedQuestions, randomizeOrder } from "@/utils/questionOrder";
 import { useRouter } from "next/navigation";
 import { useDetail } from "@/src/components/hook/useDetails";
 import { useQuestions } from "@/src/components/hook/useQuestions";
+import { Spinner } from "react-bootstrap";
 
 export default function QuestionPage({
   params,
@@ -33,7 +36,6 @@ export default function QuestionPage({
   >([] as QuestionType[]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [questionAnimation, setQuestionAnimation] = useState<number>(0);
-  const { examIsFinished } = useContext(AnswerContext);
   const router = useRouter();
   const {
     details,
@@ -58,20 +60,28 @@ export default function QuestionPage({
         setRandomizedQuestions(getOrderedQuestions(questions, order));
         setCookieQuestionOrder(order);
       }
+      const savedQuestionIndex = getCookieCurrentQuestion();
+      if (savedQuestionIndex) {
+        setCurrentQuestionIndex(JSON.parse(savedQuestionIndex));
+      }
     }
   }, [isLoading, isDetailLoading, questions, details]);
 
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setQuestionAnimation(1);
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      const nextQuestionIndex = currentQuestionIndex + 1;
+      setCurrentQuestionIndex(nextQuestionIndex);
+      setCookieCurrentQuestion(nextQuestionIndex);
     }
   };
 
   const handlePreviousQuestion = () => {
     if (currentQuestionIndex > 0) {
       setQuestionAnimation(-1);
-      setCurrentQuestionIndex(currentQuestionIndex - 1);
+      const previousQuestionIndex = currentQuestionIndex - 1;
+      setCurrentQuestionIndex(previousQuestionIndex);
+      setCookieCurrentQuestion(previousQuestionIndex);
     }
   };
 
@@ -81,7 +91,13 @@ export default function QuestionPage({
   });
 
   if (isLoading || isDetailLoading || randomizedQuestions.length === 0) {
-    return <></>;
+    return (
+      <div className={styles.questionBackground}>
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
+    );
   }
 
   if (isError || isDetailError || questions.length === 0) {
@@ -93,7 +109,7 @@ export default function QuestionPage({
       </div>
     );
   }
-
+  //TODO: move ExamQuestion and ExamNavigationButtons to a separate component
   return (
     <div
       {...(isMobile || isTablet ? swipeHandler : {})}
@@ -108,7 +124,6 @@ export default function QuestionPage({
       >
         <ExamQuestion
           question={randomizedQuestions[currentQuestionIndex]}
-          examIsFinished={examIsFinished}
           currentQuestion={currentQuestionIndex}
         />
         {isDesktop && (
@@ -127,6 +142,7 @@ export default function QuestionPage({
             className={styles.examResultButton}
             onClick={() => {
               router.push(`/${params.examId}/${params.moduleId}/result`);
+              setCookieExamIsFinished(true);
             }}
             title={"Finish"}
           >

@@ -19,7 +19,6 @@ export default function ResultPage({
   };
 }) {
   const [userAnswers, setUserAnswers] = useState<AnswersType[]>([]);
-  const { setExamIsFinished } = useContext(AnswerContext);
   const { result, isError, isMutating, postAnswers } = useResult(
     params.examId,
     params.moduleId,
@@ -32,14 +31,13 @@ export default function ResultPage({
 
   useEffect(() => {
     if (!isLoading || result) {
-      setExamIsFinished(true);
       const savedUserAnswers = getCookieUserAnswers();
       if (savedUserAnswers) {
         setUserAnswers(JSON.parse(savedUserAnswers));
       }
     }
-    postAnswers([...userAnswers]);
-  }, [userAnswers, isLoading, details]);
+    postAnswers(userAnswers);
+  }, []);
 
   const percentageOfRightAnswers =
     result.rightAnswersCount != 0

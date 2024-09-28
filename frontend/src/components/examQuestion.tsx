@@ -1,31 +1,28 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import type { AnswersType, QuestionType } from "@/types/database";
 import styles from "@/styles/components/question.module.scss";
 import ExamImage from "@/src/components/examImage";
 import clsx from "clsx";
 import LanguageContext from "@/src/components/context/languageContext";
-import { getCookieUserAnswers, setCookieUserAnswers } from "@/utils/cookies";
+import {
+  getCookieExamIsFinished,
+  getCookieUserAnswers,
+  setCookieUserAnswers,
+} from "@/utils/cookies";
 
 type QuestionProps = {
   question: QuestionType;
-  examIsFinished: boolean;
   currentQuestion: number;
 };
 
-const ExamQuestion = ({
-  question,
-  examIsFinished,
-  currentQuestion,
-}: QuestionProps) => {
-  const [userAnswers, setUserAnswers] = useState<AnswersType[]>([]);
+const ExamQuestion = ({ question, currentQuestion }: QuestionProps) => {
   const { lang } = useContext(LanguageContext);
+  let userAnswers: AnswersType[];
 
-  useEffect(() => {
-    const savedUserAnswers = getCookieUserAnswers();
-    if (savedUserAnswers) {
-      setUserAnswers(JSON.parse(savedUserAnswers));
-    }
-  }, []);
+  const savedUserAnswers = getCookieUserAnswers();
+  if (savedUserAnswers) {
+    userAnswers = JSON.parse(savedUserAnswers);
+  }
 
   const handleAnswerChange = (id: string) => {
     const newAnswers = userAnswers;
@@ -55,12 +52,10 @@ const ExamQuestion = ({
         {question.options.map((option) => (
           <div key={option.id}>
             <input
-              type={"checkbox"}
+              type="checkbox"
               id={option.id}
               className={styles.hidden}
-              onClick={() => {
-                handleAnswerChange(option.id);
-              }}
+              onClick={() => handleAnswerChange(option.id)}
               defaultChecked={userAnswers.some(
                 (answer) =>
                   answer.number === question.number &&
@@ -76,13 +71,11 @@ const ExamQuestion = ({
           </div>
         ))}
       </div>
-      {examIsFinished && question.explanation[lang] ? (
+      {getCookieExamIsFinished() && question.explanation[lang] && (
         <div className={styles.explanation}>
-          <h6>{"Explanation"}</h6>
+          <h6>Explanation</h6>
           {question.explanation[lang]}
         </div>
-      ) : (
-        <></>
       )}
     </>
   );
