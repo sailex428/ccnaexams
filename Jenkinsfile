@@ -50,12 +50,12 @@ pipeline {
                                 docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PWD
 
                                 echo "Pulling the images"
-                                docker pull $DOCKERHUB_USER/ccnaexams_frontend:${VERSION}
-                                docker pull $DOCKERHUB_USER/ccnaexams_backend:${VERSION}
+                                sudo docker pull $DOCKERHUB_USER/ccnaexams_frontend:${VERSION}
+                                sudo docker pull $DOCKERHUB_USER/ccnaexams_backend:${VERSION}
 
                                 echo "Deploying the containers"
                                 cd ccnaexams
-                                docker-compose up -d
+                                sudo docker compose up -d
                             EOF
                         '''
                     }
