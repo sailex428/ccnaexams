@@ -1,17 +1,17 @@
 services:
   frontend:
-    image: eliashahn12/ccnaexams_frontend:1.0.2
+    image: eliashahn12/ccnaexams_frontend:1.0.3
     ports:
       - "3000:3000"
     environment:
-      - BACKEND_URI=http://backend:10051/api
+      - BACKEND_URI=http://backend:8080
     networks:
       - app
     depends_on:
       - backend
 
   backend:
-    image: eliashahn12/ccnaexams_backend:1.0.2
+    image: eliashahn12/ccnaexams_backend:1.0.3
     ports:
       - "8080:8080"
     environment:
