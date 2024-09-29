@@ -20,6 +20,10 @@
   border-radius: 20px;
 }
 
+.errorText {
+  color: var(--text-color);
+}
+
 .examContainer {
   display: flex;
   flex-direction: column;

@@ -23,7 +23,15 @@ const ExamModulesSelector = () => {
   if (isError) {
     return (
       <div className={clsx(styles.selectionContainer, styles.spinnerBorder)}>
-        <div className={styles.selectionContainer}>An Error occurred</div>
+        <div
+          className={clsx(
+            styles.selectionContainer,
+            styles.errorText,
+            "defaultText",
+          )}
+        >
+          An Error occurred
+        </div>
       </div>
     );
   }
