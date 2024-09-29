@@ -4,18 +4,19 @@ pipeline {
     environment {
         GITHUB_API_URL = 'https://github.com/sailex428/ccnaexams.git'
         VERSION = '1.0.0'
+        BRANCH = 'develop'
     }
 
     stages {
 
         stage("Checkout") {
             steps {
-                git branch: "develop",
+                git branch: "${BRANCH}",
                     url: "${GITHUB_API_URL}"
 
                 sh """
                     git fetch origin
-                    git pull origin develop
+                    git pull origin ${BRANCH}
                 """
             }
         }
@@ -54,12 +55,20 @@ pipeline {
                                 echo "Logging in to Docker Hub"
                                 docker login -u '"$DOCKERHUB_USER"' -p '"$DOCKERHUB_PWD"'
 
+                                echo "Cloning or updating the repository"
+                                if [ ! -d "ccnaexams" ]; then
+                                    git clone ${GITHUB_API_URL}
+                                else
+                                    cd ccnaexams
+                                    git fetch origin
+                                    git pull origin ${BRANCH}
+                                fi
+
                                 echo "Pulling the images"
                                 sudo docker pull '"$DOCKERHUB_USER"'/ccnaexams_frontend:'"$VERSION"'
                                 sudo docker pull '"$DOCKERHUB_USER"'/ccnaexams_backend:'"$VERSION"'
 
                                 echo "Deploying the containers"
-                                cd ccnaexams
                                 sudo docker compose down
                                 sudo docker compose up -d
                             '
