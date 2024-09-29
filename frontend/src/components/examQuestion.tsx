@@ -17,7 +17,7 @@ type QuestionProps = {
 
 const ExamQuestion = ({ question, currentQuestion }: QuestionProps) => {
   const { lang } = useContext(LanguageContext);
-  let userAnswers: AnswersType[];
+  let userAnswers: AnswersType[] = [];
 
   const savedUserAnswers = getCookieUserAnswers();
   if (savedUserAnswers) {
