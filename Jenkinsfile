@@ -55,6 +55,7 @@ pipeline {
 
                                 echo "Deploying the containers"
                                 cd ccnaexams
+                                sudo docker compose down
                                 sudo docker compose up -d
                             '
                         '''
