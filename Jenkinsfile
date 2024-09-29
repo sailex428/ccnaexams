@@ -12,6 +12,11 @@ pipeline {
             steps {
                 git branch: "develop",
                     url: "${GITHUB_API_URL}"
+
+                sh """
+                    git fetch origin
+                    git pull origin develop
+                """
             }
         }
 
