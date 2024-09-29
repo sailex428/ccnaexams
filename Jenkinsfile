@@ -45,18 +45,18 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PWD')]) {
                     sshagent(credentials: ['ce-ssh-key']) {
                         sh '''
-                            ssh -o StrictHostKeyChecking=no ubuntu@ec2-3-68-199-220.eu-central-1.compute.amazonaws.com << EOF
+                            ssh -o StrictHostKeyChecking=no ubuntu@ec2-3-68-199-220.eu-central-1.compute.amazonaws.com '
                                 echo "Logging in to Docker Hub"
-                                docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PWD
+                                docker login -u '"$DOCKERHUB_USER"' -p '"$DOCKERHUB_PWD"'
 
                                 echo "Pulling the images"
-                                sudo docker pull $DOCKERHUB_USER/ccnaexams_frontend:${VERSION}
-                                sudo docker pull $DOCKERHUB_USER/ccnaexams_backend:${VERSION}
+                                sudo docker pull '"$DOCKERHUB_USER"'/ccnaexams_frontend:'"$VERSION"'
+                                sudo docker pull '"$DOCKERHUB_USER"'/ccnaexams_backend:'"$VERSION"'
 
                                 echo "Deploying the containers"
                                 cd ccnaexams
                                 sudo docker compose up -d
-                            EOF
+                            '
                         '''
                     }
                 }
