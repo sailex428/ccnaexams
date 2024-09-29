@@ -58,8 +58,8 @@ pipeline {
                                 echo "Cloning or updating the repository"
                                 git clone ${GITHUB_API_URL}
                                 cd ccnaexams
-                                git fetch origin
-                                git pull
+                                sudo git fetch origin
+                                sudo git pull
 
                                 echo "Pulling the images"
                                 sudo docker pull '"$DOCKERHUB_USER"'/ccnaexams_frontend:'"$VERSION"'
