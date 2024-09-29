@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         GITHUB_API_URL = 'https://github.com/sailex428/ccnaexams.git'
-        VERSION = '1.0.1'
+        VERSION = '1.0.2'
         BRANCH = 'develop'
     }
 
@@ -34,8 +34,8 @@ pipeline {
         stage("Build Image") {
             steps {
                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PWD')]) {
-                    sh "sudo docker build -t ${DOCKERHUB_USER}/ccnaexams_frontend:${VERSION} -f frontend/Dockerfile frontend"
-                    sh "sudo docker build -t ${DOCKERHUB_USER}/ccnaexams_backend:${VERSION} -f backend/Dockerfile backend"
+                    sh "sudo docker buildx build --platform=linux/amd64 -t ${DOCKERHUB_USER}/ccnaexams_frontend:${VERSION} -f frontend/Dockerfile frontend"
+                    sh "sudo docker buildx build --platform=linux/amd64 -t ${DOCKERHUB_USER}/ccnaexams_backend:${VERSION} -f backend/Dockerfile backend"
                     sh 'echo "Logging in to Docker Hub"'
                     sh "sudo docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PWD}"
                     sh 'echo "Pushing images to Docker Hub"'
