@@ -1,8 +1,8 @@
 import { getCookie, setCookie } from "cookies-next";
 import { AnswersType } from "@/types/database";
 
-export const setCookieQuestionOrder = (order: number[]) => {
-  setCookie("questionOrder", JSON.stringify(order), {
+export const setCookieQuestionOrder = (order?: number[]) => {
+  setCookie("questionOrder", JSON.stringify(order ?? []), {
     expires: getDefaultExpirationDate(),
     sameSite: "strict",
   });

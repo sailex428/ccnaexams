@@ -8,7 +8,12 @@ import { Spinner } from "react-bootstrap";
 import Link from "next/link";
 import LanguageContext from "@/src/components/context/languageContext";
 import { useDetail } from "@/src/components/hook/useDetails";
-import { setCookieExamIsFinished } from "@/utils/cookies";
+import {
+  setCookieCurrentQuestion,
+  setCookieExamIsFinished,
+  setCookieQuestionOrder,
+  setCookieUserAnswers,
+} from "@/utils/cookies";
 
 const ExamModules = (modules: { section: string; exam: string }) => {
   const { lang } = useContext(LanguageContext);
@@ -63,6 +68,9 @@ const ExamModules = (modules: { section: string; exam: string }) => {
                 href={`/${modules.exam}/${detail.module}`}
                 onClick={() => {
                   setCookieExamIsFinished(false);
+                  setCookieUserAnswers();
+                  setCookieCurrentQuestion(0);
+                  setCookieQuestionOrder();
                 }}
               >
                 <div className={clsx(styles.moduleText, "defaultText")}>

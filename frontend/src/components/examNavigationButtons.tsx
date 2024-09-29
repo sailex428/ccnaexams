@@ -8,6 +8,7 @@ import clsx from "clsx";
 import styles from "@/styles/components/navigationButton.module.scss";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { setCookieExamIsFinished } from "@/utils/cookies";
 
 type ExamNavigationButtonsProps = {
   currentQuestionIndex: number;
@@ -46,6 +47,7 @@ const ExamNavigationButtons = ({
         className={styles.examResultButton}
         onClick={() => {
           router.push(`/${params.examId}/${params.moduleId}/result`);
+          setCookieExamIsFinished(true);
         }}
         title={"Finish"}
       >

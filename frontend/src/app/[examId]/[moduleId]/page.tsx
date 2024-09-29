@@ -51,7 +51,7 @@ export default function QuestionPage({
   useEffect(() => {
     if (!isLoading && !isDetailLoading && questions.length > 0) {
       const savedOrder = getCookieQuestionOrder();
-      if (savedOrder) {
+      if (savedOrder && savedOrder.length > 2) {
         setRandomizedQuestions(
           getOrderedQuestions(questions, JSON.parse(savedOrder)),
         );
