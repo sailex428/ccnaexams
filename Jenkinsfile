@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         GITHUB_API_URL = 'https://github.com/sailex428/ccnaexams.git'
-        VERSION = '1.0.0'
+        VERSION = '1.0.1'
         BRANCH = 'develop'
     }
 
