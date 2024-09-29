@@ -56,13 +56,10 @@ pipeline {
                                 docker login -u '"$DOCKERHUB_USER"' -p '"$DOCKERHUB_PWD"'
 
                                 echo "Cloning or updating the repository"
-                                if [ ! -d "ccnaexams" ]; then
-                                    git clone ${GITHUB_API_URL}
-                                else
-                                    cd ccnaexams
-                                    git fetch origin
-                                    git pull
-                                fi
+                                git clone ${GITHUB_API_URL}
+                                cd ccnaexams
+                                git fetch origin
+                                git pull
 
                                 echo "Pulling the images"
                                 sudo docker pull '"$DOCKERHUB_USER"'/ccnaexams_frontend:'"$VERSION"'
