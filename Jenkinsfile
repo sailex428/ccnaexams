@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         GITHUB_API_URL = 'https://github.com/sailex428/ccnaexams.git'
+        VERSION = '1.0.0'
     }
 
     stages {
@@ -27,13 +28,13 @@ pipeline {
         stage("Build Image") {
             steps {
                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PWD')]) {
-                    sh "sudo docker build -t ${DOCKERHUB_USER}/ccnaexams_frontend:dev -f frontend/Dockerfile frontend"
-                    sh "sudo docker build -t ${DOCKERHUB_USER}/ccnaexams_backend:dev -f backend/Dockerfile backend"
+                    sh "sudo docker build -t ${DOCKERHUB_USER}/ccnaexams_frontend:${VERSION} -f frontend/Dockerfile frontend"
+                    sh "sudo docker build -t ${DOCKERHUB_USER}/ccnaexams_backend:${VERSION} -f backend/Dockerfile backend"
                     sh 'echo "Logging in to Docker Hub"'
                     sh "sudo docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PWD}"
                     sh 'echo "Pushing images to Docker Hub"'
-                    sh "sudo docker push ${DOCKERHUB_USER}/ccnaexams_frontend:dev"
-                    sh "sudo docker push ${DOCKERHUB_USER}/ccnaexams_backend:dev"
+                    sh "sudo docker push ${DOCKERHUB_USER}/ccnaexams_frontend:${VERSION}"
+                    sh "sudo docker push ${DOCKERHUB_USER}/ccnaexams_backend:${VERSION}"
                }
             }
         }
@@ -41,25 +42,21 @@ pipeline {
         stage("Deploy Containers") {
             steps {
                 echo "Deploying Containers"
-
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PWD')]) {
                     sshagent(credentials: ['ce-ssh-key']) {
                         sh '''
-                            ssh -o StrictHostKeyChecking=no ubuntu@ec2-3-68-199-220.eu-central-1.compute.amazonaws.com << "EOF"
-                                echo "Cloning the repository"
-                                sudo git clone -b develop $GITHUB_API_URL
-
+                            ssh -o StrictHostKeyChecking=no ubuntu@ec2-3-68-199-220.eu-central-1.compute.amazonaws.com << EOF
                                 echo "Logging in to Docker Hub"
-                                sudo docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PWD
+                                docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PWD
 
                                 echo "Pulling the images"
-                                sudo docker pull $DOCKERHUB_USER/ccnaexams_frontend:dev
-                                sudo docker pull $DOCKERHUB_USER/ccnaexams_backend:dev
+                                docker pull $DOCKERHUB_USER/ccnaexams_frontend:${VERSION}
+                                docker pull $DOCKERHUB_USER/ccnaexams_backend:${VERSION}
 
-                                cd ccnaexams
                                 echo "Deploying the containers"
-                                sudo docker compose up -d
-                        EOF
+                                cd ccnaexams
+                                docker-compose up -d
+                            EOF
                         '''
                     }
                 }
