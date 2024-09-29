@@ -61,7 +61,7 @@ pipeline {
                                 else
                                     cd ccnaexams
                                     git fetch origin
-                                    git pull origin ${BRANCH}
+                                    git pull
                                 fi
 
                                 echo "Pulling the images"
