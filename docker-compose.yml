@@ -4,7 +4,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - BACKEND_URI=http://backend:8080
+      - BACKEND_URI=http://ec2-3-68-199-220.eu-central-1.compute.amazonaws.com:8080
     networks:
       - app
     depends_on:
