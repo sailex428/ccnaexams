@@ -1,9 +1,9 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.scss";
-import { AnswerContextProvider } from "@/src/components/answerContext";
-import { LanguageContextProvider } from "@/src/components/languageContext";
 import ExamsNavbar from "@/src/components/examsNavbar";
+import { LanguageContextProvider } from "@/src/components/context/languageContext";
+import ExamFooter from "@/src/components/examFooter";
 
 export default function RootLayout({
   children,
@@ -19,7 +19,8 @@ export default function RootLayout({
       <body>
         <LanguageContextProvider>
           <ExamsNavbar />
-          <AnswerContextProvider>{children}</AnswerContextProvider>
+          {children}
+          <ExamFooter />
         </LanguageContextProvider>
       </body>
     </html>

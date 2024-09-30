@@ -1,28 +1,29 @@
-"use client";
-
 import React, { useRef } from "react";
 import styles from "../../styles/components/moduleSelector.module.scss";
 import clsx from "clsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { useDetail } from "@/src/app/api/actions";
 import { useContext, useState } from "react";
-import LanguageContext from "@/src/components/languageContext";
 import { Spinner } from "react-bootstrap";
 import Link from "next/link";
+import LanguageContext from "@/src/components/context/languageContext";
+import { useDetail } from "@/src/components/hook/useDetails";
+import {
+  setCookieCurrentQuestion,
+  setCookieExamIsFinished,
+  setCookieQuestionOrder,
+  setCookieUserAnswers,
+} from "@/utils/cookies";
 
-export default function ExamModules(modules: {
-  section: string;
-  exam: number;
-}) {
+const ExamModules = (modules: { section: string; exam: string }) => {
   const { lang } = useContext(LanguageContext);
   const { details, isLoading, isError } = useDetail(`${modules.exam}`);
-  const [openSection, setOpenSection] = useState<number>(0);
+  const [openSection, setOpenSection] = useState<string>("");
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const handleClick = () => {
     const isOpening = modules.exam !== openSection;
-    setOpenSection(isOpening ? modules.exam : 0);
+    setOpenSection(isOpening ? modules.exam : "");
     if (isOpening && sectionRef.current) {
       sectionRef.current.scrollIntoView({ behavior: "smooth" });
     }
@@ -47,22 +48,30 @@ export default function ExamModules(modules: {
         })}
       >
         {isLoading && (
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
+          <div className={"my-2 mx-3"}>
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
         )}
         {isError && (
-          <div className="mx-3 mt-2 fw-bold defaultText">
+          <div className="my-2 mx-3 fw-bold defaultText">
             An Error occurred.
           </div>
         )}
-        {details && (
-          <div>
+        {details.length !== 0 && (
+          <div className={styles.moduleContentWrapper}>
             {details.map((detail) => (
               <Link
                 className={styles.moduleContent}
                 key={detail.module}
                 href={`/${modules.exam}/${detail.module}`}
+                onClick={() => {
+                  setCookieExamIsFinished(false);
+                  setCookieUserAnswers();
+                  setCookieCurrentQuestion(0);
+                  setCookieQuestionOrder();
+                }}
               >
                 <div className={clsx(styles.moduleText, "defaultText")}>
                   {detail.module}
@@ -77,4 +86,6 @@ export default function ExamModules(modules: {
       </div>
     </div>
   );
-}
+};
+
+export default ExamModules;

@@ -1,18 +1,27 @@
 import Image from "next/image";
-import clsx from "clsx";
+import styles from "@/styles/components/examImage.module.scss";
 
-export default function ExamImage(question: { img: string }) {
+const ExamImage = (question: { img: string }) => {
+  const questionImageSrc = "data:image/png;base64," + question.img;
   return (
-    <>
+    <div className={styles.imageWrapper}>
       {question.img ? (
         <Image
-          src={"data:image/png;base64," + question.img}
+          src={questionImageSrc}
           alt={"question image"}
-          className={clsx("image")}
+          className={styles.image}
+          fill={true}
+          onError={(e) => {
+            e.currentTarget.src = "/images/fallback.png";
+          }}
+          blurDataURL={questionImageSrc}
+          placeholder={"blur"}
         />
       ) : (
         <></>
       )}
-    </>
+    </div>
   );
-}
+};
+
+export default ExamImage;

@@ -1,0 +1,26 @@
+@import '../../styles/mixins.scss';
+
+.buttonContainer {
+  display: grid;
+  grid-template-columns: 70px 70px 70px;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.examResultButton {
+  bottom: 25px;
+  right: 25px;
+
+  padding: 15px 25px;
+  cursor: pointer;
+
+  @include defaultButtonHover;
+}
+
+.button {
+  padding: 15px 25px;
+  cursor: pointer;
+
+  @include defaultButtonHover;
+}

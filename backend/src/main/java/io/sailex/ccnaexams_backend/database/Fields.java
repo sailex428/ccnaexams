@@ -15,4 +15,6 @@ public class Fields {
     public static String EXAM = "exam";
 
     public static String TYPE = "type";
+
+    public static String QUESTION = "question";
 }

@@ -2,10 +2,12 @@ FROM openjdk:21-oracle
 
 LABEL authors="sailex"
 
-WORKDIR /
+WORKDIR /backend
 
-COPY /target/ccnaexams_backend-0.0.1.jar .
+ENV TZ=Europe/Berlin
+
+COPY /build/libs/backend-1.0.0.jar .
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "ccnaexams_backend-0.0.1.jar"]
+CMD ["java", "-Dspring.profiles.active=prod", "-jar", "backend-1.0.0.jar"]

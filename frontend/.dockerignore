@@ -1,5 +1,5 @@
 node_modules
-*.md
+.next
 .git
 .gitignore
 npm-debug.log

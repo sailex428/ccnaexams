@@ -3,8 +3,20 @@
   font-weight 300ms ease-in-out;
 
   &:hover {
-    font-weight: 900;
-    color: white;
+    font-weight: bold;
+    color: #e5e5e5;
+    background-color: transparent !important;
     cursor: pointer;
+  }
+}
+
+@mixin defaultButtonHover {
+  transition: background 300ms ease-in-out;
+  background: rgba(15, 20, 34, 0.7);
+  border: 1px solid rgba(21, 21, 21, 0.9);
+  border-radius: 15px;
+
+  &:hover {
+    background: rgba(20, 29, 50, 0.7);
   }
 }

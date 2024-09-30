@@ -1,30 +1,49 @@
-version: '3'
-
 services:
   frontend:
-    image: ccna-exams/frontend:dev
+    image: eliashahn12/ccnaexams_frontend:1.0.4
     ports:
       - "3000:3000"
     environment:
-      - BACKEND_URI=http://backend:8080/api
+      - BACKEND_URI=http://ec2-3-68-199-220.eu-central-1.compute.amazonaws.com:8080
     networks:
       - app
     depends_on:
       - backend
 
   backend:
-    image: ccna-exams/backend:dev
+    image: eliashahn12/ccnaexams_backend:1.0.4
     ports:
       - "8080:8080"
+    environment:
+      MONGODB_URI: mongodb://${MONGO_BACKEND_USER}:${MONGO_BACKEND_PWD}@mongo:27017/
     networks:
       - app
     depends_on:
-      - mongodb
+      - mongo
 
-  mongodb:
+  mongo:
     image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PWD}
+    volumes:
+      - ../db:/data/db
+    networks:
+      - app
+
+  mongo-express:
+    image: mongo-express
+    restart: always
     ports:
-      - "27017:27017"
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_ROOT_USER}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_ROOT_PWD}
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_ROOT_USER}:${MONGO_ROOT_PWD}@mongo:27017/
+      ME_CONFIG_BASICAUTH: false
+    depends_on:
+      - mongo
     networks:
       - app
 

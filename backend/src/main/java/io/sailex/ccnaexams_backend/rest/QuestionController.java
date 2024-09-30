@@ -22,14 +22,11 @@ public class QuestionController {
     private QuestionCollection collection;
     private ResultManager resultManager;
 
-    @GetMapping(value = "/question/{examId}/{moduleId}/{questionId}")
+    @GetMapping(value = "/questions/{examId}/{moduleId}")
     public ResponseEntity<List<Document>> getQuestion(
-            @PathVariable("examId") String examId,
-            @PathVariable("moduleId") String moduleId,
-            @PathVariable("questionId") String questionId) {
+            @PathVariable("examId") String examId, @PathVariable("moduleId") String moduleId) {
         try {
-            return new ResponseEntity<>(
-                    collection.getQuestion(examId, moduleId, questionId).get(), HttpStatus.OK);
+            return new ResponseEntity<>(collection.getQuestions(examId, moduleId).get(), HttpStatus.OK);
         } catch (InterruptedException | ExecutionException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -49,6 +46,15 @@ public class QuestionController {
     public ResponseEntity<List<Document>> getDetail(@PathVariable("examId") String examId) {
         try {
             return new ResponseEntity<>(collection.getDetail(examId, null).get(), HttpStatus.OK);
+        } catch (InterruptedException | ExecutionException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(value = "/exams")
+    public ResponseEntity<List<Document>> getExams() {
+        try {
+            return new ResponseEntity<>(collection.getExams().get(), HttpStatus.OK);
         } catch (InterruptedException | ExecutionException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

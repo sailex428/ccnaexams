@@ -1,0 +1,15 @@
+.imageWrapper {
+  width: 100%;
+  height: 100%;
+
+  position: relative;
+}
+
+.image {
+  border-radius: 15px;
+  border: 1px solid rgba(21, 21, 21, 0.9);
+  position: relative !important;
+
+  max-height: none;
+  max-width: 100%;
+}

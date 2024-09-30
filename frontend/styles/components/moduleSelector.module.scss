@@ -4,16 +4,24 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 10px;
 
   width: 90%;
   max-width: 550px;
-  height: fit-content;
+  height: 100%;
 
   padding: 10px;
+}
 
+.spinnerBorder {
+  height: 52px;
   border: 1px solid #151515;
   border-radius: 20px;
+}
+
+.errorText {
+  color: var(--text-color);
 }
 
 .examContainer {
@@ -55,7 +63,8 @@
   text-decoration: none;
   color: var(--text-color);
 
-  padding: 5px 20px 5px 20px;
+  padding: 5px 17px 5px 17px;
+  font-size: 19px;
 
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
@@ -65,13 +74,19 @@
   @include defaultTextHover;
 }
 
+.moduleContentWrapper {
+  margin-bottom: 8px;
+}
+
 .module.open .moduleContent {
   opacity: 1;
 }
 
 .moduleText {
-  font-size: 15px;
+  font-size: 17px;
   color: var(--text-color);
+
+  @include defaultTextHover;
 }
 
 .dropDownButton {
@@ -93,7 +108,7 @@
   transition: background 300ms ease-in-out;
 
   &:hover {
-    background: rgb(21, 21, 21, 0.7);
+    background: var(--primary);
   }
 }
 

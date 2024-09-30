@@ -3,13 +3,17 @@ export type QuestionType = {
   question: LanguageStringType;
   options: OptionType[];
   explanation: LanguageStringType;
-  type: "checkbox" | "radio";
   img: string;
 };
 
 export type OptionType = {
   id: string;
 } & LanguageArrayType;
+
+export type ExamType = {
+  exam: string;
+  title: string;
+};
 
 export type DetailType = {
   numberOfQuestions: number;
@@ -28,8 +32,8 @@ export type LanguageStringType = {
 };
 
 export type AnswersType = {
-  answer: string[];
   number: string;
+  answer: string[];
 };
 
 export type ResultType = {

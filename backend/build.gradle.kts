@@ -1,4 +1,5 @@
 plugins {
+    id("org.springframework.boot") version "3.2.4"
     `java-library`
     `maven-publish`
     id("com.diffplug.spotless") version "7.0.0.BETA2"
@@ -25,6 +26,12 @@ version = "1.0.0"
 description = "backend"
 java.sourceCompatibility = JavaVersion.VERSION_21
 java.targetCompatibility = JavaVersion.VERSION_21
+
+tasks.jar {
+    manifest {
+        attributes["Main-Class"] = "io.sailex.ccnaexams_backend.App"
+    }
+}
 
 publishing {
     publications.create<MavenPublication>("maven") {
